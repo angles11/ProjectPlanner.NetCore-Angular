@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ProjectPlanner.API.Dtos;
 using ProjectPlanner.API.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace ProjectPlanner.API.Controllers
 {
@@ -43,6 +44,12 @@ namespace ProjectPlanner.API.Controllers
                 return CreatedAtRoute("GetUser", new { controller = "User", id = userToCreate.Id }, userToReturn);
             }
 
+            foreach(var error in result.Errors)
+            {
+                if (error.Code == "DuplicateUserName")
+                    return BadRequest(error.Description);
+            }
+          
             return BadRequest("Something happened");
         }
 

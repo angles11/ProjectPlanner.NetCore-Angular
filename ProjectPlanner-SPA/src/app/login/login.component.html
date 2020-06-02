@@ -1,0 +1,40 @@
+<div class="form-panel col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-lg-6 offset-lg-3 col-12">
+  <div class="form-header text-center">
+    <h1>Login</h1>
+  </div>
+  <div class="form-content">
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+      <div class="form-group">
+        <label class="control-label">Username</label>
+        <input type="text" class="form-control" name="username" required [(ngModel)]="model.username" />
+      </div>
+      <div class="form-group">
+        <label class="control-label">Password</label>
+        <input type="password" class="form-control" name="password" required [(ngModel)]="model.password" />
+      </div>
+      <div class="form-group text-center">
+        <button type="submit" class="btn btn-dark w-100" [disabled]="!loginForm.valid">Login</button>
+      </div>
+    </form>
+    <div class="text-center">
+      <span class="text-muted">Or login with</span>
+    </div>
+    <br />
+  </div>
+  <div>
+    <button class="btn btn-block btn-danger">
+      <i class="fa fa-google"></i>
+    </button>
+    <button class="btn btn-block btn-primary">
+      <i class="fa fa-facebook"></i>
+    </button>
+  </div>
+  <hr />
+  <div class="text-center">
+    <span class="text-muted">Not a member? </span>
+    <a href="#">Sign up now</a>
+  </div>
+  <div class="text-center">
+    <a href="#">Forgot Password?</a>
+  </div>
+</div>

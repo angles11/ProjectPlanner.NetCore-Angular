@@ -1,0 +1,187 @@
+<div class="form-panel col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-lg-6 offset-lg-3 col-12">
+  <div class="form-header text-center">
+    <h1>Register</h1>
+  </div>
+  <div class="form-content">
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <div class="form-group">
+        <label class="control-label">Username</label>
+        <input type="text" class="form-control" formControlName="username" />
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('username').touched && registerForm.get('username').hasError('required')"
+      >
+        Username is required.
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Known As</label>
+        <input type="text" class="form-control" formControlName="knownAs" />
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('knownAs').touched && registerForm.get('knownAs').hasError('required')"
+      >
+        Known As is required.
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Email</label>
+        <input type="email" class="form-control" formControlName="email" />
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('email').touched && registerForm.get('email').hasError('required')"
+      >
+        Email is required.
+      </div>
+      <div class="form-group">
+        <label class="control-label">Gender: </label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" value="male" formControlName="gender" />
+          <label class="form-check-label">Male</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" value="female" formControlName="gender" />
+          <label class="form-check-label">Female</label>
+        </div>
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('gender').touched && registerForm.get('gender').hasError('required')"
+      >
+        Gender is required.
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Date of Birth</label>
+        <input class="form-control" type="text" formControlName="dateOfBirth" bsDatepicker [bsConfig]="bsConfig" />
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('dateOfBirth').touched && registerForm.get('dateOfBirth').hasError('required')"
+      >
+        Date of Birth is required.
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Country</label>
+        <input type="text" class="form-control" formControlName="country" />
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('country').touched && registerForm.get('country').hasError('required')"
+      >
+        Country is required.
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Position</label>
+        <input type="text" class="form-control" formControlName="position" />
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('position').touched && registerForm.get('position').hasError('required')"
+      >
+        Position is required.
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Employer</label>
+        <input type="text" class="form-control" formControlName="employer" />
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('employer').touched && registerForm.get('employer').hasError('required')"
+      >
+        Employer is required.
+      </div>
+
+      <div class="form-group">
+        <label>Experience</label>
+        <select class="form-control" formControlName="experience">
+          <option>
+            Junior
+          </option>
+          <option>
+            Semi Senior
+          </option>
+          <option>
+            Senior
+          </option>
+          <option>
+            Team Lead
+          </option>
+          <option>
+            Arquitect
+          </option>
+        </select>
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('experience').touched && registerForm.get('experience').hasError('required')"
+      >
+        Experience is required.
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Password</label>
+        <input type="password" class="form-control" formControlName="password" />
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('required')"
+      >
+        Password is required.
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('minLength')"
+      >
+        Password must be at least 8 characters long.
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('maxLenth')"
+      >
+        Password must be less than 20 characters long.
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Confirm Password</label>
+        <input type="password" class="form-control" formControlName="confirmPassword" />
+      </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').hasError('required')"
+      >
+        Password Confirmation is required.
+      </div>
+
+      <div class="form-group text-center">
+        <button type="submit" [disabled]="!registerForm.valid" class="btn btn-dark w-100">
+          Login
+        </button>
+      </div>
+    </form>
+  </div>
+  <hr />
+  <div class="text-center">
+    <span class="text-muted">Already have an account? </span>
+    <a [routerLink]="['/login']">Login </a>
+  </div>
+</div>
