@@ -4,6 +4,7 @@ import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker/public_api';
 import { User } from '../_models/user';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,12 @@ export class RegisterComponent implements OnInit {
   bsConfig: Partial<BsDatepickerConfig>;
   user: User;
 
-  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router,
+    private alertify: AlertifyService
+  ) {}
 
   ngOnInit() {
     this.bsConfig = {
@@ -54,10 +60,10 @@ export class RegisterComponent implements OnInit {
       this.user = Object.assign({}, this.registerForm.value);
       this.authService.register(this.user).subscribe(
         () => {
-          console.log('success');
+          this.alertify.success('Registered successfully');
         },
         (error) => {
-          console.log(error);
+          this.alertify.error(error);
         },
         () => {
           this.authService.login(this.user).subscribe(() => {

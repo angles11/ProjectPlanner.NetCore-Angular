@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ProjectPlanner.API.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProjectPlanner.API.Dtos
 {
-    public class UserForDetailedDto
+    public class UserForReturnDto
     {
         public string Id { get; set; }
         public string Username { get; set; }
@@ -19,5 +20,6 @@ namespace ProjectPlanner.API.Dtos
         public string Employer { get; set; }
         public string Experience { get; set; }
         public string Country { get; set; }
+
     }
 }

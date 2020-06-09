@@ -40,7 +40,7 @@ namespace ProjectPlanner.API.Controllers
 
             if (result.Succeeded)
             {
-                var userToReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
+                var userToReturn = _mapper.Map<UserForReturnDto>(userToCreate);
                 return CreatedAtRoute("GetUser", new { controller = "User", id = userToCreate.Id }, userToReturn);
             }
 
@@ -61,12 +61,13 @@ namespace ProjectPlanner.API.Controllers
             if (user == null)
                 return Unauthorized("User doesn't exist");
 
+
             var result = await _signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
            
             if (result.Succeeded)
             {
 
-                var userToReturn = _mapper.Map<UserForDetailedDto>(user);
+                var userToReturn = _mapper.Map<UserForReturnDto>(user);
 
                 return Ok(new
                 {

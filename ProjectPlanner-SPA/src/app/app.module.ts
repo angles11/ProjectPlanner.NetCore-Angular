@@ -8,6 +8,9 @@ import { AppComponent } from './app.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 import { AuthService } from './_services/auth.service';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
@@ -18,13 +21,22 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes.routing';
 import { RegisterComponent } from './register/register.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { ProjectsListResolver } from './resolvers/projects-list.resolver';
+import { ProjectCardComponent } from './projects/project-card/project-card.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
 
 @NgModule({
-  declarations: [AppComponent, ProjectsComponent, NavComponent, LoginComponent, RegisterComponent],
+  declarations: [
+    AppComponent,
+    ProjectsComponent,
+    NavComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProjectCardComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -34,6 +46,9 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    TabsModule.forRoot(),
+    AlertModule.forRoot(),
+    CollapseModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter,
@@ -42,7 +57,7 @@ export function tokenGetter() {
       },
     }),
   ],
-  providers: [AuthService, ErrorInterceptorProvider],
+  providers: [AuthService, ErrorInterceptorProvider, ProjectsListResolver],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

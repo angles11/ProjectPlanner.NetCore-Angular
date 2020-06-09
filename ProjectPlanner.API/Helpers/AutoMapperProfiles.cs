@@ -13,7 +13,13 @@ namespace ProjectPlanner.API.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<UserForRegisterDto, User>();
-            CreateMap<User, UserForDetailedDto>();
+            CreateMap<User, UserForReturnDto>();
+            CreateMap<User, UserForListDto>();
+            CreateMap<ProjectForCreationDto, Project>();
+            CreateMap<Project, ProjectForListDto>();
+
+            CreateMap<Friendship, FriendshipForReturnDto>();
+
         }
     }
 }

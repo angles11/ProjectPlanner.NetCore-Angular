@@ -144,6 +144,73 @@ namespace ProjectPlanner.API.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ProjectPlanner.API.Models.Collaborator", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("UserId", "ProjectId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Collaborators");
+                });
+
+            modelBuilder.Entity("ProjectPlanner.API.Models.Friendship", b =>
+                {
+                    b.Property<string>("SenderId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RecipientId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Since")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("SenderId", "RecipientId");
+
+                    b.HasIndex("RecipientId");
+
+                    b.ToTable("Friendships");
+                });
+
+            modelBuilder.Entity("ProjectPlanner.API.Models.Project", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EstimatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Projects");
+                });
+
             modelBuilder.Entity("ProjectPlanner.API.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -284,6 +351,43 @@ namespace ProjectPlanner.API.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ProjectPlanner.API.Models.Collaborator", b =>
+                {
+                    b.HasOne("ProjectPlanner.API.Models.Project", "Project")
+                        .WithMany("Collaborators")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjectPlanner.API.Models.User", "User")
+                        .WithMany("CollaboratedProjects")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProjectPlanner.API.Models.Friendship", b =>
+                {
+                    b.HasOne("ProjectPlanner.API.Models.User", "Recipient")
+                        .WithMany("FriendshipReceived")
+                        .HasForeignKey("RecipientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjectPlanner.API.Models.User", "Sender")
+                        .WithMany("FriendshipSent")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProjectPlanner.API.Models.Project", b =>
+                {
+                    b.HasOne("ProjectPlanner.API.Models.User", "Owner")
+                        .WithMany("OwnedProjects")
+                        .HasForeignKey("OwnerId");
                 });
 #pragma warning restore 612, 618
         }

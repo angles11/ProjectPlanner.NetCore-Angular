@@ -1,1 +1,47 @@
-<p>projects works!</p>
+<h3 class="text-center mt-2">Projects</h3>
+<button class="btn btn-success" (click)="isCollapsed = !isCollapsed">New Project</button>
+<div id="collapseBasic" class="mt-3" [collapse]="isCollapsed" [isAnimated]="true">
+  <form [formGroup]="newProjectForm" (ngSubmit)="createProject()">
+    <div class="row">
+      <div class="col-12 form-group">
+        <label class="control-label">Title</label>
+        <input type="text" class="form-control" formControlName="title" />
+      </div>
+      <div class="col-12 form-group">
+        <label class="control-label">Description</label>
+        <textarea type="text" class="form-control" formControlName="description"></textarea>
+      </div>
+      <div class="col-6 form-group">
+        <label class="control-label">Estimated Date</label>
+        <input
+          class="form-control"
+          type="text"
+          formControlName="estimatedDate"
+          readonly
+          bsDatepicker
+          [bsConfig]="bsConfig"
+        />
+      </div>
+      <div class="col-6 form-group">
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          style="margin-top: 32px;"
+          [disabled]="!newProjectForm.valid"
+        >
+          Create
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="mt-3 test">
+  <tabset [justified]="true">
+    <tab heading="Owned">
+      <div *ngFor="let project of projects">
+        <app-project-card [project]="project" (removeProject)="removeProject($event)"></app-project-card>
+      </div>
+    </tab>
+    <tab heading="Collaborating">Basic content 1</tab>
+  </tabset>
+</div>
