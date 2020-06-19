@@ -1,29 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from './_services/auth.service';
-import { User } from './_models/user';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'ProjectPlanner-SPA';
-  jwtHeper = new JwtHelperService();
 
-  constructor(private authService: AuthService) {}
+  constructor(private router: Router, public authService: AuthService){}
 
-  ngOnInit() {
-    const token = localStorage.getItem('token');
-    const user: User = JSON.parse(localStorage.getItem('user'));
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
+  }
 
-    if (user) {
-      this.authService.currentUser = user;
-    }
-
-    if (token) {
-      this.authService.decodedToken = this.jwtHeper.decodeToken(token);
-    }
+  loggedIn() {
+    return this.authService.loggedIn();
   }
 }
+
+

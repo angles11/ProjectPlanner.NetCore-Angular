@@ -149,3 +149,4 @@ C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\bi
 C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\obj\Debug\netcoreapp3.1\ProjectPlanner.API.csproj.CoreCompileInputs.cache
 C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\obj\Debug\netcoreapp3.1\ProjectPlanner.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\bin\Debug\netcoreapp3.1\Data\UserSeedData.json

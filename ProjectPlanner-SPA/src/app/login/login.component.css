@@ -1,11 +1,19 @@
-.form-panel {
-  padding: 50px;
-  margin-top: 50px;
+
+.login-form {
+    padding: 40px 10px;
+    box-shadow: 2px -2px 10px #8a858a;
 }
 
-button {
-  border-radius: 5px;
+.form-field {
+    width: 100%;
+
 }
-span {
-  font-size: 12px;
+
+.mat-form-field.mat-form-field {
+    font-size: 16px;
 }
+
+.mat-raised-button {
+    width: 100%;
+}
+

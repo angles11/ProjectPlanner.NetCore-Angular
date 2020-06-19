@@ -40,8 +40,11 @@ namespace ProjectPlanner.API.Controllers
 
             if (result.Succeeded)
             {
-                var userToReturn = _mapper.Map<UserForReturnDto>(userToCreate);
-                return CreatedAtRoute("GetUser", new { controller = "User", id = userToCreate.Id }, userToReturn);
+                var user = await _userManager.FindByNameAsync(userToCreate.UserName);
+
+                var userToReturn = _mapper.Map<UserForReturnDto>(user);
+
+                return CreatedAtRoute("GetUser", new { controller = "User", userId = user.Id }, userToReturn);
             }
 
             foreach(var error in result.Errors)

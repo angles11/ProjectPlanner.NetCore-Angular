@@ -1,63 +1,101 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
 
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { AlertModule } from 'ngx-bootstrap/alert';
-
-import { AuthService } from './_services/auth.service';
-import { ErrorInterceptorProvider } from './_services/error.interceptor';
-import { ProjectsComponent } from './projects/projects.component';
-import { NavComponent } from './nav/nav.component';
-import { LoginComponent } from './login/login.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { appRoutes } from './routes.routing';
-import { RegisterComponent } from './register/register.component';
 import { JwtModule } from '@auth0/angular-jwt';
-import { ProjectsListResolver } from './resolvers/projects-list.resolver';
-import { ProjectCardComponent } from './projects/project-card/project-card.component';
+import { ErrorInterceptorProvider } from './_services/error.inteceptor';
+
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+
+
+import { ProjectsComponent } from './projects/projects.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { NavComponent } from './nav/nav.component';
+import { appRoutes } from './routes.routing';
+import { MySnackBarComponent } from './_notifications/my-snackBar/my-snackBar.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { PeopleComponent } from './people/people.component';
+import { FriendsComponent } from './people/friends/friends.component';
+import { UsersComponent } from './people/users/users.component';
+
+
 
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
 
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    ProjectsComponent,
-    NavComponent,
-    LoginComponent,
-    RegisterComponent,
-    ProjectCardComponent,
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes),
-    BrowserAnimationsModule,
-    BsDropdownModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    TabsModule.forRoot(),
-    AlertModule.forRoot(),
-    CollapseModule.forRoot(),
-    JwtModule.forRoot({
+   declarations: [
+      AppComponent,
+      ProjectsComponent,
+      LoginComponent,
+      RegisterComponent,
+      NavComponent,
+      MySnackBarComponent,
+      PeopleComponent,
+      FriendsComponent,
+      UsersComponent
+   ],
+   imports: [
+      BrowserModule,
+      HttpClientModule,
+      FormsModule,
+      ReactiveFormsModule,
+      FlexLayoutModule,
+      BrowserAnimationsModule,
+      RouterModule.forRoot(appRoutes),
+      MatToolbarModule,
+      MatButtonModule,
+      MatSidenavModule,
+      MatIconModule,
+      MatListModule,
+      MatMenuModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatDividerModule,
+      MatSnackBarModule,
+      MatRadioModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
+      MatSelectModule,
+      MatTabsModule,
+      JwtModule.forRoot({
       config: {
         tokenGetter,
         whitelistedDomains: ['localhost:5000'],
         blacklistedRoutes: ['localhost:5000/api/auth'],
       },
     }),
-  ],
-  providers: [AuthService, ErrorInterceptorProvider, ProjectsListResolver],
-  bootstrap: [AppComponent],
+   ],
+   providers: [
+      MatDatepickerModule,
+      ErrorInterceptorProvider
+   ],
+   bootstrap: [
+      AppComponent
+   ],
+   entryComponents: [
+      MySnackBarComponent
+   ]
 })
-export class AppModule {}
+export class AppModule { }
