@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using ProjectPlanner.API.Dtos;
 using ProjectPlanner.API.Models;
 using Microsoft.EntityFrameworkCore.Internal;
+using ProjectPlanner.API.Services.PhotoUploader;
 
 namespace ProjectPlanner.API.Controllers
 {
@@ -22,19 +23,23 @@ namespace ProjectPlanner.API.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly IPhotoUploader _photoUploader;
 
-        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration, IMapper mapper)
+        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration, IMapper mapper, IPhotoUploader photoUploader)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
             _mapper = mapper;
+            _photoUploader = photoUploader;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
+        public async Task<IActionResult> Register([FromForm] UserForRegisterDto userForRegisterDto)
         {
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
+
+            userToCreate.PhotoUrl = await _photoUploader.UploadPhotoAsync(userForRegisterDto.Photo);
 
             var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
 

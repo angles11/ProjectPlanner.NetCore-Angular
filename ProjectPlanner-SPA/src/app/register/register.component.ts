@@ -4,6 +4,8 @@ import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../_models/user';
 import { MySnackBarService } from '../_notifications/my-snackBar.service';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { AppDateAdapter, APP_DATE_FORMATS } from '../_helpers/format-datepicker';
 
 @Component({
   selector: 'app-register',
@@ -16,8 +18,13 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   maxDate: Date;
   user: User;
+  imageSrc: string;
+  selectedPhoto: File;
+  dateOfBirth: string;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private router: Router, private snackBar: MySnackBarService) { }
+
+
 
   ngOnInit() {
     this.maxDate = new Date();
@@ -52,20 +59,47 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  onFileSelect(event): void {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+      reader.onload = (e: any) => {
+        this.imageSrc = e.target.result;
+      };
+      this.selectedPhoto = file;
+    }
+  }
   register() {
     if (this.registerForm.valid) {
-      this.user = Object.assign({}, this.registerForm.value);
-      this.authService.register(this.user).subscribe(() => {
-        this.snackBar.openSnackBar('Registered successfully', 'success', 2000, 'bottom');
+
+      const formData: FormData = new FormData();
+
+      Object.entries(this.registerForm.value).forEach(
+        ([key, value]: any[]) => {
+          if (key === 'dateOfBirth') {
+            this.dateOfBirth = (new Date(value)).toUTCString();
+          } else {
+            formData.set(key, value);
+          }
+        });
+
+      // https://stackoverflow.com/questions/29287311/how-to-append-datetime-value-to-formdata-and-receive-it-in-controller//
+      formData.append('dateOfBirth', this.dateOfBirth);
+      formData.append('photo', this.selectedPhoto);
+
+      this.authService.register(formData).subscribe(() => {
+        this.snackBar.openSnackBar('Registered successfully', 'success', 200, 'bottom');
       }, error => {
           this.snackBar.openSnackBar(error, 'error', 5000);
       }, () => {
-          this.authService.login(this.user).subscribe(() => {
+          this.authService.login(this.registerForm.value).subscribe(() => {
             this.router.navigate(['/projects']);
           }, error => {
-              console.log(error);
-          })
-      })
+            this.snackBar.openSnackBar(error, 'error', 5000);
+          });
+      });
     }
   }
 }

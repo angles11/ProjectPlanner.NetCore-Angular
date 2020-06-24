@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using ProjectPlanner.API.Data;
 using ProjectPlanner.API.Helpers;
 using ProjectPlanner.API.Models;
+using ProjectPlanner.API.Services.PhotoUploader;
 using System.Net;
 using System.Text;
 
@@ -68,8 +69,11 @@ namespace ProjectPlanner.API
                    };
                });
 
+            services.Configure<PhotoUploaderSettings>(Configuration.GetSection("PhotoUploaderSettings"));
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddSingleton<IPhotoUploader, PhotoUploader>();
+           
 
         }
 

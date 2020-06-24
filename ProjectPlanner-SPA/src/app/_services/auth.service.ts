@@ -33,7 +33,7 @@ constructor(private http: HttpClient) { }
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  register(user: User) {
-    return this.http.post(this.baseUrl + 'register', user);
+  register(model: any) {
+    return this.http.post(this.baseUrl + 'register', model);
   }
 }

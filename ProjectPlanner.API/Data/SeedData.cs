@@ -22,7 +22,6 @@ namespace ProjectPlanner.API.Data
 
                 var users = JsonConvert.DeserializeObject<List<User>>(userData);
                 
-
                 foreach (var user in users)
                 {
                     userManager.CreateAsync(user, "asdasdas");
@@ -32,13 +31,6 @@ namespace ProjectPlanner.API.Data
             }
         }
 
-        //private static void CreatePasswordHash(string password, out byte[] passwordHash)
-        //{
-        //    using (var hmac = new HMACSHA512())
-        //    {
-        //        passwordHash
-        //    }
-        //}
     }
 
 }

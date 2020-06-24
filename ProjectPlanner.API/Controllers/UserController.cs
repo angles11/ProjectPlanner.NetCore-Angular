@@ -24,6 +24,8 @@ namespace ProjectPlanner.API.Controllers
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
 
+
+
         public UserController(UserManager<User> userManager, IMapper mapper, IUserRepository userRepository)
         {
             _userManager = userManager;
@@ -34,6 +36,8 @@ namespace ProjectPlanner.API.Controllers
         [HttpGet("{userId}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(string userId)
         {
+
+
             var user = await _userManager.GetUserAsync(User);
 
             if (user == null)

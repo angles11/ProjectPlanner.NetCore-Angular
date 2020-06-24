@@ -32,15 +32,16 @@ import { RegisterComponent } from './register/register.component';
 import { NavComponent } from './nav/nav.component';
 import { appRoutes } from './routes.routing';
 import { MySnackBarComponent } from './_notifications/my-snackBar/my-snackBar.component';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { PeopleComponent } from './people/people.component';
 import { FriendsComponent } from './people/friends/friends.component';
 import { UsersComponent } from './people/users/users.component';
+import { APP_DATE_FORMATS, AppDateAdapter } from './_helpers/format-datepicker';
 
 
 
 export function tokenGetter() {
-  return localStorage.getItem('token');
+   return localStorage.getItem('token');
 }
 
 
@@ -80,16 +81,18 @@ export function tokenGetter() {
       MatSelectModule,
       MatTabsModule,
       JwtModule.forRoot({
-      config: {
-        tokenGetter,
-        whitelistedDomains: ['localhost:5000'],
-        blacklistedRoutes: ['localhost:5000/api/auth'],
-      },
-    }),
+         config: {
+            tokenGetter,
+            whitelistedDomains: ['localhost:5000'],
+            blacklistedRoutes: ['localhost:5000/api/auth'],
+         },
+      }),
    ],
    providers: [
       MatDatepickerModule,
-      ErrorInterceptorProvider
+      ErrorInterceptorProvider,
+      { provide: DateAdapter, useClass: AppDateAdapter },
+      { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
    ],
    bootstrap: [
       AppComponent

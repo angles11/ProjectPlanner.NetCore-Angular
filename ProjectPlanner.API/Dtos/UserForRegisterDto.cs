@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -33,6 +34,9 @@ namespace ProjectPlanner.API.Dtos
         public string Employer { get; set; }
         [Required]
         public string Experience { get; set; }
+
+        [Required]
+        public IFormFile Photo { get; set; }
 
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
