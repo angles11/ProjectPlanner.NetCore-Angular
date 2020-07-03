@@ -1,0 +1,13 @@
+
+
+<div class="dialog" fxLayout="column" fxLayoutAlign="center">
+  <h1 mat-dialog-title class="dialog-title" fxFlex>{{title}}</h1>
+   <mat-dialog-content fxFlex>
+    <p class="dialog-message">{{message}}</p>
+   </mat-dialog-content>
+
+  <mat-dialog-actions fxFlex class="dialog-actions">
+    <button mat-raised-button color="accent" (click)="onConfirm()">Add</button>
+    <button mat-raised-button color="warn" (click)="onDismiss()">Cancel</button>
+  </mat-dialog-actions>
+</div>

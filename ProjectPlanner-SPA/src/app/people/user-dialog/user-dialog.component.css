@@ -1,0 +1,43 @@
+.dialog {
+    width: 600px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.dialog-top {
+    background-color: #880e4f;
+    padding: 10px;
+    border-radius: 4px 4px 0px 0px;
+}
+
+.dialog-top-content-title {
+    text-align: center;
+    color: white;
+}
+
+.dialog-top-content-text p {
+
+    color: white;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+}
+.dialog-top-content-text span {
+
+    color: white;
+}
+
+.dialog-top-img {
+    display: flex;
+    justify-content:center;
+}
+.dialog-top-img img{
+    width: 50%;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.mat-dialog-content {
+    padding: 10px 34px ;
+}

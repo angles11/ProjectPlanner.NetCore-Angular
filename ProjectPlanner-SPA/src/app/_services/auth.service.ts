@@ -12,6 +12,7 @@ export class AuthService {
   baseUrl = environment.apiUrl + 'auth/';
   jwtHelper = new JwtHelperService();
   decodedToken: any;
+  currentUser: User;
 
 constructor(private http: HttpClient) { }
 
@@ -23,6 +24,7 @@ constructor(private http: HttpClient) { }
           localStorage.setItem('token', user.token);
           localStorage.setItem('user', JSON.stringify(user.user));
           this.decodedToken = this.jwtHelper.decodeToken(user.token);
+          this.currentUser = user.user;
         }
       })
     );

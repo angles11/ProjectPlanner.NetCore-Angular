@@ -24,6 +24,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 import { ProjectsComponent } from './projects/projects.component';
@@ -37,6 +41,13 @@ import { PeopleComponent } from './people/people.component';
 import { FriendsComponent } from './people/friends/friends.component';
 import { UsersComponent } from './people/users/users.component';
 import { APP_DATE_FORMATS, AppDateAdapter } from './_helpers/format-datepicker';
+import { FriendsResolver } from './resolvers/friends.resolver';
+import { UsersResolver } from './resolvers/users.resolver';
+import { UserCardComponent } from './people/users/user-card/user-card.component';
+import { FriendCardComponent } from './people/friends/friend-card/friend-card.component';
+import { ConfirmDialogComponent } from './_notifications/confirm-dialog/confirm-dialog.component';
+import { UserDialogComponent } from './people/user-dialog/user-dialog.component';
+
 
 
 
@@ -55,7 +66,11 @@ export function tokenGetter() {
       MySnackBarComponent,
       PeopleComponent,
       FriendsComponent,
-      UsersComponent
+      UsersComponent,
+      UserCardComponent,
+      FriendCardComponent,
+      ConfirmDialogComponent,
+      UserDialogComponent
    ],
    imports: [
       BrowserModule,
@@ -80,6 +95,10 @@ export function tokenGetter() {
       MatNativeDateModule,
       MatSelectModule,
       MatTabsModule,
+      MatCardModule,
+      MatPaginatorModule,
+      MatGridListModule,
+      MatDialogModule,
       JwtModule.forRoot({
          config: {
             tokenGetter,
@@ -92,13 +111,17 @@ export function tokenGetter() {
       MatDatepickerModule,
       ErrorInterceptorProvider,
       { provide: DateAdapter, useClass: AppDateAdapter },
-      { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+      { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+      FriendsResolver,
+      UsersResolver
    ],
    bootstrap: [
       AppComponent
    ],
    entryComponents: [
-      MySnackBarComponent
+      MySnackBarComponent,
+      ConfirmDialogComponent,
+      UserDialogComponent
    ]
 })
 export class AppModule { }

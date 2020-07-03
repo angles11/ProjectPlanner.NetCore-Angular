@@ -1,0 +1,16 @@
+<mat-card  ngClass.gt-xs="user-card" ngClass.xs="user-card-xs">
+    <mat-card-header>
+        <img mat-card-image src="{{user.photoUrl}}">
+    </mat-card-header>
+    <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+        <mat-card-title fxFlex color="primary">{{user.knownAs}}</mat-card-title>
+        <p fxFlex class="mat-body-strong">{{user.position}}</p>
+        <span fxFlex >at</span>
+        <p fxFlex class="mat-body-strong">{{user.employer}}</p>
+    </mat-card-content>
+    <div class="card-footer" backgroundColor="primary" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <button mat-raised-button color="accent" (click)="addFriend()" *ngIf="!requestSent">Add friend</button>
+        <button mat-raised-button  *ngIf="requestSent" class="request-sent" (click)="cancelRequest()"><p><span>Request Sent</span></p></button>
+        <button mat-raised-button class="profileBtn" (click)="openDialog()">View profile</button>
+    </div>
+</mat-card>

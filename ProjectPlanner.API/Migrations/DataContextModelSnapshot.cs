@@ -167,6 +167,9 @@ namespace ProjectPlanner.API.Migrations
                     b.Property<string>("RecipientId")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ActionUserId")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("Since")
                         .HasColumnType("TEXT");
 
@@ -174,6 +177,8 @@ namespace ProjectPlanner.API.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("SenderId", "RecipientId");
+
+                    b.HasIndex("ActionUserId");
 
                     b.HasIndex("RecipientId");
 
@@ -373,6 +378,10 @@ namespace ProjectPlanner.API.Migrations
 
             modelBuilder.Entity("ProjectPlanner.API.Models.Friendship", b =>
                 {
+                    b.HasOne("ProjectPlanner.API.Models.User", "ActionUser")
+                        .WithMany()
+                        .HasForeignKey("ActionUserId");
+
                     b.HasOne("ProjectPlanner.API.Models.User", "Recipient")
                         .WithMany("FriendshipReceived")
                         .HasForeignKey("RecipientId")

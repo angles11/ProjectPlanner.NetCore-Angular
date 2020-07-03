@@ -1,0 +1,104 @@
+
+
+.user-card {
+    margin-top: 20px;
+    box-shadow: 0px 0px 2px #c7c7c7;
+    background-color:#fafafa;
+
+
+}
+.user-card:hover {
+    transform: scale(1.2, 1.2);
+    transition-duration: 500ms;
+    transition-timing-function: ease-out;
+    z-index: 20;
+    box-shadow: 2px -2px 5px #8a858a;
+
+
+}
+
+.user-card:hover .mat-card-image{
+    transform: scale(1.3, 1.3);
+    transition-duration: 500ms;
+    transition-timing-function: ease-out;
+    opacity: 1;
+}
+
+.user-card-xs {
+    width: 300px;
+    margin-top: 30px;
+    box-shadow: 0px 0px 2px #c7c7c7;
+}
+
+
+
+.mat-card-image {
+    border-radius: 50%;
+    width: 50%;
+    opacity: 0.6;
+}
+
+:host /deep/ .mat-card-header-text{
+    margin: 0;
+}
+
+.mat-card-header {
+    justify-content:center;
+    margin-bottom:5px;
+}
+
+.mat-card-title {
+    color: #4a148c;
+    text-transform: uppercase;
+    font-size: 1.2em;
+}
+
+.card-footer {
+
+    border-radius: 0px 0px 5px 5px;
+    color: white;
+}
+
+.profileBtn {
+    background-color: #880E4F;
+    color: white;
+}
+
+span {
+    color: #00838f;
+}
+
+.user-card p {
+    margin-bottom: 0px;
+    text-transform: capitalize;
+    font-size: 12px;
+}
+
+.card-footer button {
+    width: 80%;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0;
+}
+
+.request-sent{
+    background-color: #00838f;
+    color: white;
+}
+.request-sent p {
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.request-sent span{
+    color: white;
+}
+
+.request-sent:hover span {
+    display: none;
+}
+.request-sent:hover  p:after {
+    content: 'Cancel request';
+}

@@ -1,0 +1,38 @@
+.test {
+    border-bottom: 1px solid #4a148c;
+}
+
+::ng-deep .mat-paginator{
+    background: transparent;
+}
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: transparent;
+}
+
+::ng-deep .mat-icon-button{
+    color: #880e4f;
+}
+::ng-deep .mat-select-value {
+  color: #880e4f;
+  font-weight: bold;
+
+}
+::ng-deep .mat-select-arrow {
+    color: #880e4f;
+}
+
+::ng-deep .mat-option-text {
+
+    text-align: center;
+}
+
+.selected-icon {
+    position: relative;
+    top: 6px;
+
+}
+
+.alert-message {
+    text-align: center;
+    font-weight: 500;
+}

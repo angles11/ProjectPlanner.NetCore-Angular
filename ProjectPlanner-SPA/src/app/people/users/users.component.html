@@ -1,1 +1,52 @@
-<p>users works!</p>
+<div class="test" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between stretch">
+    <mat-form-field appearance="outline" color="accent" fxFlex="35" class="form-field">
+        <mat-icon matSuffix color="accent">search</mat-icon>
+        <mat-label>Search</mat-label>
+        <input type="text" placeholder="Name" matInput [(ngModel)]="searchTerm" name="searchTerm" (keyup)="loadUsers()">
+    </mat-form-field>
+    <mat-paginator fxFlex="65" [length]="pagination.totalItems" [pageSize]="pagination.pageSize"
+        [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = pageChanged($event)">
+    </mat-paginator>
+</div>
+<div class="filters" fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+    <mat-form-field appearance="standard" color="accent" fxFlex="30">
+        <mat-label>Order By</mat-label>
+        <mat-select (selectionChange)="orderByChange()" [(value)]="sortingOption">
+            <mat-select-trigger *ngIf="sortingOption">
+                {{sortingOption.viewValue}} <mat-icon  inline="true">{{sortingOption.viewIcon}}</mat-icon>
+            </mat-select-trigger>
+            <mat-option *ngFor="let option of sortingOptions" [value]="option">
+                {{option.viewValue}} <mat-icon>{{option.viewIcon}}</mat-icon>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="standard" color="accent" fxFlex="30">
+        <mat-label>Gender</mat-label>
+        <mat-select (selectionChange)="genderChange()" [(value)]="gender">
+            <mat-option value="all">
+                All
+            </mat-option>
+            <mat-option value="male">
+                Male
+            </mat-option>
+            <mat-option value="female">
+                Female
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center">
+    <div *ngFor="let user of users" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22" fxFlex.sm="30">
+        <app-user-card [user]="user"></app-user-card>
+    </div>
+    <div *ngFor="let number of numbers" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22" fxFlex.sm="30"
+        style="height: 0px;">
+    </div>
+</div>
+
+<div *ngIf="searchTerm.length !== 0 && users.length === 0" class="alert-message">
+    <h2>There are no users with a name containing <strong>{{searchTerm}}</strong> </h2>
+</div>
+<div *ngIf="gender !== 'all' && users.length === 0 && searchTerm.length === 0" class="alert-message">
+    <h2>There are no <strong>{{gender}}</strong> users</h2>
+</div>

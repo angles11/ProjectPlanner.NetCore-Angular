@@ -19,10 +19,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.authService.login(this.model).subscribe(() => {
-      this.snackBar.openSnackBar('Welcome! ' + this.authService.decodedToken.unique_name, 'success', 3000, 'bottom');
+      this.snackBar.openSnackBar('Welcome! ' + this.authService.currentUser.knownAs, 'success', 3000, 'bottom');
       this.router.navigate(['/projects']);
     }, error => {
-      this.snackBar.openSnackBar('Error', 'error', 3000);
+      this.snackBar.openSnackBar(error, 'error', 3000);
     });
   }
 }

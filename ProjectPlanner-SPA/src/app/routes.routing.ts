@@ -6,6 +6,8 @@ import { AuthGuard } from './_guards/auth.guard';
 import { PeopleComponent } from './people/people.component';
 import { FriendsComponent } from './people/friends/friends.component';
 import { UsersComponent } from './people/users/users.component';
+import { FriendsResolver } from './resolvers/friends.resolver';
+import { UsersResolver } from './resolvers/users.resolver';
 
 export const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,13 +17,13 @@ export const appRoutes: Routes = [
   {
     path: 'people', component: PeopleComponent, canActivate: [AuthGuard], children: [
       {
-        path: '', component: FriendsComponent
+        path: '', redirectTo: 'friends', pathMatch: 'full'
       },
       {
-      path: 'friends', component: FriendsComponent
+      path: 'friends', component: FriendsComponent, resolve: {friends: FriendsResolver}
       },
       {
-        path: 'users', component: UsersComponent
+        path: 'users', component: UsersComponent, resolve: {users: UsersResolver}
       }
   ]}
 

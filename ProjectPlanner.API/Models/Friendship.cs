@@ -14,10 +14,14 @@ namespace ProjectPlanner.API.Models
         public DateTime Since { get; set; }
         public Status Status { get; set; }
 
+        //user with the last action in the friendship
+        public string ActionUserId { get; set; }
+
         public Friendship()
         {
             Since = DateTime.Now;
             Status = Status.Pending;
+            ActionUserId = SenderId;
         }
     }
 }

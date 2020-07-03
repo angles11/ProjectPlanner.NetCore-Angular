@@ -70,6 +70,7 @@ namespace ProjectPlanner.API
                });
 
             services.Configure<PhotoUploaderSettings>(Configuration.GetSection("PhotoUploaderSettings"));
+            
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddSingleton<IPhotoUploader, PhotoUploader>();
@@ -80,6 +81,8 @@ namespace ProjectPlanner.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var builder = new ConfigurationBuilder();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -100,7 +103,6 @@ namespace ProjectPlanner.API
                     });
                 });
             }
-
             app.UseRouting();
 
             app.UseAuthentication();

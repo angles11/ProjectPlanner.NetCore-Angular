@@ -6,10 +6,12 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.ProjectModel;
 using ProjectPlanner.API.Data;
 using ProjectPlanner.API.Dtos;
+using ProjectPlanner.API.Helpers;
 using ProjectPlanner.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -65,20 +67,22 @@ namespace ProjectPlanner.API.Controllers
 
             var friends = await _userRepository.GetFriends(userId);
 
-            var friendsToReturn = _mapper.Map<IEnumerable<FriendshipForReturnDto>>(friends);
+            var friendsToReturn = _mapper.Map<IEnumerable<FriendToReturnDto>>(friends);
 
             return Ok(friendsToReturn);
         }
 
         [HttpGet("{userId}/users")]
-        public async Task<IActionResult> GetUsers(string userId)
+        public async Task<IActionResult> GetUsers(string userId, [FromQuery]UserParams userParams)
         {
             if (userId != _userManager.GetUserId(User))
                 return Unauthorized();
 
-            var users = await _userRepository.GetUsers(userId);
+            var users = await _userRepository.GetUsers(userId, userParams);
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
+
+            Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             return Ok(usersToReturn);
         }
@@ -118,9 +122,10 @@ namespace ProjectPlanner.API.Controllers
             var friendship = new Friendship()
             {
                 Sender = user,
-                SenderId = user.Id,
+                SenderId = userId,
                 Recipient = recipient,
-                RecipientId = recipientId
+                RecipientId = recipientId,
+                ActionUserId = userId,
             };
 
             if (await _userRepository.AlreadyFriends(userId, recipientId))
@@ -132,6 +137,27 @@ namespace ProjectPlanner.API.Controllers
                 return Ok();
 
             return NoContent();
+        }
+
+        [HttpDelete("{userId}/friends/{userId2}")]
+        public async Task<IActionResult> DeleteFriendship(string userId, string userId2)
+        {
+            var friendship = await _userRepository.GetFriendship(userId, userId2);
+
+            if (friendship == null)
+            {
+                return NotFound();
+            }
+
+             _userRepository.DeleteFriendship(friendship);
+
+            if (await _userRepository.SaveAll())
+            {
+                return NoContent();
+            }
+
+            return BadRequest("Couldn't remove the friend request. Try again"); 
+          
         }
 
         [HttpPut("{userId}/friends/{senderId}")]

@@ -1,4 +1,5 @@
-﻿using ProjectPlanner.API.Models;
+﻿using ProjectPlanner.API.Helpers;
+using ProjectPlanner.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,10 @@ namespace ProjectPlanner.API.Data
     {
         public Task<bool> SaveAll();
         public Task<User> GetUser(string userId);
-        public Task<ICollection<User>> GetUsers(string userId);
-        public Task<ICollection<Friendship>> GetFriends(string userId);
+        public Task<PagedList<User>> GetUsers(string userId, UserParams userParams);
+        public Task<ICollection<Friend>> GetFriends(string userId);
         public Task AddFriend(Friendship friendship);
+        public void DeleteFriendship(Friendship friendship);
         public Task<bool> AlreadyFriends(string userId1, string userId2);
         public Task<Friendship> GetFriendship(string userId1, string userId2);
         public Task ChangeFriendshipStatus(string userId, string senderId, string status);

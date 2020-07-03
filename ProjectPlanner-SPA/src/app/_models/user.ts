@@ -11,4 +11,5 @@ export interface User {
   position: string;
   employer: string;
   experience: string;
+  photoUrl: string;
 }

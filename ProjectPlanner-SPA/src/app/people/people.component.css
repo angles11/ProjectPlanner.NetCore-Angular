@@ -1,3 +1,4 @@
+
 .mat-toolbar {
     min-height: 40px;
     height: 40px;
@@ -7,9 +8,9 @@
 
 
 a {
-    width: 50%;
+    width: 30%;
 }
 
 .active {
-    background-color: red;
+    background-color: #4a148c;
 }
