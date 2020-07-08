@@ -18,8 +18,7 @@ namespace ProjectPlanner.API.Helpers
             CreateMap<ProjectForCreationDto, Project>();
             CreateMap<Project, ProjectForListDto>();
 
-            CreateMap<Friendship, FriendshipForReturnDto>();
-
+            CreateMap<Friend, FriendToReturnDto>();
         }
     }
 }

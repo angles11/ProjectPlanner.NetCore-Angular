@@ -19,7 +19,7 @@ export class UserService {
     return this.http.get(this.baseUrl + 'user/' + userId + '/friends');
   }
 
-  getUsers(userId: string, pageIndex?, itemsPerPage?, searchTerm?, userParams?): Observable<PaginatedResult<User[]>>{
+  getUsers(userId: string, pageIndex?, itemsPerPage?, searchTerm?, userParams?): Observable<PaginatedResult<User[]>> {
 
     const paginatedResult: PaginatedResult<User[]> = new PaginatedResult<User[]>();
 
@@ -56,5 +56,12 @@ export class UserService {
 
   deleteFriend(userId: string, userId2: string) {
     return this.http.delete(this.baseUrl + 'user/' + userId + '/friends/' + userId2);
+  }
+
+  acceptFriend(userId: string, userId2: string) {
+
+    const params = new HttpParams()
+      .set('status', status);
+    return this.http.put(this.baseUrl + 'user/' + userId + '/friends/' + userId2, {});
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { UserService } from 'src/app/_services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/_models/user';
@@ -17,7 +17,8 @@ interface SortingOption {
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class UsersComponent implements OnInit {
 
@@ -74,9 +75,9 @@ export class UsersComponent implements OnInit {
   sortingOption: SortingOption;
 
   constructor(private route: ActivatedRoute,
-    private userService: UserService,
-    private authService: AuthService,
-    private snackBar: MySnackBarService) { }
+              private userService: UserService,
+              private authService: AuthService,
+              private snackBar: MySnackBarService) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -86,7 +87,6 @@ export class UsersComponent implements OnInit {
     this.userParams.orderBy = 'nameAscending';
     this.userParams.gender = 'all';
     this.gender = 'all';
-    console.log(this.pagination);
   }
 
   pageChanged(event?: PageEvent) {

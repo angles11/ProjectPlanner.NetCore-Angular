@@ -4,7 +4,7 @@
 
 $custom-theme-primary: mat-palette($mat-pink, 900, 600, 900);
 $custom-theme-accent: mat-palette($mat-purple, 900, 600, 900);;
-$custom-theme-warn: mat-palette($mat-red, 600, 400, 900);
+$custom-theme-warn: mat-palette($mat-red, 700, 400, 900);
 
 $custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
 

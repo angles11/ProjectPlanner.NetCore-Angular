@@ -12,11 +12,12 @@ namespace ProjectPlanner.API.Data
         public Task<bool> SaveAll();
         public Task<User> GetUser(string userId);
         public Task<PagedList<User>> GetUsers(string userId, UserParams userParams);
-        public Task<ICollection<Friend>> GetFriends(string userId);
+        //public Task<ICollection<Friend>> GetFriends(string userId);
         public Task AddFriend(Friendship friendship);
         public void DeleteFriendship(Friendship friendship);
         public Task<bool> AlreadyFriends(string userId1, string userId2);
         public Task<Friendship> GetFriendship(string userId1, string userId2);
-        public Task ChangeFriendshipStatus(string userId, string senderId, string status);
+        public Task<ICollection<Friendship>> GetFriendships(string userId);
+        public Task AcceptFriendship(string userId, string senderId);
     }
 }

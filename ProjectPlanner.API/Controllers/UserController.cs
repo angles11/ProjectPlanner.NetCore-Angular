@@ -65,9 +65,13 @@ namespace ProjectPlanner.API.Controllers
             if (userId != _userManager.GetUserId(User))
                 return Unauthorized();
 
-            var friends = await _userRepository.GetFriends(userId);
+            var friendships = await _userRepository.GetFriendships(userId);
 
-            var friendsToReturn = _mapper.Map<IEnumerable<FriendToReturnDto>>(friends);
+            var customMapper = new CustomMapper();
+
+            var friends = customMapper.MapFriends(friendships, userId);
+
+            var friendsToReturn = _mapper.Map<ICollection<FriendToReturnDto>>(friends);
 
             return Ok(friendsToReturn);
         }
@@ -87,24 +91,6 @@ namespace ProjectPlanner.API.Controllers
             return Ok(usersToReturn);
         }
 
-        [HttpGet("{userId}/friends/{recipientId}")]
-        public async Task<IActionResult> GetFriendship(string userId, string recipientId)
-        {
-            if (userId != _userManager.GetUserId(User))
-                return Unauthorized();
-            
-            if(await _userRepository.AlreadyFriends(userId, recipientId))
-            {
-                var friendship = await _userRepository.GetFriendship(userId, recipientId);
-
-                var friendshipToReturn = _mapper.Map<FriendshipForReturnDto>(friendship);
-
-                return Ok(friendshipToReturn);
-            }
-
-            return BadRequest();
-
-        }
 
         [HttpPost("{userId}/friends/{recipientId}")]
         public async Task<IActionResult> AddFriend(string userId, string recipientId)
@@ -160,17 +146,16 @@ namespace ProjectPlanner.API.Controllers
           
         }
 
-        [HttpPut("{userId}/friends/{senderId}")]
-
-        public async Task<IActionResult> ChangeFriendhipStatus(string userId, string senderId, [FromQuery]string status)
+        [HttpPut("{userId}/friends/{userId2}")]
+        public async Task<IActionResult> AcceptFriendship(string userId, string userId2)
         {
             if (userId != _userManager.GetUserId(User))
                 return Unauthorized();
 
-            if (!await _userRepository.AlreadyFriends(userId, senderId))
-                return BadRequest("There is no friend request from " + senderId);
+            if (!await _userRepository.AlreadyFriends(userId, userId2))
+                return BadRequest("There is no friend request from " + userId2);
 
-            await _userRepository.ChangeFriendshipStatus(userId, senderId, status);
+            await _userRepository.AcceptFriendship(userId, userId2);
 
             if (await _userRepository.SaveAll())
                 return NoContent();

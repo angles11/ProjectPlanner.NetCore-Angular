@@ -1,0 +1,72 @@
+<mat-dialog-content ngClass.xs="mat-dialog-content-xs" ngClass.sm="mat-dialog-content-sm">
+  <div class="dialog-top" fxLayout="row wrap" fxLayout.xs="column">
+    <div class="dialog-top-content" fxFlex="70" fxLayout="column" fxLayoutAlign="space-evenly">
+      <div class="dialog-top-content-title">
+        <h1>{{user.knownAs}}</h1>
+      </div>
+      <div class="dialog-top-content-text" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center center"
+        fxLayoutGap="10px">
+        <p><strong>{{user.position}}</strong></p>
+        <span>at</span>
+        <p><strong>{{user.employer}}</strong></p>
+      </div>
+    </div>
+    <div class="dialog-top-img" fxFlex="30">
+      <img src="{{user.photoUrl }}">
+    </div>
+  </div>
+  <div class="dialog-content" fxLayout="row wrap" fxLayout.xs="column">
+    <div  fxFlex="50">
+    <mat-list dense>
+      <mat-list-item>
+        <div mat-line class="header-list-item">Name</div>
+        <div mat-line class="user-list-item">{{user.knownAs}}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <div mat-line class="header-list-item">Gender</div>
+        <div mat-line class="user-list-item">{{user.gender}}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <div mat-line class="header-list-item">Email</div>
+        <div mat-line class="user-list-item">email</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <div mat-line class="header-list-item">Country</div>
+        <div mat-line class="user-list-item">{{user.country}}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+    </div>
+    <div fxFlex="50">
+      <mat-list dense>
+        <mat-list-item>
+        <div mat-line class="header-list-item">Date of Birth</div>
+        <div mat-line class="user-list-item">{{user.dateOfBirth | date}}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <div mat-line class="header-list-item">Position</div>
+        <div mat-line class="user-list-item">{{user.position}}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <div mat-line class="header-list-item">Employer</div>
+        <div mat-line class="user-list-item">{{user.employer}}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <div mat-line class="header-list-item">Experience</div>
+        <div mat-line class="user-list-item">{{user.experience}}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      </mat-list>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="accent" (click)="onDismiss()">Close</button>
+</mat-dialog-actions>
+

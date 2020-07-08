@@ -4,7 +4,6 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 
-.user-dialog-custom-class .mat-dialog-container{
-    padding: 0;
-    overflow: visible;
+.user-dialog-custom-class .mat-dialog-content{
+    max-height: 85vh;
 }

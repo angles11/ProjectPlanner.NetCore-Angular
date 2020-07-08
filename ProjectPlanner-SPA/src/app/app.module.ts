@@ -28,6 +28,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 import { ProjectsComponent } from './projects/projects.component';
@@ -46,7 +47,7 @@ import { UsersResolver } from './resolvers/users.resolver';
 import { UserCardComponent } from './people/users/user-card/user-card.component';
 import { FriendCardComponent } from './people/friends/friend-card/friend-card.component';
 import { ConfirmDialogComponent } from './_notifications/confirm-dialog/confirm-dialog.component';
-import { UserDialogComponent } from './people/user-dialog/user-dialog.component';
+import { UserDialogComponent } from './people/users/user-dialog/user-dialog.component';
 
 
 
@@ -99,6 +100,7 @@ export function tokenGetter() {
       MatPaginatorModule,
       MatGridListModule,
       MatDialogModule,
+      MatBadgeModule,
       JwtModule.forRoot({
          config: {
             tokenGetter,

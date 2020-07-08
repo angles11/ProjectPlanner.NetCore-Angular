@@ -1,0 +1,66 @@
+ /* .mat-tab-body-content {
+   padding: 50px 30px;
+ } */
+
+ .alert-message {
+   text-align: center;
+   color: #880e4f;
+   background-color: #f8d7da;
+   border-color: #f5c6cb;
+   border-radius: .25rem;
+   padding: 20px;
+ }
+
+ .alert-message p {
+   margin-bottom: 0;
+ }
+
+ .friends-tab {
+   padding: 40px 10px;
+ }
+
+ .mat-tab-label.mat-tab-label-active {
+   background-color: #4a148c;
+   color: white;
+   font-weight: 700;
+   opacity: 1;
+   border-top-left-radius: 5px;
+   border-top-right-radius: 5px;
+ }
+
+ .requests-tab {
+   margin-top: 10px;
+
+ }
+
+ .requests-tab .tab-container {
+   padding: 50px 20px;
+ }
+
+ .requests-tab .mat-tab-header {
+   background-color: #880e4f;
+   padding: 0px 20px;
+   border-radius: 5px;
+   border-bottom: 0px;
+ }
+
+ .requests-tab .mat-tab-label {
+   color: white;
+   opacity: 0.6;
+   border-radius: 0;
+   min-width: 120px;
+ }
+
+ .requests-tab .mat-tab-label-active {
+   background-color: white;
+   color: #4a148c;
+   transition: ease-in-out 500ms;
+   opacity: 1;
+   border-bottom: 2px solid #4a148c;
+   min-width: 120px;
+
+ }
+
+ .requests-tab .mat-tab-header .mat-ink-bar {
+   height: 0px;
+ }

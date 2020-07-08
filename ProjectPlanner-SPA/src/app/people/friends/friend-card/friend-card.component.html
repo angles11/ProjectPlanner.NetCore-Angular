@@ -1,3 +1,22 @@
-<p>
-  friend-card works!
-</p>
+<mat-card ngClass.gt-xs="friend-card" ngClass.xs="friend-card-xs">
+  <mat-card-header>
+    <img mat-card-image src="{{friend.userFriend.photoUrl}}">
+  </mat-card-header>
+  <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+    <mat-card-title fxFlex color="primary">{{friend.userFriend.knownAs}}</mat-card-title>
+    <p fxFlex class="mat-body-strong">{{friend.userFriend.position}}</p>
+    <span fxFlex>at</span>
+    <p fxFlex class="mat-body-strong">{{friend.userFriend.employer}}</p>
+    <p fxFlex *ngIf="type=== 'accepted'"> <span>Friends Since:</span> {{friend.since | date}}</p>
+    <p fxFlex *ngIf="type=== 'received'"> <span>Received:</span> {{friend.since | date}}</p>
+    <p fxFlex *ngIf="type=== 'sent'"> <span>Sent:</span> {{friend.since | date}}</p>
+  </mat-card-content>
+  <div class="card-footer" backgroundColor="primary" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <button mat-raised-button color="accent" *ngIf="type === 'accepted'" (click)="unfriend()">Unfriend</button>
+    <button mat-raised-button color="accent" *ngIf="type === 'received'" (click)="acceptUser()">Accept request</button>
+    <button mat-raised-button color="warn" *ngIf="type === 'received'" (click)="declineUser()">Decline</button>
+    <button mat-raised-button color="accent" *ngIf="type === 'sent'" (click)="cancelRequest()">Cancel request</button>
+    <button mat-raised-button color="accent" *ngIf="type === 'blocked'">Unblock User</button>
+    <button mat-raised-button class="profileBtn" (click)="openDialog()">View profile</button>
+  </div>
+</mat-card>

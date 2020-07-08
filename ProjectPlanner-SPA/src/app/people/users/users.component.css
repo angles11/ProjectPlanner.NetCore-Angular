@@ -1,38 +1,53 @@
 .test {
-    border-bottom: 1px solid #4a148c;
+  border-bottom: 1px solid #4a148c;
 }
 
-::ng-deep .mat-paginator{
-    background: transparent;
-}
-::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
-    background-color: transparent;
+.mat-paginator {
+  background: transparent;
 }
 
-::ng-deep .mat-icon-button{
-    color: #880e4f;
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  background-color: transparent;
 }
-::ng-deep .mat-select-value {
+
+.mat-icon-button {
+  color: #880e4f;
+}
+
+.mat-select-value {
   color: #880e4f;
   font-weight: bold;
 
 }
-::ng-deep .mat-select-arrow {
-    color: #880e4f;
+
+.mat-select-arrow {
+  color: #880e4f;
 }
 
-::ng-deep .mat-option-text {
+.mat-option-text {
 
-    text-align: center;
+  text-align: center;
 }
 
 .selected-icon {
-    position: relative;
-    top: 6px;
+  position: relative;
+  top: 6px;
 
 }
 
 .alert-message {
-    text-align: center;
-    font-weight: 500;
+  text-align: center;
+  color: #880e4f;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  border-radius: .25rem;
+  padding: 20px;
+}
+
+.alert-message p {
+  margin-bottom: 0;
+}
+
+.alert-message strong {
+  font-size: 18px;
 }

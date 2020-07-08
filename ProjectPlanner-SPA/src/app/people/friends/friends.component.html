@@ -1,6 +1,84 @@
-<mat-tab-group mat-stretch-tabs color="accent">
-    <mat-tab label="Accepted"> Accepted</mat-tab>
-    <mat-tab label="Blocked">Friend requests</mat-tab>
-    <mat-tab label="Requests">Blocked</mat-tab>
-</mat-tab-group>
+<mat-tab-group mat-stretch-tabs dynamicHeight color="accent">
+  <mat-tab label="Friends">
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" class="friends-tab">
+      <div *ngIf="acceptedFriends.length < 1" fxFlex="100" class="alert-message">
+        <p>You have no <strong>friends</strong> yet</p>
+      </div>
+      <div *ngFor=" let friend of acceptedFriends" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22" fxFlex.sm="30">
+        <app-friend-card [friend]="friend" [type]="'accepted'" (changedEvent)="onChangedStatus($event)">
+        </app-friend-card>
+      </div>
+      <div *ngFor="let number of numbers" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22" fxFlex.sm="30"
+        style="height: 0px;">
+      </div>
+    </div>
+  </mat-tab>
 
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span>Friend Requests</span>
+    </ng-template>
+    <mat-tab-group dynamicHeight color="primary" mat-align-tabs="start" class="requests-tab">
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span matBadge="{{friendRequestsReceived.length}}" matBadgeOverlap="false" matBadgeColor="accent"
+            matBadgeSize="small">Received</span>
+        </ng-template>
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" class="friends-tab">
+          <div *ngIf="friendRequestsReceived.length < 1" fxFlex="100" class="alert-message">
+            <p>You have no friend requests <strong>received</strong></p>
+          </div>
+          <div *ngFor="let friend of friendRequestsReceived" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22"
+            fxFlex.sm="40">
+            <app-friend-card [friend]="friend" [type]="'received'" (changedEvent)="onChangedStatus($event)">
+            </app-friend-card>
+          </div>
+          <div *ngFor="let number of numbers" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22" fxFlex.sm="30"
+            style="height: 0px;">
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span matBadge="{{friendRequestsSent.length}}" matBadgeOverlap="false" matBadgeColor="accent"
+            matBadgeSize="small">Sent</span>
+        </ng-template>
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" class="friends-tab">
+          <div *ngIf="friendRequestsSent.length < 1" fxFlex="100" class="alert-message">
+            <p>You have no friend requests <strong>sent</strong></p>
+          </div>
+          <div *ngFor="let friend of friendRequestsSent" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22" fxFlex.sm="40">
+            <app-friend-card [friend]="friend" [type]="'sent'" (changedEvent)="onChangedStatus($event)">
+            </app-friend-card>
+          </div>
+          <div *ngFor="let number of numbers" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22" fxFlex.sm="30"
+            style="height: 0px;">
+          </div>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </mat-tab>
+  <!--
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span matBadge="{{friendRequestsSent.length}}" matBadgeOverlap="false">Requests Sent</span>
+    </ng-template>
+
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" class="tab-container">
+      <div *ngIf="friendRequestsSent.length < 1" fxFlex="100">
+        <p class="message-empty">You have no <strong>friend requests</strong> sent</p>
+      </div>
+      <div class="friend-card" *ngFor="let friend of friendRequestsSent" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22"
+        fxFlex.sm="30">
+        <app-friend-card [friend]="friend" [type]="'pending'" (changedEvent)="onChangedStatus($event)">
+        </app-friend-card>
+      </div>
+      <div *ngFor="let number of numbers" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22" fxFlex.sm="30"
+        style="height: 0px;">
+      </div>
+    </div>
+  </mat-tab> -->
+</mat-tab-group>

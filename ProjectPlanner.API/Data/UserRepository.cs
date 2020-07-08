@@ -19,25 +19,13 @@ namespace ProjectPlanner.API.Data
             _dataContext = dataContext;
         }
 
-        public async Task ChangeFriendshipStatus(string userId, string senderId, string status)
+        public  async Task AcceptFriendship(string userId, string senderId)
         {
             var friendship = await _dataContext.Friendships.FindAsync(senderId, userId);
 
-            switch (status)
-            {
-                case "Accepted":
-                    friendship.Status = Status.Accepted;
-                     _dataContext.Update(friendship);
-                    break;
-                case "Blocked":
-                    friendship.Status = Status.Blocked;
-                    _dataContext.Update(friendship);
-                    break;
-                case "Declined":
-                     _dataContext.Friendships.Remove(friendship);
-                    break;
-            }
+            friendship.Status = Status.Accepted;
 
+             _dataContext.Friendships.Update(friendship);
         }
 
         public async Task AddFriend(Friendship friendship)
@@ -57,84 +45,92 @@ namespace ProjectPlanner.API.Data
 
         }
 
-        public async Task<ICollection<Friend>> GetFriends(string userId)
+        public async Task<ICollection<Friendship>> GetFriendships(string userId)
         {
-            var friends = new List<Friend>();
+            var friendships = await _dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient).Where(f => f.SenderId == userId || f.RecipientId == userId).ToListAsync();
 
-            var acceptedFriends = await _dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient)
-                .Where(f => f.SenderId == userId && f.Status == Status.Accepted).Select(f => f.Recipient).ToListAsync();
-            acceptedFriends.AddRange(_dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient)
-                .Where(f => f.RecipientId == userId && f.Status == Status.Accepted).Select(f => f.Sender));
-
-            if(acceptedFriends.Any())
-            {
-                foreach (var friend in acceptedFriends)
-                {
-                    var friendToAdd = new Friend()
-                    {
-                        FriendId = friend.Id,
-                        KnownAs = friend.KnownAs,
-                        LastActive = friend.LastActive,
-                        PhotoUrl = friend.PhotoUrl,
-                        Status = Status.Accepted,
-                        Position = friend.Position,
-                        Employer = friend.Employer,
-                        Experience = friend.Experience,
-                        Country = friend.Country
-                    };
-                    friends.Add(friendToAdd);
-                }
-            }
-
-            var pendingFriends = await _dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient)
-                .Where(f => f.RecipientId == userId && f.Status == Status.Pending).Select(f => f.Sender).ToListAsync();
-
-            if (pendingFriends.Any())
-            {
-                foreach (var friend in pendingFriends)
-                {
-                    var friendToAdd = new Friend()
-                    {
-                        FriendId = friend.Id,
-                        KnownAs = friend.KnownAs,
-                        LastActive = friend.LastActive,
-                        PhotoUrl = friend.PhotoUrl,
-                        Status = Status.Pending,
-                        Position = friend.Position,
-                        Employer = friend.Employer,
-                        Experience = friend.Experience,
-                        Country = friend.Country
-                    };
-                    friends.Add(friendToAdd);
-                }
-            }
-
-            var blockedFriends = await _dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient)
-                 .Where(f => f.SenderId == userId && f.Status == Status.Blocked && f.ActionUserId == userId).Select(f => f.Recipient).ToListAsync();
-            blockedFriends.AddRange( _dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient)
-                .Where(f => f.RecipientId == userId && f.Status == Status.Blocked && f.ActionUserId == userId).Select(f => f.Sender));
-
-            if (blockedFriends.Any())
-            {
-                foreach (var friend in blockedFriends)
-                {
-                    var friendToAdd = new Friend()
-                    {
-                        FriendId = friend.Id,
-                        KnownAs = friend.KnownAs,
-                        LastActive = friend.LastActive,
-                        PhotoUrl = friend.PhotoUrl,
-                        Status = Status.Blocked,
-                        Position = friend.Position,
-                        Employer = friend.Employer,
-                        Experience = friend.Experience,
-                        Country = friend.Country
-                    };
-                    friends.Add(friendToAdd);
-                }
-            }
-            return friends.OrderBy(f => f.KnownAs).ToList();
+            return friendships;
         }
+
+        //public  Task<ICollection<Friend>> GetFriends(string userId)
+        //{
+        //    var friends = new List<Friend>();
+
+        //    //var acceptedFriends = await _dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient)
+        //    //    .Where(f => f.SenderId == userId && f.Status == Status.Accepted).Select(f => f.Recipient).ToListAsync();
+        //    //acceptedFriends.AddRange(_dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient)
+        //    //    .Where(f => f.RecipientId == userId && f.Status == Status.Accepted).Select(f => f.Sender));
+
+        //    //if(acceptedFriends.Any())
+        //    //{
+        //    //    foreach (var friend in acceptedFriends)
+        //    //    {
+        //    //        var friendToAdd = new Friend()
+        //    //        {
+        //    //            FriendId = friend.Id,
+        //    //            KnownAs = friend.KnownAs,
+        //    //            LastActive = friend.LastActive,
+        //    //            PhotoUrl = friend.PhotoUrl,
+        //    //            Status = Status.Accepted,
+        //    //            Position = friend.Position,
+        //    //            Employer = friend.Employer,
+        //    //            Experience = friend.Experience,
+        //    //            Country = friend.Country
+        //    //            Since  = 
+        //    //        };
+        //    //        friends.Add(friendToAdd);
+        //    //    }
+        //    //}
+
+        //    //var pendingFriends = await _dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient)
+        //    //    .Where(f => f.RecipientId == userId && f.Status == Status.Pending).Select(f => f.Sender).ToListAsync();
+
+        //    //if (pendingFriends.Any())
+        //    //{
+        //    //    foreach (var friend in pendingFriends)
+        //    //    {
+        //    //        var friendToAdd = new Friend()
+        //    //        {
+        //    //            FriendId = friend.Id,
+        //    //            KnownAs = friend.KnownAs,
+        //    //            LastActive = friend.LastActive,
+        //    //            PhotoUrl = friend.PhotoUrl,
+        //    //            Status = Status.Pending,
+        //    //            Position = friend.Position,
+        //    //            Employer = friend.Employer,
+        //    //            Experience = friend.Experience,
+        //    //            Country = friend.Country
+        //    //        };
+        //    //        friends.Add(friendToAdd);
+        //    //    }
+        //    //}
+
+        //    //var blockedFriends = await _dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient)
+        //    //     .Where(f => f.SenderId == userId && f.Status == Status.Blocked && f.ActionUserId == userId).Select(f => f.Recipient).ToListAsync();
+        //    //blockedFriends.AddRange( _dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient)
+        //    //    .Where(f => f.RecipientId == userId && f.Status == Status.Blocked && f.ActionUserId == userId).Select(f => f.Sender));
+
+        //    //if (blockedFriends.Any())
+        //    //{
+        //    //    foreach (var friend in blockedFriends)
+        //    //    {
+        //    //        var friendToAdd = new Friend()
+        //    //        {
+        //    //            FriendId = friend.Id,
+        //    //            KnownAs = friend.KnownAs,
+        //    //            LastActive = friend.LastActive,
+        //    //            PhotoUrl = friend.PhotoUrl,
+        //    //            Status = Status.Blocked,
+        //    //            Position = friend.Position,
+        //    //            Employer = friend.Employer,
+        //    //            Experience = friend.Experience,
+        //    //            Country = friend.Country
+        //    //        };
+        //    //        friends.Add(friendToAdd);
+        //    //    }
+        //    //}
+        //    return friends.OrderBy(f => f.KnownAs).ToList();
+        //}
 
         public async Task<Friendship> GetFriendship(string userId1, string userId2)
         {

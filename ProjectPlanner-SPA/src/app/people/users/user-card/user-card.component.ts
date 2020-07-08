@@ -5,7 +5,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmDialogModel, ConfirmDialogComponent } from 'src/app/_notifications/confirm-dialog/confirm-dialog.component';
 import { MySnackBarService } from 'src/app/_notifications/my-snackBar.service';
 import { AuthService } from 'src/app/_services/auth.service';
-import { UserDialogComponent } from '../../user-dialog/user-dialog.component';
+import { UserDialogComponent } from '../../users/user-dialog/user-dialog.component';
 
 @Component({
   selector: 'app-user-card',
@@ -18,9 +18,9 @@ export class UserCardComponent implements OnInit {
   requestSent = false;
 
   constructor(private userService: UserService,
-    private dialog: MatDialog,
-    private snackBar: MySnackBarService,
-    private authService: AuthService) { }
+              private dialog: MatDialog,
+              private snackBar: MySnackBarService,
+              private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -28,7 +28,7 @@ export class UserCardComponent implements OnInit {
   addFriend() {
     const message = 'Are you sure you want to add ' + this.user.knownAs + ' to your friends list?';
 
-    const dialogData = new ConfirmDialogModel('Add Friend', message);
+    const dialogData = new ConfirmDialogModel('Add Friend', message, 'Add');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: dialogData,
