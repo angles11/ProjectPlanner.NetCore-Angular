@@ -29,6 +29,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 
 
 import { ProjectsComponent } from './projects/projects.component';
@@ -48,6 +50,7 @@ import { UserCardComponent } from './people/users/user-card/user-card.component'
 import { FriendCardComponent } from './people/friends/friend-card/friend-card.component';
 import { ConfirmDialogComponent } from './_notifications/confirm-dialog/confirm-dialog.component';
 import { UserDialogComponent } from './people/users/user-dialog/user-dialog.component';
+import { ProjectsResolver } from './resolvers/projects.resolver';
 
 
 
@@ -101,6 +104,7 @@ export function tokenGetter() {
       MatGridListModule,
       MatDialogModule,
       MatBadgeModule,
+      MatExpansionModule,
       JwtModule.forRoot({
          config: {
             tokenGetter,
@@ -115,7 +119,8 @@ export function tokenGetter() {
       { provide: DateAdapter, useClass: AppDateAdapter },
       { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
       FriendsResolver,
-      UsersResolver
+      UsersResolver,
+      ProjectsResolver
    ],
    bootstrap: [
       AppComponent

@@ -9,7 +9,8 @@ namespace ProjectPlanner.API.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
+        public string ShortDescription { get; set; }
+        public string LongDescription { get; set; }
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
         public DateTime EstimatedDate { get; set; }
@@ -17,13 +18,13 @@ namespace ProjectPlanner.API.Models
         public User Owner { get; set; }
 
         //a new model is required for a many to many relationship in EF Core.
-        public ICollection<Collaborator> Collaborators { get; set; }
+        public ICollection<Collaboration> Collaborations { get; set; }
 
         public Project()
         {
             Created = DateTime.Now;
             Modified = DateTime.Now;
-            Collaborators = new List<Collaborator>();
+            Collaborations = new List<Collaboration>();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace ProjectPlanner.API.Data
         }
 
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Collaborator> Collaborators { get; set; }
+        public DbSet<Collaboration> Collaborations { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -30,17 +30,17 @@ namespace ProjectPlanner.API.Data
                 .WithMany(u => u.OwnedProjects)
                 .HasForeignKey(P => P.OwnerId);                
 
-            builder.Entity<Collaborator>()
+            builder.Entity<Collaboration>()
                   .HasKey(c => new { c.UserId, c.ProjectId });
 
-            builder.Entity<Collaborator>()
+            builder.Entity<Collaboration>()
                     .HasOne(c => c.User)
                     .WithMany(u => u.CollaboratedProjects)
                     .HasForeignKey(c => c.UserId);
 
-            builder.Entity<Collaborator>()
+            builder.Entity<Collaboration>()
                 .HasOne(c => c.Project)
-                .WithMany(p => p.Collaborators)
+                .WithMany(p => p.Collaborations)
                 .HasForeignKey(c => c.ProjectId);
 
             builder.Entity<Friendship>()

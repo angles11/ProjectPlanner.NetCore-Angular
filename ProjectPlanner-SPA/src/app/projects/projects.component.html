@@ -1,3 +1,39 @@
-<p>
-  projects works!
-</p>
+<button mat-raised-button color="primary" (click)="toggleForm()">New Project <mat-icon>add</mat-icon></button>
+
+<form [formGroup]="newProjectForm" (ngSubmit)="create()" class="create-form" *ngIf="panelOpenState" [@inOutAnimation]
+  fxLayout="column" fxLayoutAlign="center">
+  <mat-form-field appearance="outline" class="form-field" color="primary">
+    <mat-label>Title</mat-label>
+    <input type="text" matInput formControlName="title">
+    <mat-error *ngIf="newProjectForm.get('title').hasError('required')">
+      A title is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="form-field" color="primary">
+    <mat-label>Short Description</mat-label>
+    <input type="text" matInput formControlName="shortDescription">
+    <mat-error *ngIf="newProjectForm.get('shortDescription').hasError('required')">
+      A short description is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="form-field" color="primary">
+    <mat-label>Long Description</mat-label>
+    <textarea type="text" matInput formControlName="longDescription"></textarea>
+    <mat-error *ngIf="newProjectForm.get('longDescription').hasError('required')">
+      A long description is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="form-field" color="primary">
+    <mat-label>Estimated Completion Date</mat-label>
+    <input matInput [matDatepicker]="estimatedDate" (click)="estimatedDate.open()" formControlName="estimatedDate"
+      readonly>
+    <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
+    <mat-datepicker #estimatedDate disabled="false" color="primary"></mat-datepicker>
+    <mat-error *ngIf="newProjectForm.get('estimatedDate').hasError('required')">
+      A date for completion is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <div class="form-field" style="text-align:end">
+    <button mat-raised-button type="submit" color="accent" [disabled]="!newProjectForm.valid">Create</button>
+  </div>
+</form>

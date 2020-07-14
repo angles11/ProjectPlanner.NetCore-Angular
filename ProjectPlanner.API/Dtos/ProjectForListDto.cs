@@ -10,12 +10,14 @@ namespace ProjectPlanner.API.Dtos
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
+        public string ShortDescription { get; set; }
+        public string LongDescription { get; set; }
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
         public DateTime EstimatedDate { get; set; }
         public string OwnerId { get; set; }
-        public ICollection<Collaborator> Collaborators { get; set; }
+        public UserForListDto Owner { get; set; }
+        public ICollection<UserForListDto> Collaborators { get; set; }
 
     }
 }

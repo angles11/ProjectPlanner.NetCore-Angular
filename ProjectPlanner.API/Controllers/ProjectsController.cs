@@ -35,11 +35,9 @@ namespace ProjectPlanner.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProjects(string userId)
         {
-            var user =  _userManager.GetUserId(User);
-
             if (userId != _userManager.GetUserId(User))
             {
-                return Unauthorized(userId + " " + user);
+                return Unauthorized();
             }
 
             var projects = await _projectRepository.GetProjects(userId);
@@ -70,8 +68,22 @@ namespace ProjectPlanner.API.Controllers
             }
 
             return BadRequest("Something happened");
-            
+        }      
 
+        [HttpDelete("{projectId}")]
+        public async Task<IActionResult> DeleteProject (string userId, int projectId)
+        {
+            if (userId !=  _userManager.GetUserId(User))
+            {
+                return Unauthorized();
+            }
+
+             _projectRepository.DeleteProject(projectId);
+
+            if (await _projectRepository.SaveAll())
+                return NoContent();
+
+            return BadRequest("Error deleting the project");
         }
 
         [HttpGet("{projectId}", Name = "GetProject")]
@@ -91,20 +103,44 @@ namespace ProjectPlanner.API.Controllers
 
         }
 
-        [HttpDelete("{projectId}")]
-        public async Task<IActionResult> DeleteProject (string userId, int projectId)
+        [HttpPost("{projectId}/{collaboratorId}")]
+        public async Task<IActionResult> AddCollaboration(string userId, int projectId, string collaboratorId)
         {
-            if (userId !=  _userManager.GetUserId(User))
-            {
+            if (userId != _userManager.GetUserId(User))
                 return Unauthorized();
-            }
 
-             _projectRepository.DeleteProject(projectId);
+            var project = await _projectRepository.GetProject(projectId);
+
+            if (project.OwnerId != userId)
+                return Unauthorized();
+
+            var collaboration = new Collaboration
+            {
+                UserId = collaboratorId,
+                ProjectId = projectId
+            };
+
+            _projectRepository.AddCollaboration(collaboration);
+
+            if (await _projectRepository.GetCollaboration(projectId, collaboratorId) != null)
+                return BadRequest("The user is already a collaborator in this project");
 
             if (await _projectRepository.SaveAll())
-                return NoContent();
+                return CreatedAtRoute("GetCollaboration", new { userId, projectId, collaboratorId }, collaboration);
 
-            return BadRequest("Error deleting the project");
+            return BadRequest();
+        }
+
+        [HttpGet("{projectId}/{collaboratorId}", Name = "GetCollaboration")]
+
+        public async Task<IActionResult> GetCollaboration(int projectId, string collaboratorId)
+        {
+            var collaboration = await _projectRepository.GetCollaboration(projectId, collaboratorId);
+
+            if (collaboration != null)
+                return Ok(collaboration);
+
+            return NotFound();
         }
     }
 }

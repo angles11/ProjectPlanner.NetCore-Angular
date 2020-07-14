@@ -144,7 +144,7 @@ namespace ProjectPlanner.API.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ProjectPlanner.API.Models.Collaborator", b =>
+            modelBuilder.Entity("ProjectPlanner.API.Models.Collaboration", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
@@ -156,7 +156,7 @@ namespace ProjectPlanner.API.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Collaborators");
+                    b.ToTable("Collaborations");
                 });
 
             modelBuilder.Entity("ProjectPlanner.API.Models.Friendship", b =>
@@ -178,8 +178,6 @@ namespace ProjectPlanner.API.Migrations
 
                     b.HasKey("SenderId", "RecipientId");
 
-                    b.HasIndex("ActionUserId");
-
                     b.HasIndex("RecipientId");
 
                     b.ToTable("Friendships");
@@ -194,16 +192,19 @@ namespace ProjectPlanner.API.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Description")
+                    b.Property<DateTime>("EstimatedDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("EstimatedDate")
+                    b.Property<string>("LongDescription")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OwnerId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ShortDescription")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
@@ -361,10 +362,10 @@ namespace ProjectPlanner.API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProjectPlanner.API.Models.Collaborator", b =>
+            modelBuilder.Entity("ProjectPlanner.API.Models.Collaboration", b =>
                 {
                     b.HasOne("ProjectPlanner.API.Models.Project", "Project")
-                        .WithMany("Collaborators")
+                        .WithMany("Collaborations")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -378,10 +379,6 @@ namespace ProjectPlanner.API.Migrations
 
             modelBuilder.Entity("ProjectPlanner.API.Models.Friendship", b =>
                 {
-                    b.HasOne("ProjectPlanner.API.Models.User", "ActionUser")
-                        .WithMany()
-                        .HasForeignKey("ActionUserId");
-
                     b.HasOne("ProjectPlanner.API.Models.User", "Recipient")
                         .WithMany("FriendshipReceived")
                         .HasForeignKey("RecipientId")

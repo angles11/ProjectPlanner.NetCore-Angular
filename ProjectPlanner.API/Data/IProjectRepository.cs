@@ -18,5 +18,9 @@ namespace ProjectPlanner.API.Data
 
         public void DeleteProject(int projectId);
 
+        public void AddCollaboration(Collaboration collaboration);
+
+        public Task<Collaboration> GetCollaboration(int projectId, string collaboratorId);
+
     }
 }

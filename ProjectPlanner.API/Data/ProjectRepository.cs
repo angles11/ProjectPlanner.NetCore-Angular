@@ -16,6 +16,12 @@ namespace ProjectPlanner.API.Data
         {
             _dataContext = dataContext;
         }
+
+        public void AddCollaboration(Collaboration collaboration)
+        {
+            _dataContext.Add(collaboration);
+        }
+
         public void CreateProject(Project project)
         {
             _dataContext.Add(project);
@@ -30,22 +36,37 @@ namespace ProjectPlanner.API.Data
 
         }
 
+        public async Task<Collaboration> GetCollaboration(int projectId, string collaboratorId)
+        {
+            return  await _dataContext.Collaborations.FindAsync(collaboratorId, projectId);
+        }
+
         public Task<Project> GetProject(int projectId)
         {
-            return _dataContext.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
+            return _dataContext.Projects.Include(p => p.Owner).FirstOrDefaultAsync(p => p.Id == projectId);
         }
 
         public async Task<ICollection<Project>> GetProjects(string userId)
         {
-            var projects = await _dataContext.Projects.Where(p => p.OwnerId == userId).ToListAsync();
+            var ownedProjects = await _dataContext.Projects.Include(p => p.Owner)
+                                                           .Include(p => p.Collaborations)
+                                                                .ThenInclude(c => c.User)
+                                                            .Where(p => p.OwnerId == userId)
+                                                            .ToListAsync();
 
-            var collaboratedProjects = await _dataContext.Collaborators.Where(c => c.UserId == userId).Select(c => c.Project).ToListAsync();
+            var collaboratedProjects = await _dataContext.Collaborations.Include(c => c.Project)
+                                                                            .ThenInclude(p => p.Owner)
+                                                                        .Include(c => c.Project)
+                                                                            .ThenInclude(p => p.Collaborations)
+                                                                                .ThenInclude(c => c.User)
+                                                                        .Where(c => c.UserId == userId)
+                                                                        .Select(c => c.Project)
+                                                                        .ToListAsync();
 
-           foreach(var project in collaboratedProjects)
-            {
-                projects.Add(project);
-            }
+            var projects = ownedProjects.Concat(collaboratedProjects).ToList();
+
             return projects;
+
         }
 
         public async Task<bool> SaveAll()

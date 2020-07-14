@@ -17,8 +17,12 @@ namespace ProjectPlanner.API.Helpers
             CreateMap<User, UserForListDto>();
             CreateMap<ProjectForCreationDto, Project>();
             CreateMap<Project, ProjectForListDto>();
-
             CreateMap<Friend, FriendToReturnDto>();
+
+            //https://stackoverflow.com/questions/6781795/automapper-mapping-a-collection-of-object-to-a-collection-of-strings
+
+            CreateMap<Project, ProjectForListDto>()
+                .ForMember(dest => dest.Collaborators, opt => opt.MapFrom(src => src.Collaborations.Select(c => c.User).ToList()));
         }
     }
 }
