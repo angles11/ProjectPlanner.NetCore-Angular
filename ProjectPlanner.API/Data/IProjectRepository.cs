@@ -1,4 +1,5 @@
 ﻿
+using ProjectPlanner.API.Helpers;
 using ProjectPlanner.API.Models;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,13 @@ namespace ProjectPlanner.API.Data
 
         public Task<Project> GetProject(int projectId);
 
-        public Task<ICollection<Project>> GetProjects(string userId);
+        public Task<ICollection<Project>> GetProjects(string userId, ProjectParams projectParams);
         public Task<bool> SaveAll();
 
-        public void DeleteProject(int projectId);
+        public void EditProject(Project project);
+        public void DeleteProject(Project project);
+
+        public void DeleteCollaboration(Collaboration collaboration);
 
         public void AddCollaboration(Collaboration collaboration);
 

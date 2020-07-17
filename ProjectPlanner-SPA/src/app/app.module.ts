@@ -30,6 +30,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { TimeagoModule } from 'ngx-timeago';
+
 
 
 
@@ -50,7 +52,9 @@ import { UserCardComponent } from './people/users/user-card/user-card.component'
 import { FriendCardComponent } from './people/friends/friend-card/friend-card.component';
 import { ConfirmDialogComponent } from './_notifications/confirm-dialog/confirm-dialog.component';
 import { UserDialogComponent } from './people/users/user-dialog/user-dialog.component';
-import { ProjectsResolver } from './resolvers/projects.resolver';
+import { ProjectsListResolver } from './resolvers/projects-list.resolver';
+import { ProjectCardComponent } from './projects/project-card/project-card.component';
+import { ProjectDetailResolver } from './resolvers/project-detail.resolver';
 
 
 
@@ -74,7 +78,8 @@ export function tokenGetter() {
       UserCardComponent,
       FriendCardComponent,
       ConfirmDialogComponent,
-      UserDialogComponent
+      UserDialogComponent,
+      ProjectCardComponent,
    ],
    imports: [
       BrowserModule,
@@ -105,6 +110,7 @@ export function tokenGetter() {
       MatDialogModule,
       MatBadgeModule,
       MatExpansionModule,
+      TimeagoModule.forRoot(),
       JwtModule.forRoot({
          config: {
             tokenGetter,
@@ -120,7 +126,8 @@ export function tokenGetter() {
       { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
       FriendsResolver,
       UsersResolver,
-      ProjectsResolver
+      ProjectsListResolver,
+      ProjectDetailResolver
    ],
    bootstrap: [
       AppComponent

@@ -1,0 +1,116 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header class="card-header" fxLayout="row stretch" [collapsedHeight]="'80px'">
+    <mat-panel-title fxFlex="50" fxFlex.xs="100">
+      {{project.title}}
+    </mat-panel-title>
+    <mat-panel-description fxFlex="50" fxFlex.xs="100">
+      {{project.shortDescription}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <div class="expansion-panel-content" fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="20px">
+    <div class="owner-section">
+      <span style="margin-right: 10px;">Owner: </span>
+      <p>{{project.owner.knownAs}}</p>
+      <img src="{{project.owner.photoUrl}}">
+    </div>
+
+    <div class="description-section">
+      <p style="font-weight: lighter;">{{project.longDescription}}</p>
+    </div>
+
+    <div class="collaborators-section" fxLayout="row" fxLayoutAlign="space-between">
+      <button mat-button color="accent" [matMenuTriggerFor]="collaborators"
+        [disabled]="project.collaborators.length < 1">Collaborators <mat-icon>keyboard_arrow_down
+        </mat-icon></button>
+      <mat-menu #collaborators="matMenu">
+        <div class="collaborator-item" mat-menu-item *ngFor="let collaborator of project.collaborators">
+          <div class="collaborator-data">
+            <img src="{{collaborator.photoUrl}}">
+            <span>{{collaborator.knownAs}}</span>
+          </div>
+          <div class="collaborator-action" *ngIf="authService.decodedToken.nameid === project.ownerId">
+            <button mat-mini-fab (click)="removeCollaborator(collaborator.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-menu>
+      <mat-menu #addCollaborator="matMenu">
+        <div class="collaborator-item" mat-menu-item *ngFor="let friend of filteredFriends"
+          (click)="addProjectCollaborator(friend.id)">
+          <img src="{{friend.photoUrl}}">
+          <span>{{friend.knownAs}}</span>
+        </div>
+      </mat-menu>
+      <button mat-button color="accent" [matMenuTriggerFor]="addCollaborator" [disabled]="filteredFriends.length < 1"
+        *ngIf="authService.decodedToken.nameid === project.ownerId">Add
+        Collaborator <mat-icon>
+          add_circle_outline
+        </mat-icon>
+      </button>
+    </div>
+
+    <div class="dates-section" fxLayout="row" fxLayoutAlign="space-around">
+      <div class="expected">
+        <span>Estimated Date: </span>
+        <p>{{project.estimatedDate | date}}</p>
+      </div>
+      <div class="modified">
+        <span>Last Modified: </span>
+        <p>{{project.modified | timeago}}</p>
+      </div>
+    </div>
+
+
+    <div class="actions-section" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
+      <button mat-raised-button color="primary" [routerLink]="['/projects/', project.id]">Open <mat-icon inline="true">
+          folder</mat-icon></button>
+      <button mat-raised-button color="accent" *ngIf="authService.decodedToken.nameid === project.ownerId"
+        (click)="toggleForm()">Edit
+        <mat-icon inline="true">edit</mat-icon></button>
+      <button mat-raised-button color="warn" *ngIf="authService.decodedToken.nameid === project.ownerId"
+        (click)="deleteProject()">Delete
+        <mat-icon inline="true">delete</mat-icon></button>
+    </div>
+
+    <form class="edit-form" [formGroup]="editProjectForm" (ngSubmit)="editProject()" *ngIf="panelOpenState"
+      [@inOutAnimation] fxLayout="column" fxLayoutAlign="center">
+      <mat-form-field appearance="outline" class="form-field" color="primary">
+        <mat-label>Title</mat-label>
+        <input type="text" matInput formControlName="title">
+        <mat-error *ngIf="editProjectForm.get('title').hasError('required')">
+          A title is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-field" color="primary">
+        <mat-label>Short Description</mat-label>
+        <input type="text" matInput formControlName="shortDescription">
+        <mat-error *ngIf="editProjectForm.get('shortDescription').hasError('required')">
+          A title is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-field" color="primary">
+        <mat-label>Long Description</mat-label>
+        <textarea type="text" matInput formControlName="longDescription"></textarea>
+        <mat-error *ngIf="editProjectForm.get('longDescription').hasError('required')">
+          A title is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-field" color="primary">
+        <mat-label>Estimated Completion Date</mat-label>
+        <input matInput [matDatepicker]="estimatedDate" (click)="estimatedDate.open()" formControlName="estimatedDate"
+          readonly>
+        <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #estimatedDate disabled="false" color="primary"></mat-datepicker>
+        <mat-error *ngIf="editProjectForm.get('estimatedDate').hasError('required')">
+          A title is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="form-field" style="text-align:end">
+        <button mat-raised-button type="submit" color="accent">Edit</button>
+      </div>
+    </form>
+  </div>
+
+</mat-expansion-panel>

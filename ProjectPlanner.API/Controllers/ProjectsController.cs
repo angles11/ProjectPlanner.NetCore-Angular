@@ -8,13 +8,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProjectPlanner.API.Data;
 using ProjectPlanner.API.Dtos;
+using ProjectPlanner.API.Helpers;
 using ProjectPlanner.API.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ProjectPlanner.API.Controllers
 {
-    [Route("api/user/{userId}/[controller]")]
+    [Route("api/{userId}/[controller]")]
     [ApiController]
     [Authorize]
     public class ProjectsController : ControllerBase
@@ -33,14 +34,14 @@ namespace ProjectPlanner.API.Controllers
         }            
 
         [HttpGet]
-        public async Task<IActionResult> GetProjects(string userId)
+        public async Task<IActionResult> GetProjects(string userId, [FromQuery]ProjectParams projectParams)
         {
             if (userId != _userManager.GetUserId(User))
             {
                 return Unauthorized();
             }
 
-            var projects = await _projectRepository.GetProjects(userId);
+            var projects = await _projectRepository.GetProjects(userId, projectParams);
 
             var projectsToReturn = _mapper.Map<IEnumerable<ProjectForListDto>>(projects);
 
@@ -70,6 +71,26 @@ namespace ProjectPlanner.API.Controllers
             return BadRequest("Something happened");
         }      
 
+        [HttpPut("{projectId}")]
+        public async Task<IActionResult> EditProject(string userId, int projectId, ProjectForCreationDto project)
+        {
+            var projectFromRepo = await _projectRepository.GetProject(projectId);
+            if (projectFromRepo == null)
+                return BadRequest("The project you are trying to edit does not exist");
+
+            projectFromRepo.Title = project.Title;
+            projectFromRepo.ShortDescription = project.ShortDescription;
+            projectFromRepo.LongDescription = project.LongDescription;
+            projectFromRepo.EstimatedDate = project.EstimatedDate;
+            projectFromRepo.Modified = DateTime.Now;
+
+            _projectRepository.EditProject(projectFromRepo);
+
+            if (await _projectRepository.SaveAll())
+                return NoContent();
+            return BadRequest();
+        }
+
         [HttpDelete("{projectId}")]
         public async Task<IActionResult> DeleteProject (string userId, int projectId)
         {
@@ -78,7 +99,12 @@ namespace ProjectPlanner.API.Controllers
                 return Unauthorized();
             }
 
-             _projectRepository.DeleteProject(projectId);
+            var project = await _projectRepository.GetProject(projectId);
+
+            if (project.OwnerId != userId)
+                return Unauthorized("You are not the owner of this project");
+
+             _projectRepository.DeleteProject(project);
 
             if (await _projectRepository.SaveAll())
                 return NoContent();
@@ -99,11 +125,16 @@ namespace ProjectPlanner.API.Controllers
             if (project == null)
                 return NotFound();
 
-            return Ok(project);
+            if (!isOwnerOrCollaborator(userId, project))
+                return Unauthorized("You have no permission to see this project");
+
+            var projectToReturn = _mapper.Map<ProjectForListDto>(project);
+
+            return Ok(projectToReturn);
 
         }
 
-        [HttpPost("{projectId}/{collaboratorId}")]
+        [HttpPost("{projectId}/collaborators/{collaboratorId}")]
         public async Task<IActionResult> AddCollaboration(string userId, int projectId, string collaboratorId)
         {
             if (userId != _userManager.GetUserId(User))
@@ -113,6 +144,8 @@ namespace ProjectPlanner.API.Controllers
 
             if (project.OwnerId != userId)
                 return Unauthorized();
+            if (await _projectRepository.GetCollaboration(projectId, collaboratorId) != null)
+                return BadRequest("The user is already a collaborator in this project");
 
             var collaboration = new Collaboration
             {
@@ -120,10 +153,7 @@ namespace ProjectPlanner.API.Controllers
                 ProjectId = projectId
             };
 
-            _projectRepository.AddCollaboration(collaboration);
-
-            if (await _projectRepository.GetCollaboration(projectId, collaboratorId) != null)
-                return BadRequest("The user is already a collaborator in this project");
+            _projectRepository.AddCollaboration(collaboration);         
 
             if (await _projectRepository.SaveAll())
                 return CreatedAtRoute("GetCollaboration", new { userId, projectId, collaboratorId }, collaboration);
@@ -131,7 +161,7 @@ namespace ProjectPlanner.API.Controllers
             return BadRequest();
         }
 
-        [HttpGet("{projectId}/{collaboratorId}", Name = "GetCollaboration")]
+        [HttpGet("{projectId}/collaborators/{collaboratorId}", Name = "GetCollaboration")]
 
         public async Task<IActionResult> GetCollaboration(int projectId, string collaboratorId)
         {
@@ -141,6 +171,44 @@ namespace ProjectPlanner.API.Controllers
                 return Ok(collaboration);
 
             return NotFound();
+        }
+
+        [HttpDelete("{projectId}/collaborators/{collaboratorId}")]
+        public async Task<IActionResult> DeleteCollaboration(string userId, int projectId, string collaboratorId)
+        {
+            var project = await _projectRepository.GetProject(projectId);
+
+            if (project == null)
+                return NotFound();
+
+            else if (project.OwnerId != userId)
+                return Unauthorized();
+
+            var collaboration = await _projectRepository.GetCollaboration(projectId, collaboratorId);
+
+            if (collaboration == null)
+                return NotFound();
+
+             _projectRepository.DeleteCollaboration(collaboration);
+
+            if (await _projectRepository.SaveAll())
+                return NoContent();
+
+            return BadRequest();
+        }
+
+        public bool isOwnerOrCollaborator(string userId, Project project)
+        {
+            if (project.OwnerId == userId)
+                return true;
+            
+            foreach(var collaborator in project.Collaborations)
+            {
+                if (collaborator.UserId == userId)
+                    return true;
+            }
+
+            return false;
         }
     }
 }

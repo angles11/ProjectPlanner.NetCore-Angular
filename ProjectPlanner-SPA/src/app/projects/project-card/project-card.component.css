@@ -1,0 +1,147 @@
+.card-header {
+  background-color: #4a148c;
+  color: white;
+  display: flex;
+}
+
+.card-header:hover {
+  background-color: #880e4f !important;
+}
+
+.card-header:focus {
+  background-color: #4a148c !important;
+}
+
+
+.card-header .mat-expansion-panel-header-title {
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.card-header .mat-expansion-panel-header-description {
+  color: white;
+  font-weight: lighter;
+}
+
+::ng-deep .mat-expansion-indicator::after,
+.mat-expansion-panel-header-description {
+  color: white;
+}
+
+::ng-deep .mat-expansion-panel-content {
+  background-color: #eeee;
+}
+
+.expansion-panel-content {
+  padding: 10px 0px;
+}
+
+.owner-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.description-section {
+  background-color: #880e4f;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 8px 2px #a3a0a3;
+}
+
+.description-section p {
+  margin-bottom: 0;
+  color: white;
+}
+
+.expansion-panel-content span {
+  font-weight: 700;
+  color: #00838f;
+}
+
+.owner-section p {
+  margin-bottom: 0;
+  margin-right: 5px;
+}
+
+.owner-section img {
+  border-radius: 50%;
+  width: 30px;
+}
+
+.collaborator-item {
+  justify-content: space-between;
+}
+
+.collaborator-item .collaborator-data {
+  display: flex;
+  align-items: center;
+}
+
+.collaborator-item .collaborator-action {
+  display: flex;
+  align-items: center;
+}
+
+.collaborator-item .collaborator-action button {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00838f;
+}
+
+.collaborator-item .collaborator-action button:hover {
+  background-color: #880e4f;
+}
+
+.collaborator-item .collaborator-action button .mat-icon {
+  margin: 0;
+  color: white;
+  transform: scale(0.7);
+}
+
+.collaborator-item:hover img {
+  transform: scale(1.2, 1.2);
+}
+
+.collaborator-item img {
+  border-radius: 50%;
+  width: 30px;
+  margin-right: 10px;
+}
+
+::ng-deep .mat-menu-item {
+  display: flex;
+  align-items: center;
+  width: 200px;
+}
+
+.edit-form {
+  padding: 20px;
+  background-color: white;
+  margin-top: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
+    0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0px 9px 46px 4px rgba(0, 0, 0, 0.12);
+
+}
+
+.mat-label {
+  font-weight: 800;
+}
+
+.form-field {
+  justify-content: end;
+}
+
+.form-field button {
+  width: 150px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12px;
+}

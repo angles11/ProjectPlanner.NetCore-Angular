@@ -23,3 +23,26 @@
   letter-spacing: 1px;
   font-size: 12px;
 }
+
+.projects-container {
+  margin-top: 20px;
+}
+
+.alert-message {
+  text-align: center;
+  color: #880e4f;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  border-radius: .25rem;
+  padding: 40px;
+
+}
+
+.success-message {
+  text-align: center;
+  color: white;
+  background-color: #00838f;
+  border-radius: .25rem;
+  padding: 20px;
+
+}

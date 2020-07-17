@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using ProjectPlanner.API.Helpers;
 using ProjectPlanner.API.Models;
 using System;
 using System.Collections.Generic;
@@ -27,13 +28,19 @@ namespace ProjectPlanner.API.Data
             _dataContext.Add(project);
         }
 
-        public  async void DeleteProject(int projectId)
+        public void DeleteCollaboration(Collaboration collaboration)
         {
-            var project = await _dataContext.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
+            _dataContext.Remove(collaboration);
+        }
 
-            if (project != null)
-                 _dataContext.Remove(project);
+        public   void DeleteProject(Project project)
+        {
+             _dataContext.Remove(project);
+        }
 
+        public void EditProject(Project project)
+        {
+            _dataContext.Update(project);
         }
 
         public async Task<Collaboration> GetCollaboration(int projectId, string collaboratorId)
@@ -43,10 +50,10 @@ namespace ProjectPlanner.API.Data
 
         public Task<Project> GetProject(int projectId)
         {
-            return _dataContext.Projects.Include(p => p.Owner).FirstOrDefaultAsync(p => p.Id == projectId);
+            return _dataContext.Projects.Include(p => p.Owner).Include(p => p.Collaborations).ThenInclude(c => c.User).FirstOrDefaultAsync(p => p.Id == projectId);
         }
 
-        public async Task<ICollection<Project>> GetProjects(string userId)
+        public async Task<ICollection<Project>> GetProjects(string userId, ProjectParams projectParams)
         {
             var ownedProjects = await _dataContext.Projects.Include(p => p.Owner)
                                                            .Include(p => p.Collaborations)
@@ -63,12 +70,17 @@ namespace ProjectPlanner.API.Data
                                                                         .Select(c => c.Project)
                                                                         .ToListAsync();
 
-            var projects = ownedProjects.Concat(collaboratedProjects).ToList();
+            var projects = ownedProjects.Concat(collaboratedProjects);
 
-            return projects;
+            if (!string.IsNullOrEmpty(projectParams.SearchTerm))
+            {
+                var searchTerm = projectParams.SearchTerm.ToUpperInvariant();
+                projects = projects.Where(p => p.Title.ToUpperInvariant().Contains(searchTerm));
+            }
+
+            return projects.ToList();
 
         }
-
         public async Task<bool> SaveAll()
         {
             return await _dataContext.SaveChangesAsync() > 0;
