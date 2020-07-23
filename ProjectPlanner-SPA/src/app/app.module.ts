@@ -55,6 +55,9 @@ import { UserDialogComponent } from './people/users/user-dialog/user-dialog.comp
 import { ProjectsListResolver } from './resolvers/projects-list.resolver';
 import { ProjectCardComponent } from './projects/project-card/project-card.component';
 import { ProjectDetailResolver } from './resolvers/project-detail.resolver';
+import { ProjectDetailComponent } from './projects/project-detail/project-detail.component';
+import { TodoCardComponent } from './projects/project-detail/todo-card/todo-card.component';
+import { MessagesDialogComponent } from './projects/project-detail/messages-dialog/messages-dialog.component';
 
 
 
@@ -80,6 +83,9 @@ export function tokenGetter() {
       ConfirmDialogComponent,
       UserDialogComponent,
       ProjectCardComponent,
+      ProjectDetailComponent,
+      TodoCardComponent,
+      MessagesDialogComponent
    ],
    imports: [
       BrowserModule,
@@ -135,7 +141,8 @@ export function tokenGetter() {
    entryComponents: [
       MySnackBarComponent,
       ConfirmDialogComponent,
-      UserDialogComponent
+      UserDialogComponent,
+      MessagesDialogComponent
    ]
 })
 export class AppModule { }

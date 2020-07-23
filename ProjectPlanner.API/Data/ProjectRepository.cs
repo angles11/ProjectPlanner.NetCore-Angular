@@ -18,29 +18,19 @@ namespace ProjectPlanner.API.Data
             _dataContext = dataContext;
         }
 
-        public void AddCollaboration(Collaboration collaboration)
+        public void Add<T>(T entity) where T : class
         {
-            _dataContext.Add(collaboration);
+            _dataContext.Add(entity);
         }
 
-        public void CreateProject(Project project)
+        public void Delete<T>(T entity) where T : class
         {
-            _dataContext.Add(project);
+            _dataContext.Remove(entity);
         }
 
-        public void DeleteCollaboration(Collaboration collaboration)
+        public void Edit<T>(T entity) where T : class
         {
-            _dataContext.Remove(collaboration);
-        }
-
-        public   void DeleteProject(Project project)
-        {
-             _dataContext.Remove(project);
-        }
-
-        public void EditProject(Project project)
-        {
-            _dataContext.Update(project);
+            _dataContext.Update(entity);
         }
 
         public async Task<Collaboration> GetCollaboration(int projectId, string collaboratorId)
@@ -48,9 +38,15 @@ namespace ProjectPlanner.API.Data
             return  await _dataContext.Collaborations.FindAsync(collaboratorId, projectId);
         }
 
-        public Task<Project> GetProject(int projectId)
+        public async Task<Project> GetProject(int projectId)
         {
-            return _dataContext.Projects.Include(p => p.Owner).Include(p => p.Collaborations).ThenInclude(c => c.User).FirstOrDefaultAsync(p => p.Id == projectId);
+            return await _dataContext.Projects.Include(p => p.Owner).Include(p => p.Todos).ThenInclude(t => t.Messages).ThenInclude(m => m.User)
+                .Include(p => p.Collaborations).ThenInclude(c => c.User).FirstOrDefaultAsync(p => p.Id == projectId);
+        }
+
+        public async Task<Todo> GetTodo(int todoId)
+        {
+            return await _dataContext.Todos.Include(t => t.Project).Include(t => t.Messages).ThenInclude(m => m.User).FirstOrDefaultAsync(t => t.Id == todoId);
         }
 
         public async Task<ICollection<Project>> GetProjects(string userId, ProjectParams projectParams)
@@ -81,9 +77,17 @@ namespace ProjectPlanner.API.Data
             return projects.ToList();
 
         }
+
+       
+
         public async Task<bool> SaveAll()
         {
             return await _dataContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<TodoMessage> GetMessage(int messageId)
+        {
+            return await _dataContext.TodoMessages.FirstOrDefaultAsync(m => m.Id == messageId);
         }
     }
 }

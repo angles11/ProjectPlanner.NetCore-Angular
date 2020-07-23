@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectPlanner.API.Data;
 
 namespace ProjectPlanner.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200720193010_EntitieTodoStatusAdded")]
+    partial class EntitieTodoStatusAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,33 +256,6 @@ namespace ProjectPlanner.API.Migrations
                     b.ToTable("Todos");
                 });
 
-            modelBuilder.Entity("ProjectPlanner.API.Models.TodoMessage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("TodoId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TodoId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("TodoMessages");
-                });
-
             modelBuilder.Entity("ProjectPlanner.API.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -470,19 +445,6 @@ namespace ProjectPlanner.API.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ProjectPlanner.API.Models.TodoMessage", b =>
-                {
-                    b.HasOne("ProjectPlanner.API.Models.Todo", "Todo")
-                        .WithMany("Messages")
-                        .HasForeignKey("TodoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProjectPlanner.API.Models.User", "User")
-                        .WithMany("TodoMessages")
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

@@ -19,5 +19,7 @@ namespace ProjectPlanner.API.Dtos
         public UserForListDto Owner { get; set; }
         public ICollection<UserForListDto> Collaborators { get; set; }
 
+        public ICollection<TodoForListDto> Todos { get; set; }
+
     }
 }

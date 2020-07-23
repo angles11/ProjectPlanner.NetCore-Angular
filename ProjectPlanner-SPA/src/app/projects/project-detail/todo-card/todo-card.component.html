@@ -1,0 +1,72 @@
+<div class="todo-card" fxLayout="column" fxLayoutGap="20px" [ngStyle]="{'border-color': todo.status === 'Completed' ? '#00838f' : todo.status === 'In Progress' ? '#880e4f':
+  '#8c8c8c'}">
+  <div class="todo-title" fxLayout="row" fxLayoutAlign="space-between">
+    <h1>{{todo.title}}</h1>
+    <span>{{index + 1}}</span>
+  </div>
+
+  <div class="todo-description" fxLayout="row" fxLayoutGap="10px">
+    <span>Description: </span>
+    <p>{{todo.longDescription}}</p>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="10px">
+    <span class="property">Estimated Date:</span>
+    <p>{{todo.estimatedDate | date}}</p>
+  </div>
+
+  <div class="todo-status" fxLayout="row" fxLayoutAlign="space-between">
+    <div class="status-info" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+      <p class="property">Status:</p>
+      <p [ngStyle]="{'color': todo.status === 'Completed' ? '#00838f' : todo.status === 'In Progress' ? '#880e4f':
+  '#8c8c8c'}">{{todo.status}}</p>
+    </div>
+
+    <div class="status-change">
+      <mat-form-field appearance="legacy" color="accent">
+        <mat-label>Select Status</mat-label>
+        <mat-select [(value)]="todo.status" (selectionChange)="changeStatus($event.value)">
+          <mat-option value="Completed">Completed</mat-option>
+          <mat-option value="In Progress">In Progress</mat-option>
+          <mat-option value="Pending">Pending</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="todo-message" *ngIf="todo.messages.length >= 1">
+    <p class="property" style="margin-bottom: 10px">Last message:</p>
+    <div class="message">
+      <div class="message-title" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
+        <img src="{{lastMessage.userPhotoUrl}}">
+        <span>{{lastMessage.userKnownAs}}</span>
+        <span>-</span>
+        <span>{{lastMessage.created | date}}</span>
+      </div>
+      <div class="message-text">
+        <p style="word-break: break-word;">"{{lastMessage.message}}"</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="todo-newMessage" fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="20px">
+    <div class="todo-newMessage-actions" fxFlex fxLayout="row" fxLayoutAlign="start" fxLayoutGap="20px">
+      <button mat-raised-button color="primary" (click)="toggleForm()">Add Message</button>
+      <button mat-raised-button color="accent" (click)="openDialog()">Message History</button>
+    </div>
+    <div *ngIf="panelOpenState" [@inOutAnimation]>
+      <form #addMessage="ngForm" (ngSubmit)="onAddMessage()" fxLayout="column" class="create-form">
+        <mat-form-field appearance="outline" color="primary">
+          <mat-label>Message</mat-label>
+          <textarea matInput type="text" name="message" [(ngModel)]="newMessage" #message="ngModel" minlength=15
+            required></textarea>
+          <mat-error *ngIf="message.errors?.required">Message is <strong>required</strong></mat-error>
+          <mat-error *ngIf="message.errors?.minlength">Message must be at least <strong>15 characters long</strong>
+          </mat-error>
+        </mat-form-field>
+        <div style="display: flex; justify-content: flex-end;">
+          <button mat-raised-button class="submit-message" type="submit" [disabled]="!addMessage.valid">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

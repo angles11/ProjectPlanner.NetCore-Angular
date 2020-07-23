@@ -1,11 +1,12 @@
-
-<div fxLayout="row" fxLayoutAlign="space-evenly">
+<div class="container" ngClass.xs="containerXs">
+  <div fxLayout="row" fxLayoutAlign="space-evenly">
     <a routerLink="friends" mat-raised-button color="primary" routerLinkActive="active">
-        Friends <mat-icon>emoji_people</mat-icon>
+      Friends <mat-icon>emoji_people</mat-icon>
     </a>
     <a routerLink="users" mat-raised-button color="primary" routerLinkActive="active">
-        Users <mat-icon>person_add</mat-icon>
+      Users <mat-icon>person_add</mat-icon>
     </a>
+  </div>
+  <br>
+  <router-outlet></router-outlet>
 </div>
-<br>
-<router-outlet></router-outlet>

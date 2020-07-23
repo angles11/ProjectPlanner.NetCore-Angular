@@ -1,4 +1,5 @@
 import { User } from './user';
+import { Todo } from './todo';
 
 export interface Project {
     id: number;
@@ -11,4 +12,5 @@ export interface Project {
     owner: User;
     ownerId: string;
     collaborators: User[];
+    todos: Todo[];
 }

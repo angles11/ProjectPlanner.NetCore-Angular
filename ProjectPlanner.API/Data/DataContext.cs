@@ -12,7 +12,7 @@ namespace ProjectPlanner.API.Data
     {
         private readonly DbContextOptions<DataContext> _options;
 
-        public DataContext(DbContextOptions<DataContext> options): base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
             _options = options;
         }
@@ -21,6 +21,10 @@ namespace ProjectPlanner.API.Data
         public DbSet<Collaboration> Collaborations { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
 
+        public DbSet<Todo> Todos { get; set; }
+
+        public DbSet<TodoMessage> TodoMessages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -28,7 +32,30 @@ namespace ProjectPlanner.API.Data
             builder.Entity<Project>()
                 .HasOne(p => p.Owner)
                 .WithMany(u => u.OwnedProjects)
-                .HasForeignKey(P => P.OwnerId);                
+                .HasForeignKey(P => P.OwnerId);
+
+            builder.Entity<Project>()
+                .HasMany(p => p.Todos)
+                .WithOne(t => t.Project);
+
+            builder.Entity<Todo>()
+                .HasOne(t => t.Project)
+                .WithMany(p => p.Todos)
+                .HasForeignKey(t => t.ProjectId);
+
+            builder.Entity<Todo>()
+                .HasMany(t => t.Messages)
+                .WithOne(td => td.Todo);
+
+            builder.Entity<TodoMessage>()
+                .HasOne(tm => tm.Todo)
+                .WithMany(t => t.Messages)
+                .HasForeignKey(t => t.TodoId);
+
+            builder.Entity<TodoMessage>()
+            .HasOne(tm => tm.User)
+            .WithMany(u => u.TodoMessages)
+            .HasForeignKey(tm => tm.UserId);
 
             builder.Entity<Collaboration>()
                   .HasKey(c => new { c.UserId, c.ProjectId });
@@ -56,7 +83,8 @@ namespace ProjectPlanner.API.Data
                 .HasOne(f => f.Recipient)
                 .WithMany(f => f.FriendshipReceived)
                 .HasForeignKey(f => f.RecipientId);
-                 
+
+            
         }
     }
 }

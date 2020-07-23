@@ -28,5 +28,7 @@ namespace ProjectPlanner.API.Models
 
         public ICollection<Friendship> FriendshipReceived { get; set; }
 
+        public ICollection<TodoMessage> TodoMessages { get; set; }
+
     }
 }

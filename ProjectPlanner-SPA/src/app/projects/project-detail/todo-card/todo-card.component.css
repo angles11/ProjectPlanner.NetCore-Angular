@@ -1,0 +1,55 @@
+.todo-card {
+  color: #4a148c;
+  background-color: #e9ecef;
+  padding: 20px;
+  border-radius: 0px 10px 10px 0px;
+  box-shadow: 2px 2px 8px 2px #a3a0a3;
+  border-left: 15px solid;
+}
+
+.todo-card .property {
+  font-weight: 700;
+}
+
+.todo-card p {
+  margin-bottom: 0;
+}
+
+.todo-description {
+  background-color: #880e4f;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.create-form {
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
+    0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0px 9px 46px 4px rgba(0, 0, 0, 0.12);
+
+}
+
+.message {
+  color: white;
+  background-color: #00838f;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.message .message-title img {
+  border-radius: 50%;
+  width: 20px;
+}
+
+
+
+.submit-message {
+  width: 30%;
+  background-color: #00838f;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

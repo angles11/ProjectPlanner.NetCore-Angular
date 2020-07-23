@@ -61,7 +61,7 @@ namespace ProjectPlanner.API.Controllers
 
             project.Owner = await _userRepository.GetUser(userId);
 
-            _projectRepository.CreateProject(project);
+            _projectRepository.Add(project);
 
             if (await _projectRepository.SaveAll())
             {
@@ -84,7 +84,7 @@ namespace ProjectPlanner.API.Controllers
             projectFromRepo.EstimatedDate = project.EstimatedDate;
             projectFromRepo.Modified = DateTime.Now;
 
-            _projectRepository.EditProject(projectFromRepo);
+            _projectRepository.Edit(projectFromRepo);
 
             if (await _projectRepository.SaveAll())
                 return NoContent();
@@ -104,7 +104,7 @@ namespace ProjectPlanner.API.Controllers
             if (project.OwnerId != userId)
                 return Unauthorized("You are not the owner of this project");
 
-             _projectRepository.DeleteProject(project);
+             _projectRepository.Delete(project);
 
             if (await _projectRepository.SaveAll())
                 return NoContent();
@@ -153,7 +153,7 @@ namespace ProjectPlanner.API.Controllers
                 ProjectId = projectId
             };
 
-            _projectRepository.AddCollaboration(collaboration);         
+            _projectRepository.Add(collaboration);         
 
             if (await _projectRepository.SaveAll())
                 return CreatedAtRoute("GetCollaboration", new { userId, projectId, collaboratorId }, collaboration);
@@ -189,7 +189,7 @@ namespace ProjectPlanner.API.Controllers
             if (collaboration == null)
                 return NotFound();
 
-             _projectRepository.DeleteCollaboration(collaboration);
+             _projectRepository.Delete(collaboration);
 
             if (await _projectRepository.SaveAll())
                 return NoContent();

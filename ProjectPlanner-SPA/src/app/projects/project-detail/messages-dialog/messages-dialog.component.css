@@ -1,0 +1,11 @@
+.message {
+  color: white;
+  padding: 10px 10px 0px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.message .message-title img {
+  width: 30px;
+  border-radius: 50%;
+}

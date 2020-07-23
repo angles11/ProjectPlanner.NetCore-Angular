@@ -1,9 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+html,
+body {
+  height: 100%;
+}
 
-.user-dialog-custom-class .mat-dialog-content{
-    max-height: 85vh;
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.user-dialog-custom-class .mat-dialog-content {
+  max-height: 85vh;
+}
+
+
+.container {
+  margin: 10px 50px;
+}
+
+.containerXs {
+  margin: 10px 10px;
 }

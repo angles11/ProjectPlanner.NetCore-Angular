@@ -12,7 +12,7 @@ export class UserDialogComponent implements OnInit {
   user: User;
 
   constructor(private dialogRef: MatDialogRef<UserDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: User) {
+              @Inject(MAT_DIALOG_DATA) public data: User) {
     this.user = data;
   }
   ngOnInit() {

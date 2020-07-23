@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Message History</h2>
+<mat-dialog-content>
+  <div class="message" *ngFor="let message of messages.slice().reverse()" fxLayout="column"
+    fxLayoutAlign="center stretch" [ngStyle]="{'background-color': message.userId === userId ? '#880e4f': '#00838f'}">
+    <div class="message-title" fxFlex fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
+      <img src="{{message.userPhotoUrl}}">
+      <span>{{message.userKnownAs}}</span>
+      <span>-</span>
+      <span>{{message.created | date}}</span>
+    </div>
+    <div class="message-text">
+      <p style="word-break: break-word;">"{{message.message}}"</p>
+    </div>
+  </div>
+</mat-dialog-content>

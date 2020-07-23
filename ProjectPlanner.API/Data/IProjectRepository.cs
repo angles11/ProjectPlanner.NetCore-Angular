@@ -10,21 +10,21 @@ namespace ProjectPlanner.API.Data
 {
     public interface IProjectRepository
     {
-        public void CreateProject(Project project);
+
+        public void Add<T>(T entity) where T : class;
+        public void Edit<T>(T entity) where T : class;
+        public void Delete<T>(T entity) where T : class;
 
         public Task<Project> GetProject(int projectId);
 
+        public Task<Todo> GetTodo(int todoId);
+        public Task<Collaboration> GetCollaboration(int projectId, string collaboratorId);
         public Task<ICollection<Project>> GetProjects(string userId, ProjectParams projectParams);
+
+        public Task<TodoMessage> GetMessage(int messageId);
         public Task<bool> SaveAll();
 
-        public void EditProject(Project project);
-        public void DeleteProject(Project project);
-
-        public void DeleteCollaboration(Collaboration collaboration);
-
-        public void AddCollaboration(Collaboration collaboration);
-
-        public Task<Collaboration> GetCollaboration(int projectId, string collaboratorId);
+     
 
     }
 }

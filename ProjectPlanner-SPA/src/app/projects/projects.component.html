@@ -1,62 +1,65 @@
-<button mat-raised-button color="primary" (click)="toggleForm()">New Project <mat-icon>add</mat-icon></button>
+<div class="container" ngClass.xs="containerXs">
+  <button mat-raised-button color="primary" (click)="toggleForm()">New Project <mat-icon>add</mat-icon></button>
 
-<form [formGroup]="newProjectForm" (ngSubmit)="create()" class="create-form" *ngIf="panelOpenState" [@inOutAnimation]
-  fxLayout="column" fxLayoutAlign="center">
-  <mat-form-field appearance="outline" class="form-field" color="primary">
-    <mat-label>Title</mat-label>
-    <input type="text" matInput formControlName="title">
-    <mat-error *ngIf="newProjectForm.get('title').hasError('required')">
-      A title is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="form-field" color="primary">
-    <mat-label>Short Description</mat-label>
-    <input type="text" matInput formControlName="shortDescription">
-    <mat-error *ngIf="newProjectForm.get('shortDescription').hasError('required')">
-      A short description is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="form-field" color="primary">
-    <mat-label>Long Description</mat-label>
-    <textarea type="text" matInput formControlName="longDescription"></textarea>
-    <mat-error *ngIf="newProjectForm.get('longDescription').hasError('required')">
-      A long description is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="form-field" color="primary">
-    <mat-label>Estimated Completion Date</mat-label>
-    <input matInput [matDatepicker]="estimatedDate" (click)="estimatedDate.open()" formControlName="estimatedDate"
-      readonly>
-    <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
-    <mat-datepicker #estimatedDate disabled="false" color="primary"></mat-datepicker>
-    <mat-error *ngIf="newProjectForm.get('estimatedDate').hasError('required')">
-      A date for completion is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-  <div class="form-field" style="text-align:end">
-    <button mat-raised-button type="submit" color="accent" [disabled]="!newProjectForm.valid">Create</button>
+  <form [formGroup]="newProjectForm" (ngSubmit)="create()" class="create-form" *ngIf="panelOpenState" [@inOutAnimation]
+    fxLayout="column" fxLayoutAlign="center">
+    <mat-form-field appearance="outline" class="form-field" color="primary">
+      <mat-label>Title</mat-label>
+      <input type="text" matInput formControlName="title">
+      <mat-error *ngIf="newProjectForm.get('title').hasError('required')">
+        A title is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field" color="primary">
+      <mat-label>Short Description</mat-label>
+      <input type="text" matInput formControlName="shortDescription">
+      <mat-error *ngIf="newProjectForm.get('shortDescription').hasError('required')">
+        A short description is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field" color="primary">
+      <mat-label>Long Description</mat-label>
+      <textarea type="text" matInput formControlName="longDescription"></textarea>
+      <mat-error *ngIf="newProjectForm.get('longDescription').hasError('required')">
+        A long description is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field" color="primary">
+      <mat-label>Estimated Completion Date</mat-label>
+      <input matInput [matDatepicker]="estimatedDate" (click)="estimatedDate.open()" formControlName="estimatedDate"
+        readonly>
+      <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
+      <mat-datepicker #estimatedDate disabled="false" color="primary"></mat-datepicker>
+      <mat-error *ngIf="newProjectForm.get('estimatedDate').hasError('required')">
+        A date for completion is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <div class="form-field" style="text-align:end">
+      <button mat-raised-button type="submit" color="accent" [disabled]="!newProjectForm.valid">Create</button>
+    </div>
+  </form>
+  <div class="filters-container" fxLayout="row" fxLayout.xs="column" style="margin-top: 20px">
+    <mat-form-field appearance="outline" color="accent" fxFlex="35" class="form-field">
+      <mat-icon matSuffix color="accent">search</mat-icon>
+      <mat-label>Search</mat-label>
+      <input type="text" placeholder="Title" matInput [(ngModel)]="searchTerm" name="searchTerm"
+        (keyup)="loadProjects()">
+    </mat-form-field>
   </div>
-</form>
-<div class="filters-container" fxLayout="row" fxLayout.xs="column" style="margin-top: 20px">
-  <mat-form-field appearance="outline" color="accent" fxFlex="35" class="form-field">
-    <mat-icon matSuffix color="accent">search</mat-icon>
-    <mat-label>Search</mat-label>
-    <input type="text" placeholder="Title" matInput [(ngModel)]="searchTerm" name="searchTerm" (keyup)="loadProjects()">
-  </mat-form-field>
-</div>
 
-<div *ngIf="searchTerm.length !== 0 && projects.length < 1" class="alert-message">
-  <p style="margin-bottom: 0">There are no projects with a title containing <strong>{{searchTerm}}</strong> </p>
-</div>
+  <div *ngIf="searchTerm.length !== 0 && projects.length < 1" class="alert-message">
+    <p style="margin-bottom: 0">There are no projects with a title containing <strong>{{searchTerm}}</strong> </p>
+  </div>
 
-<div *ngIf="searchTerm.length !== 0 && projects.length >= 1" class="success-message">
-  <p style="margin-bottom: 0">There are <strong>{{projects.length}}</strong> projects with a title containing
-    <strong>{{searchTerm}}</strong> </p>
-</div>
+  <div *ngIf="searchTerm.length !== 0 && projects.length >= 1" class="success-message">
+    <p style="margin-bottom: 0">There are <strong>{{projects.length}}</strong> projects with a title containing
+      <strong>{{searchTerm}}</strong> </p>
+  </div>
 
-<div class="projects-container" fxLayout="column" fxLayoutGap="20px">
-  <div class="project-card" *ngFor="let project of projects">
-    <app-project-card [project]="project" [friends]="acceptedFriends" (deletedEvent)="onDeleted($event)">
-    </app-project-card>
+  <div class="projects-container" fxLayout="column" fxLayoutGap="20px">
+    <div class="project-card" *ngFor="let project of projects">
+      <app-project-card [project]="project" [friends]="acceptedFriends" (deletedEvent)="onDeleted($event)">
+      </app-project-card>
+    </div>
   </div>
 </div>
