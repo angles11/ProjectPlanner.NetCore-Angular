@@ -17,7 +17,7 @@ namespace ProjectPlanner.API.Models
         public string OwnerId { get; set; }
         public User Owner { get; set; }
 
-        //a new model is required for a many to many relationship in EF Core.
+        // A new entity is required for a many to many relationship in EF Core.
         public ICollection<Collaboration> Collaborations { get; set; }
 
         public ICollection<Todo> Todos { get; set; }

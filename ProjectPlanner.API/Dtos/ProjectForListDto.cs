@@ -15,11 +15,14 @@ namespace ProjectPlanner.API.Dtos
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
         public DateTime EstimatedDate { get; set; }
+        public int  CompletedPercentage { get; set; }
         public string OwnerId { get; set; }
         public UserForListDto Owner { get; set; }
         public ICollection<UserForListDto> Collaborators { get; set; }
 
         public ICollection<TodoForListDto> Todos { get; set; }
+
+        public TodoMessageForListDto LastMessage { get; set; }
 
     }
 }

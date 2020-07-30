@@ -1,64 +1,66 @@
 .mat-dialog-content {
-    width: 700px;
-    padding: 0;
+  width: 700px;
+  padding: 0;
 }
 
 .mat-dialog-content-sm {
-    width: 500px;
+  width: 500px;
 }
+
 .mat-dialog-content-xs {
-    width: 350px;
+  width: 350px;
 }
 
 .dialog-top {
-    background-color: #880e4f;
-    width: 100%;
-    padding: 10px;
+  background-color: #880e4f;
+  width: 100%;
+  padding: 10px;
 }
 
 .dialog-top-content-title {
-    text-align: center;
-    color: white;
+  text-align: center;
+  color: white;
 }
 
 .dialog-top-content-text p {
 
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 0;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0;
 
 }
+
 .dialog-top-content-text span {
-    color: white;
+  color: white;
 }
 
 .dialog-top-img {
-    display: flex;
-    justify-content:center;
+  display: flex;
+  justify-content: center;
 }
 
-.dialog-top-img img{
-    width: 70%;
-    border-radius: 50%;
-    border: 2px solid white;
+.dialog-top-img img {
+  width: 70%;
+  border-radius: 50%;
+  border: 2px solid white;
 }
 
 .dialog-content {
-    padding: 10px;
+  padding: 10px;
 }
 
 .header-list-item {
-    color: #4a148c;
-    font-weight: 700 !important;
+  color: #283593;
+  font-weight: 700 !important;
 }
 
 .user-list-item {
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .mat-dialog-actions {
-    justify-content: center;
+  justify-content: center;
 }

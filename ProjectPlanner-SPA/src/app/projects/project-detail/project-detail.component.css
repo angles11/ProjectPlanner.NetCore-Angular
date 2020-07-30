@@ -1,8 +1,8 @@
 .header {
   background-color: #e9ecef;
-  color: #4a148c;
+  color: #283593;
   padding: 20px 10px;
-  border-bottom: 1px solid #4a148c;
+  border-bottom: 1px solid #283593;
 }
 
 .header-owner {
@@ -45,13 +45,3 @@
     0px 9px 46px 4px rgba(0, 0, 0, 0.12);
 
 }
-
-/* .title {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.description {
-  font-size: 1rem;
-  font-weight: 300;
-} */

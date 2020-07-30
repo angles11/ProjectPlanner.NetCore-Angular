@@ -58,7 +58,7 @@ namespace ProjectPlanner.API.Data
             .HasForeignKey(tm => tm.UserId);
 
             builder.Entity<Collaboration>()
-                  .HasKey(c => new { c.UserId, c.ProjectId });
+                  .HasKey(c => new { c.UserId, c.ProjectId }); //Composite key
 
             builder.Entity<Collaboration>()
                     .HasOne(c => c.User)
@@ -71,7 +71,7 @@ namespace ProjectPlanner.API.Data
                 .HasForeignKey(c => c.ProjectId);
 
             builder.Entity<Friendship>()
-                .HasKey(f => new { f.SenderId, f.RecipientId });
+                .HasKey(f => new { f.SenderId, f.RecipientId }); //Composite key
 
             builder.Entity<Friendship>()
                 .HasOne(f => f.Sender)

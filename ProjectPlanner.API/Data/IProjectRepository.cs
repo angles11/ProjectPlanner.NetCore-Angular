@@ -15,6 +15,7 @@ namespace ProjectPlanner.API.Data
         public void Edit<T>(T entity) where T : class;
         public void Delete<T>(T entity) where T : class;
 
+        public void UpdateLastModified(Project project);
         public Task<Project> GetProject(int projectId);
 
         public Task<Todo> GetTodo(int todoId);

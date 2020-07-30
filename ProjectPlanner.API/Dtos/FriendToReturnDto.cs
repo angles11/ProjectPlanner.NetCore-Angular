@@ -8,7 +8,7 @@ namespace ProjectPlanner.API.Dtos
 {
     public class FriendToReturnDto
     {
-        public UserForListDto UserFriend{ get; set; }
+        public UserForDetailedDto UserFriend{ get; set; }
         public DateTime Since { get; set; }
         public Status Status { get; set; }
         public string SentById { get; set; }

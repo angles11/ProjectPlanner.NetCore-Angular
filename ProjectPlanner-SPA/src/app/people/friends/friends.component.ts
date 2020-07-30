@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/_services/user.service';
 import { Friend } from 'src/app/_models/friend';
+import { MySnackBarService } from 'src/app/_notifications/my-snackBar.service';
 export { };
 
 @Component({
@@ -19,13 +20,14 @@ export class FriendsComponent implements OnInit {
   blockedFriends: Friend[] = [];
   numbers = [1, 2, 3, 4, 5, 6];
 
-  constructor(private authService: AuthService, private userService: UserService, private route: ActivatedRoute) { }
+  constructor(private authService: AuthService, private userService: UserService,
+    private route: ActivatedRoute, private snackBar: MySnackBarService) { }
 
   ngOnInit() {
     this.route.data.subscribe((data) => {
       this.friends = data.friends;
     }, error => {
-      console.log(error);
+      this.snackBar.openSnackBar(error, 'error', 5000);
     });
     this.mapFriends(this.friends);
   }

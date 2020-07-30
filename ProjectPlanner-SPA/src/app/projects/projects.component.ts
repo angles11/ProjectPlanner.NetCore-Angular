@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { transition, trigger, style, animate } from '@angular/animations';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
 import { ProjectService } from '../_services/project.service';
@@ -8,26 +7,14 @@ import { ActivatedRoute } from '@angular/router';
 import { Project } from '../_models/project';
 import { Friend } from '../_models/friend';
 import { User } from '../_models/user';
+import { Animations } from '../_helpers/animations';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css'],
   animations: [
-    trigger(
-      'inOutAnimation',
-      [
-        transition(':enter', [
-          style({transform: 'translateX(-100%)', opacity: 0}),
-          animate('500ms', style({transform: 'translateX(0)', opacity: 1}))
-        ]),
-        transition(':leave', [
-          style({transform: 'translateX(0)', opacity: 1}),
-          animate('500ms', style({transform: 'translateX(-100%)', opacity: 0}))
-          ]
-        )
-      ]
-    )
+    Animations.inOutAnimation
   ]
 })
 export class ProjectsComponent implements OnInit {
@@ -47,7 +34,7 @@ export class ProjectsComponent implements OnInit {
       this.projects = data.projects;
       this.filterAcceptedFriends(data.friends);
     }, error => {
-        console.log(error);
+        this.snackBar.openSnackBar(error, 'error', 5000);
     });
     this.createNewProjectForm();
 
@@ -79,7 +66,9 @@ export class ProjectsComponent implements OnInit {
       }, error => {
         this.snackBar.openSnackBar(error, 'error', 5000);
       }, () => {
-        this.loadProjects();
+          setTimeout(() => {
+            this.loadProjects();
+          }, 500);
       });
     }
   }
@@ -91,7 +80,7 @@ export class ProjectsComponent implements OnInit {
     this.projectService.getProjects(this.authService.decodedToken.nameid, this.searchTerm).subscribe((response: Project[]) => {
       this.projects = response;
     }, error => {
-      console.log(error);
+      this.snackBar.openSnackBar(error, 'error', 5000);
     });
   }
 

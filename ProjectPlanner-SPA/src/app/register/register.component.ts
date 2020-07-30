@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../_models/user';
@@ -13,6 +13,8 @@ import { AppDateAdapter, APP_DATE_FORMATS } from '../_helpers/format-datepicker'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
+
   hidePwd = true;
   hideCPwd = true;
   registerForm: FormGroup;
@@ -21,6 +23,8 @@ export class RegisterComponent implements OnInit {
   imageSrc: string;
   selectedPhoto: File;
   dateOfBirth: string;
+
+  registrationSuccessful = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private router: Router, private snackBar: MySnackBarService) { }
 
@@ -94,11 +98,8 @@ export class RegisterComponent implements OnInit {
       }, error => {
           this.snackBar.openSnackBar(error, 'error', 5000);
       }, () => {
-          this.authService.login(this.registerForm.value).subscribe(() => {
-            this.router.navigate(['/projects']);
-          }, error => {
-            this.snackBar.openSnackBar(error, 'error', 5000);
-          });
+          this.registrationSuccessful = true;
+          this.formGroupDirective.resetForm();
       });
     }
   }

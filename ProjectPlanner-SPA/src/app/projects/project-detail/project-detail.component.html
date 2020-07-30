@@ -23,7 +23,10 @@
 </div>
 <div class="container" ngClass.xs="containerXs">
   <div *ngIf="authService.currentUser.id === project.ownerId">
-    <button mat-raised-button color="primary" (click)="toggleForm()">New Todo <mat-icon>add</mat-icon></button>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+      <button mat-raised-button [routerLink]="['/projects']" color="accent">Back to list</button>
+      <button mat-raised-button color="primary" (click)="toggleForm()">New Todo <mat-icon>add</mat-icon></button>
+    </div>
     <form [formGroup]="newTodoForm" (ngSubmit)="create()" class="create-form" *ngIf="panelOpenState" [@inOutAnimation]
       fxLayout="column" fxLayoutAlign="center">
       <mat-form-field appearance="outline" class="form-field" color="primary">
@@ -63,6 +66,11 @@
     </form>
   </div>
 </div>
+
+<div *ngIf="project.todos.length < 1" style="margin-top: 20px;">
+  <h2 style="text-align:center">There are no todos yet</h2>
+</div>
+
 <div class="container" ngClass.xs="containerXs" fxLayout="column" fxLayoutGap="30px">
   <div *ngFor="let todo of project.todos; index as i">
     <app-todo-card [todo]="todo" [index]="i"></app-todo-card>

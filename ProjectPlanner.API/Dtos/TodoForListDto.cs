@@ -17,6 +17,6 @@ namespace ProjectPlanner.API.Dtos
         public string Status { get; set; }
         public string ProjectId { get; set; }
         public ProjectForListDto Project { get; set; }
-        public ICollection<TodoMessageForListDto> Messages { get; set; }
+        public HashSet<TodoMessageForListDto> Messages { get; set; }
     }
 }

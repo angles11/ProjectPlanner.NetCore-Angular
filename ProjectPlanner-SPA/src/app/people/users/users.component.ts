@@ -39,7 +39,7 @@ export class UsersComponent implements OnInit {
     {
       value: 'nameDescending',
       viewValue: 'Name',
-      viewIcon: 'arrow_drop_downa'
+      viewIcon: 'arrow_drop_down'
     },
     {
       value: 'positionAscending',

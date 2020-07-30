@@ -13,7 +13,9 @@ using Microsoft.IdentityModel.Tokens;
 using ProjectPlanner.API.Data;
 using ProjectPlanner.API.Helpers;
 using ProjectPlanner.API.Models;
+using ProjectPlanner.API.Services.EmailConfirmation;
 using ProjectPlanner.API.Services.PhotoUploader;
+using System;
 using System.Net;
 using System.Text;
 
@@ -36,8 +38,16 @@ namespace ProjectPlanner.API
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
+                options.SignIn.RequireConfirmedEmail = true;
+                options.User.RequireUniqueEmail = true;
 
-            }).AddEntityFrameworkStores<DataContext>();
+            }).AddEntityFrameworkStores<DataContext>()
+            .AddDefaultTokenProviders();
+
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromDays(1);
+            });
 
             services.AddDbContext<DataContext>(x =>
             {
@@ -63,18 +73,21 @@ namespace ProjectPlanner.API
                    options.TokenValidationParameters = new TokenValidationParameters
                    {
                        ValidateIssuerSigningKey = true,
-                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["AppSettings:Token"])),
                        ValidateIssuer = false,
                        ValidateAudience = false
                    };
                });
 
             services.Configure<PhotoUploaderSettings>(Configuration.GetSection("PhotoUploaderSettings"));
-            
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSenderSettings"));
+
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddSingleton<IPhotoUploader, PhotoUploader>();
-           
+
+            services.AddScoped<LogUserActivity>();
+            services.AddSingleton<IEmailSender, EmailSender>();
 
         }
 
@@ -110,8 +123,6 @@ namespace ProjectPlanner.API
             app.UseAuthentication();
 
             app.UseAuthorization();
-
-           
 
             app.UseEndpoints(endpoints =>
             {

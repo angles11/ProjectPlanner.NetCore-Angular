@@ -20,8 +20,10 @@ namespace ProjectPlanner.API.Dtos
         [Required]
         public string Gender { get; set; }
         [Required]
+        [StringLength(15, MinimumLength = 8, ErrorMessage = "The knownAs must be between 8 and 15 characters.")]
         public string KnownAs { get; set; }
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }

@@ -30,7 +30,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { TimeagoModule } from 'ngx-timeago';
+
 
 
 
@@ -58,6 +60,12 @@ import { ProjectDetailResolver } from './resolvers/project-detail.resolver';
 import { ProjectDetailComponent } from './projects/project-detail/project-detail.component';
 import { TodoCardComponent } from './projects/project-detail/todo-card/todo-card.component';
 import { MessagesDialogComponent } from './projects/project-detail/messages-dialog/messages-dialog.component';
+import { ConfirmEmailComponent } from './register/confirm-email/confirm-email.component';
+import { FooterComponent } from './footer/footer.component';
+import { AccountComponent } from './account/account.component';
+import { AccountResolver } from './resolvers/account.resolver';
+
+
 
 
 
@@ -85,7 +93,10 @@ export function tokenGetter() {
       ProjectCardComponent,
       ProjectDetailComponent,
       TodoCardComponent,
-      MessagesDialogComponent
+      MessagesDialogComponent,
+      ConfirmEmailComponent,
+      FooterComponent,
+      AccountComponent
    ],
    imports: [
       BrowserModule,
@@ -116,6 +127,7 @@ export function tokenGetter() {
       MatDialogModule,
       MatBadgeModule,
       MatExpansionModule,
+      MatProgressBarModule,
       TimeagoModule.forRoot(),
       JwtModule.forRoot({
          config: {
@@ -133,7 +145,8 @@ export function tokenGetter() {
       FriendsResolver,
       UsersResolver,
       ProjectsListResolver,
-      ProjectDetailResolver
+      ProjectDetailResolver,
+      AccountResolver
    ],
    bootstrap: [
       AppComponent

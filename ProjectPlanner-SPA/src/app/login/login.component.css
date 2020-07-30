@@ -1,19 +1,19 @@
-
 .login-form {
-    padding: 40px 10px;
-    box-shadow: 2px -2px 10px #8a858a;
+  padding: 40px 10px;
+  box-shadow: 2px -2px 10px #8a858a;
+  border-top: 5px solid #283593;
+  border-radius: 5px;
 }
 
 .form-field {
-    width: 100%;
+  width: 100%;
 
 }
 
 .mat-form-field.mat-form-field {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .mat-raised-button {
-    width: 100%;
+  width: 100%;
 }
-

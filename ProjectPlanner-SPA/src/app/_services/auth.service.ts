@@ -38,4 +38,8 @@ constructor(private http: HttpClient) { }
   register(model: any) {
     return this.http.post(this.baseUrl + 'register', model);
   }
+
+  confirmEmail(email: string, token: string) {
+    return this.http.post(this.baseUrl + 'confirm'  , {token, email});
+  }
 }

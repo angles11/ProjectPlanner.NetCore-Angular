@@ -21,7 +21,7 @@ namespace ProjectPlanner.API.Models
         public string PhotoUrl { get; set; }
         public ICollection<Project> OwnedProjects { get; set; }
 
-        //a new model is required for a many to many relationship in EF Core.
+        //A new entity is required for a many to many relationship in EF Core.
         public ICollection<Collaboration> CollaboratedProjects { get; set; }
 
         public ICollection<Friendship> FriendshipSent { get; set; }

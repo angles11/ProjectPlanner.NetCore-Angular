@@ -4,39 +4,33 @@ import { User } from 'src/app/_models/user';
 import { AuthService } from 'src/app/_services/auth.service';
 import { ProjectService } from 'src/app/_services/project.service';
 import { MySnackBarService } from 'src/app/_notifications/my-snackBar.service';
-import { trigger, transition, style, animate } from '@angular/animations';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, ConfirmDialogComponent } from 'src/app/_notifications/confirm-dialog/confirm-dialog.component';
+import { Animations } from 'src/app/_helpers/animations';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-project-card',
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.css'],
   animations: [
-    trigger(
-      'inOutAnimation',
-      [
-        transition(':enter', [
-          style({ transform: 'translateY(-100%)', opacity: 0 }),
-          animate('500ms', style({ transform: 'translateY(0)', opacity: 1 }))
-        ]),
-        transition(':leave', [
-          style({ transform: 'translateY(0)', opacity: 1 }),
-          animate('500ms', style({ transform: 'translateY(100%)', opacity: 0 }))
-        ]
-        )
-      ]
-    )
+    Animations.inOutAnimation,
+    Animations.expandAnimation
   ]
+
 })
 export class ProjectCardComponent implements OnInit {
 
   @Input() project: Project;
   @Input() friends: User[];
+  @Input() index: number;
 
   @Output() deletedEvent = new EventEmitter<any>();
 
+  progressBarValue = 0;
+
+  panelContentOpenState = false;
   filteredFriends: User[];
   panelOpenState = false;
   editProjectForm: FormGroup;
@@ -47,12 +41,21 @@ export class ProjectCardComponent implements OnInit {
 
   ngOnInit() {
     this.filterFriends();
+    this.updateProgressBar();
   }
 
   filterFriends() {
     this.filteredFriends = this.friends.filter(f => !this.project.collaborators.find(c => c.id === f.id));
   }
 
+  updateProgressBar() {
+    setInterval(() => {
+      if (this.progressBarValue < this.project.completedPercentage) {
+        console.log(this.progressBarValue);
+        this.progressBarValue++;
+      }
+    }, 10);
+  }
   addProjectCollaborator(friendId: string) {
     this.projectService.addCollaborator(
       this.authService.decodedToken.nameid, this.project.id, friendId
@@ -63,6 +66,11 @@ export class ProjectCardComponent implements OnInit {
     }, error => {
       this.snackBar.openSnackBar(error, 'error', 5000);
     });
+  }
+
+   togglePanelContent() {
+     this.panelContentOpenState = !this.panelContentOpenState;
+     this.panelOpenState = false;
   }
 
   removeCollaborator(collaboratorId: string) {
@@ -92,6 +100,8 @@ export class ProjectCardComponent implements OnInit {
       }
     });
   }
+
+
 
   createEditProjectForm() {
     this.editProjectForm = this.fb.group({

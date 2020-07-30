@@ -1,5 +1,24 @@
-<div class="container" ngClass.xs="containerXs">
-  <button mat-raised-button color="primary" (click)="toggleForm()">New Project <mat-icon>add</mat-icon></button>
+<div class="header" fxLayout="column" fxLayoutGap="20px">
+  <h1 class="mat-display-1">Projects</h1>
+  <h3>Manage your projects</h3>
+</div>
+
+<div class="container" ngClass.xs="containerXs" fxLayout="column">
+  <div class="container-top" fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-raised-button color="primary" (click)="toggleForm()" fxFlex="25%" fxFlex.xs="35%">New Project <mat-icon>
+        add</mat-icon>
+    </button>
+    <mat-form-field appearance="outline" color="accent" class="form-field" fxFlex="40%" fxFlex.xs="50%">
+      <mat-icon matSuffix color="accent">search</mat-icon>
+      <mat-label>Search</mat-label>
+      <input type="text" placeholder="Title" matInput [(ngModel)]="searchTerm" name="searchTerm"
+        (keyup)="loadProjects()">
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="projects.length < 1 && searchTerm.length < 1" style="margin-top: 20px;">
+    <h2 style="text-align:center">You have no projects yet. Create one!</h2>
+  </div>
 
   <form [formGroup]="newProjectForm" (ngSubmit)="create()" class="create-form" *ngIf="panelOpenState" [@inOutAnimation]
     fxLayout="column" fxLayoutAlign="center">
@@ -38,14 +57,6 @@
       <button mat-raised-button type="submit" color="accent" [disabled]="!newProjectForm.valid">Create</button>
     </div>
   </form>
-  <div class="filters-container" fxLayout="row" fxLayout.xs="column" style="margin-top: 20px">
-    <mat-form-field appearance="outline" color="accent" fxFlex="35" class="form-field">
-      <mat-icon matSuffix color="accent">search</mat-icon>
-      <mat-label>Search</mat-label>
-      <input type="text" placeholder="Title" matInput [(ngModel)]="searchTerm" name="searchTerm"
-        (keyup)="loadProjects()">
-    </mat-form-field>
-  </div>
 
   <div *ngIf="searchTerm.length !== 0 && projects.length < 1" class="alert-message">
     <p style="margin-bottom: 0">There are no projects with a title containing <strong>{{searchTerm}}</strong> </p>
@@ -57,8 +68,9 @@
   </div>
 
   <div class="projects-container" fxLayout="column" fxLayoutGap="20px">
-    <div class="project-card" *ngFor="let project of projects">
-      <app-project-card [project]="project" [friends]="acceptedFriends" (deletedEvent)="onDeleted($event)">
+    <div class="project-card" *ngFor="let project of projects; index as i">
+      <app-project-card [project]="project" [friends]="acceptedFriends" [index]="i" (deletedEvent)="onDeleted($event)"
+        [@inOutAnimation]>
       </app-project-card>
     </div>
   </div>

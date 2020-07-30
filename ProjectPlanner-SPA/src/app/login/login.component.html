@@ -1,28 +1,33 @@
-<div class="form-container" fxLayout="row" fxLayoutAlign="center center">
-  <div class="form-content" fxFlex="40%" fxFlex.lt-sm="100%">
-    <h1>Login</h1>
-    <form (ngSubmit)="login()" #loginForm="ngForm" class="login-form" fxLayout="column" fxLayoutAlign="center center">
-      <mat-form-field appearance="outline" class="form-field" color="primary">
-        <mat-label>Username</mat-label>
-        <input type="text" name="username" required [(ngModel)]="model.username" #username=ngModel matInput>
-        <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">Please enter a Username</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="form-field" color="primary">
-        <mat-label>Password</mat-label>
-        <input [type]="hide ? 'password' : 'text'" name="password" required [(ngModel)]="model.password" matInput #password=ngModel>
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-        <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">Please enter a password</mat-error>
-      </mat-form-field>
-      <div class="submit-button" style="width: 50%">
-        <button type="submit" [disabled]="!loginForm.valid" mat-raised-button color="primary">Login</button>
+<div class="container" ngClass.xs="containerXs">
+  <div class="form-container" fxLayout="row" fxLayoutAlign="center center" style="margin-top: 50px;">
+    <div class="form-content" fxFlex="40%" fxFlex.lt-sm="100%">
+      <h1>Login</h1>
+      <form (ngSubmit)="login()" #loginForm="ngForm" class="login-form" fxLayout="column" fxLayoutAlign="center center">
+        <mat-form-field appearance="outline" class="form-field" color="primary">
+          <mat-label>Username</mat-label>
+          <input type="text" name="username" required [(ngModel)]="model.username" #username=ngModel matInput>
+          <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">Please enter a Username
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field" color="primary">
+          <mat-label>Password</mat-label>
+          <input [type]="hide ? 'password' : 'text'" name="password" required [(ngModel)]="model.password" matInput
+            #password=ngModel>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">Please enter a password
+          </mat-error>
+        </mat-form-field>
+        <div class="submit-button" style="width: 50%">
+          <button type="submit" [disabled]="!loginForm.valid" mat-raised-button color="primary">Login</button>
+        </div>
+      </form>
+      <br>
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+        <span> Not a member? </span><a mat-button [routerLink]="['/register']" color="primary">Register now</a>
       </div>
-    </form>
-    <br>
-    <div  fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
-      <span > Not a member? </span><a mat-button [routerLink]="['/register']" color="primary">Register now</a>
     </div>
   </div>
 </div>

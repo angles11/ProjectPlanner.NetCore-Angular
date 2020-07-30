@@ -6,8 +6,9 @@
       </button>
       <span>Project Planner </span>
       <span class="example-spacer"></span>
-      <div fxShow="true" fxHide.lt-md="true" *ngIf="loggedIn()">
-        <span>Hello {{authService.currentUser.knownAs}}</span>
+      <div fxShow="true" fxHide.lt-md="true" *ngIf="loggedIn()" class="user-greeting">
+        <span>Hello, {{authService.currentUser.knownAs}}</span>
+        <img src="{{authService.currentUser.photoUrl}}">
       </div>
       <span class="example-spacer"></span>
       <div fxShow="true" fxHide.lt-md="true" *ngIf="loggedIn()">
@@ -24,7 +25,7 @@
           <mat-icon>account_circle</mat-icon> My Account <mat-icon>keyboard_arrow_down</mat-icon>
         </a>
         <mat-menu #account="matMenu">
-          <a mat-menu-item>Edit Account</a>
+          <a mat-menu-item [routerLink]="['/account']">Edit Account</a>
           <a mat-menu-item (click)="logout()">Logout</a>
         </mat-menu>
       </div>
@@ -57,7 +58,7 @@
           My Account <mat-icon>keyboard_arrow_right</mat-icon>
         </a>
         <mat-menu #accountSidenav="matMenu" xPosition="before">
-          <a mat-menu-item>Edit Account</a>
+          <a mat-menu-item [routerLink]="['/account']">Edit Account</a>
           <a mat-menu-item>Logout</a>
         </mat-menu>
         <a (click)="sidenav.toggle()" mat-list-item>
@@ -65,8 +66,11 @@
         </a>
       </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content fxFlexFill>
-      <router-outlet></router-outlet>
+    <mat-sidenav-content fxLayout="column" fxFlexFill>
+      <div [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet"></router-outlet>
+      </div>
+      <app-footer fxFlexOffset="auto"></app-footer>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

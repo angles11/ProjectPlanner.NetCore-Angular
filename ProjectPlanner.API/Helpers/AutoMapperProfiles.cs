@@ -13,15 +13,16 @@ namespace ProjectPlanner.API.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<UserForRegisterDto, User>();
-            CreateMap<User, UserForReturnDto>();
+            CreateMap<User, UserForDetailedDto>();
             CreateMap<User, UserForListDto>();
-            CreateMap<Friend, FriendToReturnDto>();
-            CreateMap<ProjectForCreationDto, Project>();
-            CreateMap<Project, ProjectForListDto>();           
-            //https://stackoverflow.com/questions/6781795/automapper-mapping-a-collection-of-object-to-a-collection-of-strings
 
+            CreateMap<Friend, FriendToReturnDto>();
+
+            CreateMap<ProjectForCreationDto, Project>();
             CreateMap<Project, ProjectForListDto>()
-                .ForMember(dest => dest.Collaborators, opt => opt.MapFrom(src => src.Collaborations.Select(c => c.User).ToList()));
+                .ForMember(dest => dest.Collaborators, opt => opt.MapFrom(src => src.Collaborations.Select(c => c.User).ToList()))
+                .ForMember(dest => dest.CompletedPercentage, opt => opt.MapFrom(src => src.Todos.CalculatePercentage())) // Get the percentage of completed todos.
+                .ForMember(dest => dest.LastMessage, opt => opt.MapFrom(src => src.Todos.GetLastMessage())); // Get the last message created between all todos.
 
             CreateMap<Todo, TodoForListDto>();         
             CreateMap<TodoForCreationDto, Todo>();

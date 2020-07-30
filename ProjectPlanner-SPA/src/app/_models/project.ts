@@ -1,5 +1,6 @@
 import { User } from './user';
 import { Todo } from './todo';
+import { TodoMessage } from './todoMessage';
 
 export interface Project {
     id: number;
@@ -10,7 +11,9 @@ export interface Project {
     estimatedDate: Date;
     modified: Date;
     owner: User;
+    completedPercentage: number;
     ownerId: string;
     collaborators: User[];
     todos: Todo[];
+    lastMessage: TodoMessage;
 }

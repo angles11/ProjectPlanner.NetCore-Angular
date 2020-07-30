@@ -1,41 +1,30 @@
-.card-header {
-  background-color: #4a148c;
+.project-card {
+  background-color: #e9ecef;
+  padding: 20px;
+  box-shadow: 2px 2px 8px 2px #a3a0a3;
+  color: #1e457c;
+  border-top: 5px solid #880e4f;
+  border-radius: 5px;
+}
+
+.project-card span {
+  font-weight: 700;
+  color: #00838f;
+}
+
+.project-card-header {
+  cursor: pointer;
+}
+
+.project-card .title-section {
+  background-color: #283593;
   color: white;
-  display: flex;
+  border-radius: 5px;
+  padding: 10px;
 }
 
-.card-header:hover {
-  background-color: #880e4f !important;
-}
-
-.card-header:focus {
-  background-color: #4a148c !important;
-}
-
-
-.card-header .mat-expansion-panel-header-title {
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-}
-
-.card-header .mat-expansion-panel-header-description {
-  color: white;
-  font-weight: lighter;
-}
-
-::ng-deep .mat-expansion-indicator::after,
-.mat-expansion-panel-header-description {
-  color: white;
-}
-
-::ng-deep .mat-expansion-panel-content {
-  background-color: #eeee;
-}
-
-.expansion-panel-content {
-  padding: 10px 0px;
+.project-card .title-section h1 {
+  margin-bottom: 0;
 }
 
 .owner-section {
@@ -54,11 +43,6 @@
 .description-section p {
   margin-bottom: 0;
   color: white;
-}
-
-.expansion-panel-content span {
-  font-weight: 700;
-  color: #00838f;
 }
 
 .owner-section p {
@@ -114,6 +98,18 @@
   margin-right: 10px;
 }
 
+.message {
+  color: white !important;
+  background-color: #00838f;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.message .message-title img {
+  border-radius: 50%;
+  width: 20px;
+}
+
 ::ng-deep .mat-menu-item {
   display: flex;
   align-items: center;
@@ -126,9 +122,7 @@
   margin-top: 20px;
   border-radius: 5px;
   box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
-    0px 24px 38px 3px rgba(0, 0, 0, 0.14),
-    0px 9px 46px 4px rgba(0, 0, 0, 0.12);
-
+    0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 4px rgba(0, 0, 0, 0.12);
 }
 
 .mat-label {
@@ -144,4 +138,24 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 12px;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #00838f;
+}
+
+::ng-deep .mat-progress-bar {
+  height: 8px !important;
+}
+
+::ng-deep .mat-progress-bar-fill {
+  transition: none !important;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background: #e4e8eb;
+}
+
+::ng-deep .mat-progress-bar {
+  border-radius: 2px;
 }

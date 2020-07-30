@@ -19,6 +19,9 @@ export class UserService {
     return this.http.get(this.baseUrl + 'user/' + userId + '/friends');
   }
 
+  getUser(userId: string): Observable<User> {
+    return this.http.get<User>(this.baseUrl + 'user/' + userId);
+  }
   getUsers(userId: string, pageIndex?, itemsPerPage?, searchTerm?, userParams?): Observable<PaginatedResult<User[]>> {
 
     const paginatedResult: PaginatedResult<User[]> = new PaginatedResult<User[]>();
@@ -63,5 +66,17 @@ export class UserService {
     const params = new HttpParams()
       .set('status', status);
     return this.http.put(this.baseUrl + 'user/' + userId + '/friends/' + userId2, {});
+  }
+
+  editAccount(userId: string, user: User) {
+    return this.http.put(this.baseUrl + 'user/' + userId, user);
+  }
+
+  changePhoto(userId: string, photo: any) {
+    return this.http.patch(this.baseUrl + 'user/' + userId, photo);
+  }
+
+  changePassword(userId: string, data: any) {
+    return this.http.patch(this.baseUrl + 'user/' + userId + '/password', data);
   }
 }

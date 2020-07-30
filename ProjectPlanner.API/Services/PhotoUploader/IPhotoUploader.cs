@@ -9,5 +9,7 @@ namespace ProjectPlanner.API.Services.PhotoUploader
     public interface IPhotoUploader
     {
         Task<string> UploadPhotoAsync(IFormFile photo);
+
+        Task<bool> DeletePhotoAsync(string photoUrl);
     }
 }

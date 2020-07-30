@@ -27,7 +27,7 @@
         </ng-template>
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" class="friends-tab">
           <div *ngIf="friendRequestsReceived.length < 1" fxFlex="100" class="alert-message">
-            <p>You have no friend requests <strong>received</strong></p>
+            <p>You have no new <strong>friend requests</strong></p>
           </div>
           <div *ngFor="let friend of friendRequestsReceived" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22"
             fxFlex.sm="40">

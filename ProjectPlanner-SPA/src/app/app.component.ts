@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from './_services/auth.service';
 import { User } from './_models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { slideInAnimation } from './_helpers/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [slideInAnimation]
 })
 export class AppComponent implements OnInit{
   title = 'ProjectPlanner-SPA';
@@ -35,6 +37,10 @@ export class AppComponent implements OnInit{
 
   loggedIn() {
     return this.authService.loggedIn();
+  }
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 }
 

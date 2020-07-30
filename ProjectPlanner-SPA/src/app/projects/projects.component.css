@@ -1,3 +1,10 @@
+.header {
+  background-color: #e9ecef;
+  color: #283593;
+  padding: 20px 10px;
+  border-bottom: 1px solid #283593;
+}
+
 .create-form {
   padding: 20px;
   background-color: white;
@@ -7,6 +14,10 @@
     0px 24px 38px 3px rgba(0, 0, 0, 0.14),
     0px 9px 46px 4px rgba(0, 0, 0, 0.12);
 
+}
+
+::ng-deep .container-top .mat-form-field-wrapper {
+  padding: 0;
 }
 
 .mat-label {

@@ -10,6 +10,8 @@ namespace ProjectPlanner.API.Data
     public interface IUserRepository
     {
         public Task<bool> SaveAll();
+
+        public void EditUser(User user);
         public Task<User> GetUser(string userId);
         public Task<PagedList<User>> GetUsers(string userId, UserParams userParams);
         public Task AddFriend(Friendship friendship);

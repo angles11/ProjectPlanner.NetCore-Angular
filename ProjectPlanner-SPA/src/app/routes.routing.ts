@@ -11,33 +11,38 @@ import { UsersResolver } from './resolvers/users.resolver';
 import { ProjectsListResolver } from './resolvers/projects-list.resolver';
 import { ProjectDetailComponent } from './projects/project-detail/project-detail.component';
 import { ProjectDetailResolver } from './resolvers/project-detail.resolver';
+import { ConfirmEmailComponent } from './register/confirm-email/confirm-email.component';
+import { AccountComponent } from './account/account.component';
+import { AccountResolver } from './resolvers/account.resolver';
 
 export const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent, data: { animation: 'LoginPage' }},
+  { path: 'register', component: RegisterComponent, data: { animation: 'RegisterPage' } },
+  {path: 'account', component: AccountComponent, canActivate:[AuthGuard], resolve: {user: AccountResolver} },
+  {path: 'register/ConfirmEmail', component: ConfirmEmailComponent},
   {
-    path: '', component: ProjectsComponent, pathMatch: 'full', canActivate: [AuthGuard],
+    path: '', component: ProjectsComponent, pathMatch: 'full', canActivate: [AuthGuard],  data: {animation: 'ProjectsPage'},
     resolve: { projects: ProjectsListResolver, friends: FriendsResolver }
   },
   {
-    path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard],
+    path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard], data: {animation: 'ProjectsPage'},
     resolve: { projects: ProjectsListResolver, friends: FriendsResolver }
   },
   {
-    path: 'projects/:id', component: ProjectDetailComponent, canActivate: [AuthGuard],
+    path: 'projects/:id', component: ProjectDetailComponent, canActivate: [AuthGuard], data: {animation: 'ProjectPage'},
     resolve: {project: ProjectDetailResolver}
   },
   {
-    path: 'people', component: PeopleComponent, canActivate: [AuthGuard],
+    path: 'people', component: PeopleComponent, canActivate: [AuthGuard], data: {animation: 'PeoplePage'},
     children: [
       {
         path: '', redirectTo: 'friends', pathMatch: 'full'
       },
       {
-        path: 'friends', component: FriendsComponent, resolve: { friends: FriendsResolver }
+        path: 'friends', component: FriendsComponent, data: {animation: 'FriendsPage'}, resolve: { friends: FriendsResolver }
       },
       {
-        path: 'users', component: UsersComponent, resolve: { users: UsersResolver }
+        path: 'users', component: UsersComponent, data: {animation: 'UsersPage'}, resolve: { users: UsersResolver }
       }
     ]
   }
