@@ -6,7 +6,7 @@ _A tool for managing your own projects or collaborate into others_
  * _Manage the status of each Task._
  * _Add messages to mantain a communication with all the collaborators._
  
- ## Tecnologies used: 
+ ## Tecnologies used: 🛠️
  
 * [Asp .Net Core 3.1](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1) - Web API.
 * [Angular 9](https://angular.io/) - Single Page Application.
