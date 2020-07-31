@@ -112,6 +112,10 @@ namespace ProjectPlanner.API.Controllers
         [HttpPut("{projectId}")]
         public async Task<IActionResult> EditProject(string userId, int projectId, ProjectForCreationDto project)
         {
+            if (userId != _userManager.GetUserId(User))
+            {
+                return Unauthorized();
+            }
             // Get the project from the repository.
             var projectFromRepo = await _projectRepository.GetProject(projectId);
             if (projectFromRepo == null)

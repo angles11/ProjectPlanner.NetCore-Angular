@@ -106,7 +106,38 @@ namespace ProjectPlanner.API.Controllers
 
             return BadRequest();
         }
+            
 
+        /// <summary>
+        /// Delete a Todo that matches the Id.
+        /// </summary>
+        /// <param name="userId"> Id of the user. </param>
+        /// <param name="projectId"> Id of the project containing the Todo. </param>
+        /// <param name="todoId"> Id of the Todo to be deleted. </param>
+        /// <returns> No Content Result. </returns>
+        [HttpDelete("{todoId}")]
+        public async Task<IActionResult> DeleteTodo(string userId, int projectId, int todoId)
+        {
+            if (userId != _userManager.GetUserId(User))
+                return Unauthorized();
+
+            var project = await _projectRepository.GetProject(projectId);
+
+            var todo = await _projectRepository.GetTodo(todoId);
+
+            if (project == null || todo == null)
+                return NotFound();
+
+            if (project.OwnerId != userId)
+                return Unauthorized("You have no permission to perform this action.");
+
+            _projectRepository.Delete(todo);
+
+            if (await _projectRepository.SaveAll())
+                return NoContent();
+
+            return BadRequest("Something happened.");
+        }
 
         /// <summary>
         ///  Creates a message entity between a Todo and a user.

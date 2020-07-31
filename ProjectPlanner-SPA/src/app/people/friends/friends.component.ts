@@ -21,7 +21,7 @@ export class FriendsComponent implements OnInit {
   numbers = [1, 2, 3, 4, 5, 6];
 
   constructor(private authService: AuthService, private userService: UserService,
-    private route: ActivatedRoute, private snackBar: MySnackBarService) { }
+              private route: ActivatedRoute, private snackBar: MySnackBarService) { }
 
   ngOnInit() {
     this.route.data.subscribe((data) => {

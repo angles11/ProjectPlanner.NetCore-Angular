@@ -61,24 +61,4 @@
 
     </mat-tab-group>
   </mat-tab>
-  <!--
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <span matBadge="{{friendRequestsSent.length}}" matBadgeOverlap="false">Requests Sent</span>
-    </ng-template>
-
-    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" class="tab-container">
-      <div *ngIf="friendRequestsSent.length < 1" fxFlex="100">
-        <p class="message-empty">You have no <strong>friend requests</strong> sent</p>
-      </div>
-      <div class="friend-card" *ngFor="let friend of friendRequestsSent" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22"
-        fxFlex.sm="30">
-        <app-friend-card [friend]="friend" [type]="'pending'" (changedEvent)="onChangedStatus($event)">
-        </app-friend-card>
-      </div>
-      <div *ngFor="let number of numbers" fxFlex.xl="13" fxFlex.lg="15" fxFlex.md="22" fxFlex.sm="30"
-        style="height: 0px;">
-      </div>
-    </div>
-  </mat-tab> -->
 </mat-tab-group>

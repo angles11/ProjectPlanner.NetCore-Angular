@@ -258,6 +258,7 @@ namespace ProjectPlanner.API.Controllers
             user.Position = dto.Position;
             user.Experience = dto.Experience;
             user.Gender = dto.Gender;
+            user.Employer = dto.Employer;
 
              _userRepository.EditUser(user);
 

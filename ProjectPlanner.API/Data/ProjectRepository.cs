@@ -47,6 +47,7 @@ namespace ProjectPlanner.API.Data
         // if there is no match, returns null.
         public async Task<Project> GetProject(int projectId)
         {
+
             return await _dataContext.Projects.Include(p => p.Owner)
                 .Include(p => p.Todos).ThenInclude(t => t.Messages).ThenInclude(m => m.User)
                 .Include(p => p.Collaborations).ThenInclude(c => c.User).FirstOrDefaultAsync(p => p.Id == projectId);

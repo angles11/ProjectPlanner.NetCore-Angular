@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Todo } from 'src/app/_models/todo';
 import { TodoService } from 'src/app/_services/todo.service';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -20,13 +20,16 @@ export class TodoCardComponent implements OnInit {
 
   @Input() todo: Todo;
   @Input() index: number;
+  @Input() ownerId: string;
+
+  @Output() deletedEvent = new EventEmitter<number>();
 
   status: string;
   panelOpenState = false;
   lastMessage: TodoMessage;
   newMessage: string;
 
-  constructor(private todoService: TodoService, private authService: AuthService,
+  constructor(private todoService: TodoService, public authService: AuthService,
               private snackBar: MySnackBarService, private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -65,5 +68,14 @@ export class TodoCardComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {messages: this.todo.messages, userId: this.authService.decodedToken.nameid};
     this.dialog.open(MessagesDialogComponent, dialogConfig);
+  }
+
+  deleteTodo() {
+    this.todoService.deleteTodo(this.authService.decodedToken.nameid, this.todo.projectId, this.todo.id).subscribe(() => {
+      this.snackBar.openSnackBar('Todo deleted successfully', 'success', 3000);
+      this.deletedEvent.emit(this.todo.id);
+    }, error => {
+        this.snackBar.openSnackBar(error, 'error', 5000);
+    });
   }
 }

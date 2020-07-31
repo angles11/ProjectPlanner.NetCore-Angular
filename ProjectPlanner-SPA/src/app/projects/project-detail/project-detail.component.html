@@ -73,6 +73,7 @@
 
 <div class="container" ngClass.xs="containerXs" fxLayout="column" fxLayoutGap="30px">
   <div *ngFor="let todo of project.todos; index as i">
-    <app-todo-card [todo]="todo" [index]="i"></app-todo-card>
+    <app-todo-card [todo]="todo" [index]="i" [ownerId]="project.ownerId" (deletedEvent)="onDeleted($event)">
+    </app-todo-card>
   </div>
 </div>

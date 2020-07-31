@@ -185,7 +185,7 @@ namespace ProjectPlanner.API.Data
 
         public void EditUser(User user)
         {
-            _dataContext.Update(user);
+            _dataContext.Users.Update(user);
         }
     }
 }

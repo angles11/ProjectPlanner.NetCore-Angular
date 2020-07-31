@@ -7,6 +7,7 @@ import { TodoService } from 'src/app/_services/todo.service';
 import { MySnackBarService } from 'src/app/_notifications/my-snackBar.service';
 import { Animations } from 'src/app/_helpers/animations';
 import { Todo } from 'src/app/_models/todo';
+import { ProjectService } from 'src/app/_services/project.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -19,8 +20,10 @@ export class ProjectDetailComponent implements OnInit {
   project: Project;
   panelOpenState = false;
   newTodoForm: FormGroup;
+
   constructor(private route: ActivatedRoute, private fb: FormBuilder,
-              public authService: AuthService, public todoService: TodoService, private snackBar: MySnackBarService) { }
+              public authService: AuthService, public todoService: TodoService,
+              private snackBar: MySnackBarService) { }
 
   ngOnInit() {
     this.route.data.subscribe((data) => {
@@ -55,5 +58,9 @@ export class ProjectDetailComponent implements OnInit {
     this.panelOpenState = !this.panelOpenState;
   }
 
+  onDeleted(event: number) {
+    const index = this.project.todos.findIndex(x => x.id === event);
+    this.project.todos.splice(index, 1);
+  }
 
 }

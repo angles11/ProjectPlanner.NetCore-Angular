@@ -83,11 +83,15 @@ export class AccountComponent implements OnInit {
   }
   editAccount() {
     if (this.accountForm.valid) {
-      this.user = Object.assign({}, this.accountForm.value);
+      this.user = Object.assign(this.authService.currentUser, this.accountForm.value);
       this.userService.editAccount(this.authService.decodedToken.nameid, this.user).subscribe(() => {
-        this.snackBar.openSnackBar("Account edited successfully", 'success', 3000);
+        this.snackBar.openSnackBar('Account edited successfully', 'success', 3000);
       }, error => {
         this.snackBar.openSnackBar(error, 'error', 5000);
+      }, () => {
+          console.log(this.user);
+          this.authService.currentUser = this.user;
+          this.updateUser();
       });
     }
   }
@@ -103,6 +107,7 @@ export class AccountComponent implements OnInit {
       this.snackBar.openSnackBar(error, 'error', 5000);
     }, () => {
         this.authService.currentUser.photoUrl = this.imageSrc;
+        this.updateUser();
     });
   }
 
@@ -114,5 +119,12 @@ export class AccountComponent implements OnInit {
         this.snackBar.openSnackBar(error, 'error', 5000);
       });
     }
+  }
+
+  updateUser() {
+    localStorage.setItem(
+            'user',
+            JSON.stringify(this.authService.currentUser)
+          );
   }
 }

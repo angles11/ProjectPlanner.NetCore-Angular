@@ -27,7 +27,7 @@ export class TodoService {
       'Content-Type': 'application/json'
     });
     const json = JSON.stringify(status);
-    return this.http.patch(this.baseUrl + userId + '/projects/' + projectId + '/todo/' + todoId, json, {headers: headers});
+    return this.http.patch(this.baseUrl + userId + '/projects/' + projectId + '/todo/' + todoId, json, {headers});
   }
 
   addMessage(userId: string, projectId: number, todoId: number, message: string) {
@@ -37,6 +37,10 @@ export class TodoService {
     const json = JSON.stringify(message);
 
     return this.http.post(this.baseUrl + userId + '/projects/' + projectId + '/todo/' + todoId, json, {headers});
+  }
+
+  deleteTodo(userId: string, projectId: number, todoId: number) {
+    return this.http.delete(this.baseUrl + userId + '/projects/' + projectId + '/todo/' + todoId);
   }
 
 }

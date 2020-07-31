@@ -75,8 +75,8 @@
             <mat-option value="Junior">Junior</mat-option>
             <mat-option value="Semi Senior">Semi Senior</mat-option>
             <mat-option value="Senior">Senior</mat-option>
-            <mat-option value="Senior">Team Lead</mat-option>
-            <mat-option value="Senior">Architect</mat-option>
+            <mat-option value="Team Lead">Team Lead</mat-option>
+            <mat-option value="Architect">Architect</mat-option>
           </mat-select>
           <mat-error *ngIf="accountForm.get('experience').hasError('required')">
             Experience is <strong>required</strong>
@@ -84,46 +84,11 @@
         </mat-form-field>
       </div>
 
-      <!-- <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
-        <mat-form-field appearance="outline" class="form-field" color="primary" fxFlex="50%">
-          <mat-label>Password</mat-label>
-          <input [type]="hidePwd ? 'password' : 'text'" matInput formControlName="password">
-          <button mat-icon-button matSuffix (click)="hidePwd = !hidePwd" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hidePwd" color="accent">
-            <mat-icon>{{hidePwd ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-          <mat-error *ngIf="accountForm.get('password').hasError('required')">
-            Password is <strong>required</strong>
-          </mat-error>
-          <mat-error
-            *ngIf="accountForm.get('password').hasError('minlength') || accountForm.get('password').hasError('maxlength')">
-            Password must be between <strong>8 and 25 </strong> characters
-          </mat-error>
-
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="form-field" color="primary" fxFlex="50%">
-          <mat-label>Confirm Password</mat-label>
-          <input [type]="hideCPwd ? 'password' : 'text'" matInput formControlName="confirmPassword">
-          <button mat-icon-button matSuffix (click)="hideCPwd = !hideCPwd" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hideCPwd" color="accent">
-            <mat-icon>{{hideCPwd ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-          <mat-error *ngIf="accountForm.get('confirmPassword').hasError('required')">
-            Confirm Password is <strong>required</strong>
-          </mat-error>
-          <mat-error *ngIf="accountForm.get('confirmPassword').hasError('passwordMismatch')">
-            Confirm password <strong>do not match </strong> provided password
-          </mat-error>
-        </mat-form-field>
-      </div> -->
-
       <div class="submit-button" fxLayout="row" fxLayoutAlign="center center">
         <button type="submit" mat-raised-button color="accent" [disabled]="!accountForm.valid" fxFlex="50%">Edit
           Account</button>
       </div>
-      <!-- <div class="confirm-email" *ngIf="registrationSuccessful">
-          <p>Your registration is successful. Please check your email for the <strong>confirmation link.</strong></p>
-        </div> -->
+
     </form>
     <h1 class="title">Change Profile Picture</h1>
     <div class="edit-form" fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="20px">
