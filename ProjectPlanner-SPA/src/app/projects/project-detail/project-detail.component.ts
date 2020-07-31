@@ -20,6 +20,7 @@ export class ProjectDetailComponent implements OnInit {
   project: Project;
   panelOpenState = false;
   newTodoForm: FormGroup;
+  minDate: Date;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder,
               public authService: AuthService, public todoService: TodoService,
@@ -31,13 +32,14 @@ export class ProjectDetailComponent implements OnInit {
     });
 
     this.createNewTodoForm();
+    this.minDate = new Date();
   }
 
   createNewTodoForm() {
     this.newTodoForm = this.fb.group({
-      title: ['', Validators.required],
-      shortDescription: ['', Validators.required],
-      longDescription: ['', Validators.required],
+      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
+      shortDescription: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]],
+      longDescription: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(300)]],
       estimatedDate: [null, Validators.required]
     });
   }
@@ -46,7 +48,8 @@ export class ProjectDetailComponent implements OnInit {
     if (this.newTodoForm.valid) {
       this.todoService.createTodo(this.authService.decodedToken.nameid, this.project.id, this.newTodoForm.value)
         .subscribe((response: Todo) => {
-        this.snackBar.openSnackBar('Todo added successfully', 'success', 5000);
+          this.snackBar.openSnackBar('Todo added successfully', 'success', 5000);
+          console.log(response);
         this.project.todos.push(response);
         this.panelOpenState = false;
       }, error => {

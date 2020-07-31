@@ -19,16 +19,16 @@ namespace ProjectPlanner.API.Models
         public string Experience { get; set; }
         public string Country { get; set; }
         public string PhotoUrl { get; set; }
-        public ICollection<Project> OwnedProjects { get; set; }
+        public virtual ICollection<Project> OwnedProjects { get; set; }
 
         //A new entity is required for a many to many relationship in EF Core.
-        public ICollection<Collaboration> CollaboratedProjects { get; set; }
+        public virtual ICollection<Collaboration> CollaboratedProjects { get; set; }
 
-        public ICollection<Friendship> FriendshipSent { get; set; }
+        public virtual ICollection<Friendship> FriendshipSent { get; set; }
 
-        public ICollection<Friendship> FriendshipReceived { get; set; }
+        public virtual ICollection<Friendship> FriendshipReceived { get; set; }
 
-        public ICollection<TodoMessage> TodoMessages { get; set; }
+        public virtual ICollection<TodoMessage> TodoMessages { get; set; }
 
     }
 }

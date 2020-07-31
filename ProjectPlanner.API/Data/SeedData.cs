@@ -30,7 +30,7 @@ namespace ProjectPlanner.API.Data
                 // Create an entity of a user for each object provided in the data file.
                 foreach (var user in users)
                 {
-                    userManager.CreateAsync(user, "asdasdas");
+                    userManager.CreateAsync(user, "Test1234-");
                 }
 
                 dataContext.SaveChanges();

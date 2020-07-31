@@ -48,16 +48,14 @@ namespace ProjectPlanner.API.Data
         public async Task<Project> GetProject(int projectId)
         {
 
-            return await _dataContext.Projects.Include(p => p.Owner)
-                .Include(p => p.Todos).ThenInclude(t => t.Messages).ThenInclude(m => m.User)
-                .Include(p => p.Collaborations).ThenInclude(c => c.User).FirstOrDefaultAsync(p => p.Id == projectId);
+            return await _dataContext.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
         }
 
         //Returns the Todo with id equals to the provided todo's id
         // if there is no match, returns null.
         public async Task<Todo> GetTodo(int todoId)
         {
-            return await _dataContext.Todos.Include(t => t.Project).Include(t => t.Messages).ThenInclude(m => m.User).FirstOrDefaultAsync(t => t.Id == todoId);
+            return await _dataContext.Todos.FirstOrDefaultAsync(t => t.Id == todoId);
         }
 
 
@@ -73,28 +71,10 @@ namespace ProjectPlanner.API.Data
         public async Task<ICollection<Project>> GetProjects(string userId, ProjectParams projectParams)
         {
             // Get all the projects that the user owns.
-            var ownedProjects = await _dataContext.Projects.Include(p => p.Owner)
-                                                           .Include(p => p.Collaborations)
-                                                                .ThenInclude(c => c.User)
-                                                            .Include(p => p.Todos)
-                                                                .ThenInclude(t => t.Messages)
-                                                                    .ThenInclude(m => m.User)
-                                                            .Where(p => p.OwnerId == userId)
-                                                            .ToListAsync();
+            var ownedProjects = await _dataContext.Projects.Where(p => p.OwnerId == userId).ToListAsync();
 
             // Get all the projects where the user is a collaborator.
-            var collaboratedProjects = await _dataContext.Collaborations.Include(c => c.Project)
-                                                                            .ThenInclude(p => p.Owner)
-                                                                        .Include(c => c.Project)
-                                                                            .ThenInclude(p => p.Collaborations)
-                                                                                .ThenInclude(c => c.User)
-                                                                         .Include(c => c.Project)
-                                                                            .ThenInclude(p => p.Todos)
-                                                                                .ThenInclude(t => t.Messages)
-                                                                                    .ThenInclude(m => m.User)
-                                                                        .Where(c => c.UserId == userId)
-                                                                        .Select(c => c.Project)
-                                                                        .ToListAsync();
+            var collaboratedProjects = await _dataContext.Collaborations.Where(c => c.UserId == userId).Select(c => c.Project).ToListAsync();
 
             // Concat the two lists.
             var projects = ownedProjects.Concat(collaboratedProjects);

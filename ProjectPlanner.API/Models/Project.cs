@@ -15,12 +15,12 @@ namespace ProjectPlanner.API.Models
         public DateTime Modified { get; set; }
         public DateTime EstimatedDate { get; set; }
         public string OwnerId { get; set; }
-        public User Owner { get; set; }
+        public virtual User Owner { get; set; }
 
         // A new entity is required for a many to many relationship in EF Core.
-        public ICollection<Collaboration> Collaborations { get; set; }
+        public virtual ICollection<Collaboration> Collaborations { get; set; }
 
-        public ICollection<Todo> Todos { get; set; }
+        public virtual ICollection<Todo> Todos { get; set; }
 
         public Project()
         {

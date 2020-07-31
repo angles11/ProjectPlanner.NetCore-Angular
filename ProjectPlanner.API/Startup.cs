@@ -51,6 +51,7 @@ namespace ProjectPlanner.API
 
             services.AddDbContext<DataContext>(x =>
             {
+                x.UseLazyLoadingProxies();
                 x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
 

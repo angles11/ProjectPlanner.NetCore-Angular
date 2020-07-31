@@ -15,6 +15,7 @@ namespace ProjectPlanner.API.Dtos
 
         [Required]
         [StringLength(20, MinimumLength = 8, ErrorMessage = "The password must be between 8 and 20 characters.")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]

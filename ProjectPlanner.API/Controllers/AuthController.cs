@@ -75,10 +75,7 @@ namespace ProjectPlanner.API.Controllers
             // If the result isn't successful, iterate from each error.
             foreach(var error in result.Errors)
             {
-                if (error.Code == "DuplicateUserName")
-                    return BadRequest(error.Description);
-                if (error.Code == "DuplicateEmail")
-                    return BadRequest(error.Description);
+                return BadRequest(error.Description);
             }
           
             return BadRequest("Something happened, try again");

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Security;
 using ProjectPlanner.API.Data;
 using ProjectPlanner.API.Dtos;
 using ProjectPlanner.API.Models;
@@ -21,12 +22,14 @@ namespace ProjectPlanner.API.Controllers
         private readonly IProjectRepository _projectRepository;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
 
-        public TodoController(IProjectRepository projectRepository, UserManager<User> userManager, IMapper mapper)
+        public TodoController(IProjectRepository projectRepository, UserManager<User> userManager, IMapper mapper, IUserRepository userRepository)
         {
             _projectRepository = projectRepository;
             _userManager = userManager;
             _mapper = mapper;
+            _userRepository = userRepository;
         }
 
         /// <summary>
@@ -87,13 +90,14 @@ namespace ProjectPlanner.API.Controllers
             todoForCreationDto.ProjectId = projectId;
 
             var todo = _mapper.Map<Todo>(todoForCreationDto);
-            var todoForReturn = _mapper.Map<TodoForListDto>(todo);
 
             _projectRepository.Add(todo);
         
 
             if (await _projectRepository.SaveAll())
             {
+                var todoForReturn = _mapper.Map<TodoForListDto>(todo);
+
                 _projectRepository.UpdateLastModified(project);
 
                 return CreatedAtRoute(
@@ -162,19 +166,25 @@ namespace ProjectPlanner.API.Controllers
             if (!await isOwnerOrCollaborator(userId, projectId))
                 return Unauthorized("Yo have no permission for this action");
 
+            var todo = await _projectRepository.GetTodo(todoId);
+            var user = await _userRepository.GetUser(userId);
+
+
             var messageToCreate = new TodoMessage()
             {
                 Message = message,
                 UserId = userId,
-                TodoId = todoId
+                TodoId = todoId,
+                User = user,
+                Todo = todo
             };
 
             _projectRepository.Add(messageToCreate);
 
+
+            var messageToReturn = _mapper.Map<TodoMessageForListDto>(messageToCreate);
             if (await _projectRepository.SaveAll())
             {
-                var messageToReturn = _mapper.Map<TodoMessageForListDto>(messageToCreate);
-
                 return CreatedAtRoute(
                     routeName: "GetMessage",
                     routeValues: new { userId, projectId, todoId, messageId = messageToCreate.Id },

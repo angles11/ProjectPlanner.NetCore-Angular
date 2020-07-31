@@ -9,13 +9,13 @@ namespace ProjectPlanner.API.Dtos
     public class TodoForCreationDto
     {
         [Required]
-        [StringLength(20, MinimumLength = 5, ErrorMessage = "The title must be between 3 and 15 characters.")]
+        [StringLength(20, MinimumLength = 5, ErrorMessage = "The title must be between 5 and 20 characters.")]
         public string Title { get; set; }
         [Required]
-        [StringLength(50, MinimumLength = 10, ErrorMessage = "The short description must be between 3 and 15 characters.")]
+        [StringLength(50, MinimumLength = 10, ErrorMessage = "The short description must be between 10 and 50 characters.")]
         public string ShortDescription { get; set; }
         [Required]
-        [StringLength(200, MinimumLength = 20, ErrorMessage = "The long description must be between 3 and 15 characters.")]
+        [StringLength(300, MinimumLength = 20, ErrorMessage = "The long description must be between 20 and 300 characters.")]
         public string LongDescription { get; set; }
         public DateTime EstimatedDate { get; set; }
         public int ProjectId { get; set; }

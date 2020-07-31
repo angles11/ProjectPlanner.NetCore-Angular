@@ -61,7 +61,7 @@ namespace ProjectPlanner.API.Data
         /// </returns>
         public async Task<ICollection<Friendship>> GetFriendships(string userId)
         {
-            var friendships = await _dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient).Where(f => f.SenderId == userId || f.RecipientId == userId).ToListAsync();
+            var friendships = await _dataContext.Friendships.Where(f => f.SenderId == userId || f.RecipientId == userId).ToListAsync();
 
             return friendships;
         }
@@ -94,9 +94,7 @@ namespace ProjectPlanner.API.Data
         /// </returns>
         public async Task<User> GetUser(string userId)
         {
-            return await _dataContext.Users.Include(u => u.OwnedProjects).Include(u => u.CollaboratedProjects)
-                .Include(u => u.FriendshipSent).Include(u => u.FriendshipReceived)
-                .FirstOrDefaultAsync(u => u.Id == userId);
+            return await _dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
         }
 
 
@@ -113,9 +111,9 @@ namespace ProjectPlanner.API.Data
         {
             // Get all the friendships for the user and then for each friendship, select the user's "friend" entity.
 
-            var friends = await _dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient)
-                .Where(f => f.SenderId == userId).Select(f => f.Recipient).ToListAsync();
-            friends.AddRange(_dataContext.Friendships.Include(f => f.Sender).Include(f => f.Recipient).Where(f => f.RecipientId == userId).Select(f => f.Sender));
+            var friends = await _dataContext.Friendships.Where(f => f.SenderId == userId).Select(f => f.Recipient).ToListAsync();
+
+            friends.AddRange(_dataContext.Friendships.Where(f => f.RecipientId == userId).Select(f => f.Sender));
 
             // Get all users from the database..
             var users =  await _dataContext.Users.ToListAsync();

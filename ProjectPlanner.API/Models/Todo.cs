@@ -15,11 +15,11 @@ namespace ProjectPlanner.API.Models
         public DateTime Modified { get; set; }
         public DateTime EstimatedDate { get; set; }
         public int ProjectId { get; set; }
-        public Project Project { get; set; }
+        public virtual Project Project { get; set; }
 
         public string Status { get; set; }
 
-        public ICollection<TodoMessage> Messages { get; set; }
+        public virtual ICollection<TodoMessage> Messages { get; set; }
 
         //a new model is required for a many to many relationship in EF Core.
         public Todo()

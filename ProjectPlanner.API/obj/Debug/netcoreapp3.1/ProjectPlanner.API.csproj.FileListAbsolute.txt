@@ -157,5 +157,7 @@ C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\ob
 C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\bin\Debug\netcoreapp3.1\MimeKit.dll
 C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
 C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\bin\Debug\netcoreapp3.1\MailKit.dll
+C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\bin\Debug\netcoreapp3.1\Castle.Core.dll
+C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Proxies.dll
 C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\obj\Debug\netcoreapp3.1\ProjectPlanner.API.csproj.CoreCompileInputs.cache
 C:\Users\Ezequ\source\repos\ProjectPlanner .NetCoreAngular\ProjectPlanner.API\obj\Debug\netcoreapp3.1\ProjectPlanner.API.MvcApplicationPartsAssemblyInfo.cache

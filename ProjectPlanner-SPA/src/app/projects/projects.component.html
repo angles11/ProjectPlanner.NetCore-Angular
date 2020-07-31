@@ -28,25 +28,40 @@
       <mat-error *ngIf="newProjectForm.get('title').hasError('required')">
         A title is <strong>required</strong>
       </mat-error>
+      <mat-error
+        *ngIf="newProjectForm.get('title').hasError('minlength') || newProjectForm.get('title').hasError('maxlength')">
+        Title must be between <strong>5 and 20 </strong> characters
+      </mat-error>
     </mat-form-field>
+
     <mat-form-field appearance="outline" class="form-field" color="primary">
       <mat-label>Short Description</mat-label>
       <input type="text" matInput formControlName="shortDescription">
       <mat-error *ngIf="newProjectForm.get('shortDescription').hasError('required')">
         A short description is <strong>required</strong>
       </mat-error>
+      <mat-error
+        *ngIf="newProjectForm.get('shortDescription').hasError('minlength') || newProjectForm.get('shortDescription').hasError('maxlength')">
+        Short Description must be between <strong>10 and 50 </strong> characters
+      </mat-error>
     </mat-form-field>
+
     <mat-form-field appearance="outline" class="form-field" color="primary">
       <mat-label>Long Description</mat-label>
       <textarea type="text" matInput formControlName="longDescription"></textarea>
       <mat-error *ngIf="newProjectForm.get('longDescription').hasError('required')">
         A long description is <strong>required</strong>
       </mat-error>
+      <mat-error
+        *ngIf="newProjectForm.get('longDescription').hasError('minlength') || newProjectForm.get('longDescription').hasError('maxlength')">
+        Long Description must be between <strong>20 and 300 </strong> characters
+      </mat-error>
     </mat-form-field>
+
     <mat-form-field appearance="outline" class="form-field" color="primary">
       <mat-label>Estimated Completion Date</mat-label>
       <input matInput [matDatepicker]="estimatedDate" (click)="estimatedDate.open()" formControlName="estimatedDate"
-        readonly>
+        readonly [min]="minDate">
       <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
       <mat-datepicker #estimatedDate disabled="false" color="primary"></mat-datepicker>
       <mat-error *ngIf="newProjectForm.get('estimatedDate').hasError('required')">

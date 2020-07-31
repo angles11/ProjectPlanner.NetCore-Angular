@@ -57,6 +57,7 @@ export class TodoCardComponent implements OnInit {
       this.todo.projectId, this.todo.id, this.newMessage)
       .subscribe((response: TodoMessage) => {
         this.panelOpenState = false;
+        console.log(response);
         this.todo.messages.push(response);
         this.getLastMessage();
       }, error => {

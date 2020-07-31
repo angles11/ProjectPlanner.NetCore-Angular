@@ -24,6 +24,7 @@ export class ProjectsComponent implements OnInit {
   projects: Project[];
   acceptedFriends: User[] = [];
   searchTerm = '';
+  minDate: Date;
 
   constructor(private authService: AuthService, private fb: FormBuilder,
               private projectService: ProjectService, private snackBar: MySnackBarService,
@@ -37,6 +38,7 @@ export class ProjectsComponent implements OnInit {
         this.snackBar.openSnackBar(error, 'error', 5000);
     });
     this.createNewProjectForm();
+    this.minDate = new Date();
 
   }
 
@@ -50,9 +52,9 @@ export class ProjectsComponent implements OnInit {
 
   createNewProjectForm() {
     this.newProjectForm = this.fb.group({
-      title: ['', Validators.required],
-      shortDescription: ['', Validators.required],
-      longDescription: ['', Validators.required],
+      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
+      shortDescription: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]],
+      longDescription: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(300)]],
       estimatedDate: [null, Validators.required]
     });
   }

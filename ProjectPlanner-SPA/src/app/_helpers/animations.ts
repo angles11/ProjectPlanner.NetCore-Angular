@@ -185,7 +185,7 @@ export const slideInAnimation =
       ]),
       query(':enter', animateChild()),
     ]),
-     transition('LoginPage => RegisterPage', [
+     transition('RegisterPage => LoginPage', [
       style({ position: 'relative' }),
       query(':enter, :leave', [
         style({
@@ -209,7 +209,7 @@ export const slideInAnimation =
       ]),
       query(':enter', animateChild()),
     ]),
-    transition('RegisterPage => LoginPage', [
+    transition('LoginPage => RegisterPage', [
       style({ position: 'relative' }),
       query(':enter, :leave', [
         style({
