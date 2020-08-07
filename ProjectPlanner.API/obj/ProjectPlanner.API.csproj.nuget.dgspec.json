@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ezequ\\source\\repos\\ProjectPlanner .NetCoreAngular\\ProjectPlanner.API\\ProjectPlanner.API.csproj": {}
+    "C:\\Users\\Ezequ\\source\\repos\\ProjectPlanner.NetCore-Angular\\ProjectPlanner.NetCore-Angular\\ProjectPlanner.API\\ProjectPlanner.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ezequ\\source\\repos\\ProjectPlanner .NetCoreAngular\\ProjectPlanner.API\\ProjectPlanner.API.csproj": {
+    "C:\\Users\\Ezequ\\source\\repos\\ProjectPlanner.NetCore-Angular\\ProjectPlanner.NetCore-Angular\\ProjectPlanner.API\\ProjectPlanner.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ezequ\\source\\repos\\ProjectPlanner .NetCoreAngular\\ProjectPlanner.API\\ProjectPlanner.API.csproj",
+        "projectUniqueName": "C:\\Users\\Ezequ\\source\\repos\\ProjectPlanner.NetCore-Angular\\ProjectPlanner.NetCore-Angular\\ProjectPlanner.API\\ProjectPlanner.API.csproj",
         "projectName": "ProjectPlanner.API",
-        "projectPath": "C:\\Users\\Ezequ\\source\\repos\\ProjectPlanner .NetCoreAngular\\ProjectPlanner.API\\ProjectPlanner.API.csproj",
+        "projectPath": "C:\\Users\\Ezequ\\source\\repos\\ProjectPlanner.NetCore-Angular\\ProjectPlanner.NetCore-Angular\\ProjectPlanner.API\\ProjectPlanner.API.csproj",
         "packagesPath": "C:\\Users\\Ezequ\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ezequ\\source\\repos\\ProjectPlanner .NetCoreAngular\\ProjectPlanner.API\\obj\\",
+        "outputPath": "C:\\Users\\Ezequ\\source\\repos\\ProjectPlanner.NetCore-Angular\\ProjectPlanner.NetCore-Angular\\ProjectPlanner.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -83,6 +83,10 @@
               "target": "Package",
               "version": "[3.1.4, )"
             },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[3.1.4, )"
@@ -94,6 +98,18 @@
             "MimeKit": {
               "target": "Package",
               "version": "[2.9.1, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.12.0, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[3.17.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.5.1, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",

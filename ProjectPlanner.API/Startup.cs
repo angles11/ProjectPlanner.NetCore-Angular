@@ -16,7 +16,9 @@ using ProjectPlanner.API.Models;
 using ProjectPlanner.API.Services.EmailConfirmation;
 using ProjectPlanner.API.Services.PhotoUploader;
 using System;
+using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Text;
 
 namespace ProjectPlanner.API
@@ -30,7 +32,6 @@ namespace ProjectPlanner.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentity<User, IdentityRole>(options =>
@@ -52,9 +53,8 @@ namespace ProjectPlanner.API
             services.AddDbContext<DataContext>(x =>
             {
                 x.UseLazyLoadingProxies();
-                x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-
             services.AddCors();
 
             services.AddControllers()
@@ -74,11 +74,20 @@ namespace ProjectPlanner.API
                    options.TokenValidationParameters = new TokenValidationParameters
                    {
                        ValidateIssuerSigningKey = true,
-                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["AppSettings:Token"])),
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
                        ValidateIssuer = false,
                        ValidateAudience = false
                    };
                });
+
+            services.AddSwaggerGen(options => {
+
+                var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+
+                options.IncludeXmlComments(xmlCommentsFullPath);
+            });
+
 
             services.Configure<PhotoUploaderSettings>(Configuration.GetSection("PhotoUploaderSettings"));
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSenderSettings"));
@@ -117,6 +126,8 @@ namespace ProjectPlanner.API
                     });
                 });
             }
+
+
             app.UseRouting();
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
@@ -124,6 +135,18 @@ namespace ProjectPlanner.API
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Project Planner API");
+            });
+
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

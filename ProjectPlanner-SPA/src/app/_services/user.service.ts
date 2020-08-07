@@ -79,4 +79,5 @@ export class UserService {
   changePassword(userId: string, data: any) {
     return this.http.patch(this.baseUrl + 'user/' + userId + '/password', data);
   }
+
 }

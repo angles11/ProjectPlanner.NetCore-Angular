@@ -64,6 +64,9 @@ import { ConfirmEmailComponent } from './register/confirm-email/confirm-email.co
 import { FooterComponent } from './footer/footer.component';
 import { AccountComponent } from './account/account.component';
 import { AccountResolver } from './resolvers/account.resolver';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { RecoverPasswordDialogComponent } from './login/recover-password-dialog/recover-password-dialog.component';
+import { RecoverPasswordComponent } from './login/recover-password/recover-password.component';
 
 
 
@@ -96,7 +99,9 @@ export function tokenGetter() {
       MessagesDialogComponent,
       ConfirmEmailComponent,
       FooterComponent,
-      AccountComponent
+      AccountComponent,
+      RecoverPasswordDialogComponent,
+      RecoverPasswordComponent
    ],
    imports: [
       BrowserModule,
@@ -105,7 +110,7 @@ export function tokenGetter() {
       ReactiveFormsModule,
       FlexLayoutModule,
       BrowserAnimationsModule,
-      RouterModule.forRoot(appRoutes),
+      RouterModule.forRoot(appRoutes, {useHash: true}),
       MatToolbarModule,
       MatButtonModule,
       MatSidenavModule,
@@ -146,7 +151,8 @@ export function tokenGetter() {
       UsersResolver,
       ProjectsListResolver,
       ProjectDetailResolver,
-      AccountResolver
+      AccountResolver,
+      {provide: LocationStrategy, useClass: HashLocationStrategy}
    ],
    bootstrap: [
       AppComponent
@@ -155,7 +161,8 @@ export function tokenGetter() {
       MySnackBarComponent,
       ConfirmDialogComponent,
       UserDialogComponent,
-      MessagesDialogComponent
+      MessagesDialogComponent,
+      RecoverPasswordDialogComponent
    ]
 })
 export class AppModule { }

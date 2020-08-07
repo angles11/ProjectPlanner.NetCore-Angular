@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../_models/user';
@@ -41,5 +41,17 @@ constructor(private http: HttpClient) { }
 
   confirmEmail(email: string, token: string) {
     return this.http.post(this.baseUrl + 'confirm'  , {token, email});
+  }
+
+  forgotPassword(email: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    const json = JSON.stringify(email);
+    return this.http.post(this.baseUrl + 'forgotPassword', json, {headers});
+  }
+
+  resetPassword(email: string, token: string, password: string) {
+    return this.http.patch(this.baseUrl + 'resetPassword', { token, email, password });
   }
 }

@@ -1,0 +1,349 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ProjectPlanner.API</name>
+    </assembly>
+    <members>
+        <member name="M:ProjectPlanner.API.Controllers.ProjectsController.GetProjects(System.String,ProjectPlanner.API.Helpers.ProjectParams)">
+            <summary>
+             Get a list of projects from a user.
+            </summary>
+            <param name="userId"> Id of the current user </param>
+            <param name="projectParams"> Parameters to query the list </param>
+            <returns> 
+            A Collection of DTOS of projects.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.ProjectsController.CreateProject(System.String,ProjectPlanner.API.Dtos.ProjectForCreationDto)">
+            <summary>
+             Creates a project entity into the database.
+            </summary>
+            <param name="userId"> Id of the project's owner. </param>
+            <param name="projectForCreationDto"> DTO with the properties for creating the project. </param>
+            <returns>
+            A CreatedAtRoute result containing:
+                -The name of the route for retrieving the project.
+                -The parameters needed to retrieve it.
+                -The DTO of the created project.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.ProjectsController.EditProject(System.String,System.Int32,ProjectPlanner.API.Dtos.ProjectForCreationDto)">
+            <summary>
+             Edit the project properties.
+            </summary>
+            <param name="userId"> Id of the project's owner. </param>
+            <param name="projectId"> id of the project. </param>
+            <param name="project"> DTO with the properties to be updated. </param>
+            <returns>
+            No Content result.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.ProjectsController.DeleteProject(System.String,System.Int32)">
+            <summary>
+             Removes the project entity from the database.
+            </summary>
+            <param name="userId"> Id of the project's owner. </param>
+            <param name="projectId"> Id of the project to be deleted. </param>
+            <returns> 
+            No Content result.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.ProjectsController.GetProject(System.String,System.Int32)">
+            <summary>
+             Get a project that matches the id.
+            </summary>
+            <param name="userId"> Id of the requesting user. </param>
+            <param name="projectId"> Id of the project to get. </param>
+            <returns> 
+            A DTO of a project.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.ProjectsController.AddCollaboration(System.String,System.Int32,System.String)">
+            <summary>
+             Create a Collaboration entity between a project and a user.
+            </summary>
+            <param name="userId"> Id of the owner of the project. </param>
+            <param name="projectId"> Id of the project where a colalborator is going to be added. </param>
+            <param name="collaboratorId"> Id of the user to be added as a collaborator. </param>
+            <returns> 
+                A CreatedAtRoute result with:
+                - the route for retrieving the project.
+                - the parameters needed to retrieve it.
+                - the collaboration entity.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.ProjectsController.GetCollaboration(System.Int32,System.String)">
+            <summary>
+             Gets the Collaboration entity between a project and a user.
+            </summary>
+            <param name="projectId"> Id of the project. </param>
+            <param name="collaboratorId"> Id of the user as collaborator. </param>
+            <returns>
+            A Collaboration entity.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.ProjectsController.DeleteCollaboration(System.String,System.Int32,System.String)">
+            <summary>
+             Removes the Collaboration entity from the database.
+            </summary>
+            <param name="userId"> Id of the collaboration's project owner. </param>
+            <param name="projectId"> Id of the collaboration's project. </param>
+            <param name="collaboratorId"> Id of the project's collaborator. </param>
+            <returns>
+             No Content result.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.ProjectsController.isOwnerOrCollaborator(System.String,ProjectPlanner.API.Models.Project)">
+            <summary>
+             Check if the user is owner of collaborator of a provided project.
+            </summary>
+            <param name="userId"> Id of the user. </param>
+            <param name="project"> Project entity. </param>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.TodoController.GetTodo(System.String,System.Int32)">
+            <summary>
+             Get a todo that matches the id.
+            </summary>
+            <param name="userId"> Id of the current user. </param>
+            <param name="todoId"> Id of the todo to get. </param>
+            <returns>
+             A DTO of the todo obtained.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.TodoController.CreateTodo(System.String,System.Int32,ProjectPlanner.API.Dtos.TodoForCreationDto)">
+            <summary>
+             Creates a todo entity.
+            </summary>
+            <param name="userId"> Id of the current user. </param>
+            <param name="projectId"> Id of the current project. </param>
+            <param name="todoForCreationDto"> DTO with the properties for creating the todo.</param>
+            <returns>
+             A CreatedAtRoute result with:
+              - The route for retrieve the todo.
+              - The parameters needed to retrieve it.
+              - The returning DTO of the todo.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.TodoController.DeleteTodo(System.String,System.Int32,System.Int32)">
+            <summary>
+            Delete a Todo that matches the Id.
+            </summary>
+            <param name="userId"> Id of the user. </param>
+            <param name="projectId"> Id of the project containing the Todo. </param>
+            <param name="todoId"> Id of the Todo to be deleted. </param>
+            <returns> No Content Result. </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.TodoController.CreateMessage(System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+             Creates a message entity between a Todo and a user.
+            </summary>
+            <param name="userId"> Id of the user creating the message. </param>
+            <param name="projectId"> Id of the project containing the Todo. </param>
+            <param name="todoId"> Id of the Todo. </param>
+            <param name="message"> Message as a string. </param>
+            <returns>
+              A CreatedAtRoute result containing:
+              - The route for retrieve the message.
+              - The paramaters needed to retrieve it.
+              - The returning DTO of the message.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.TodoController.GetMessage(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Get the message entity
+            </summary>
+            <param name="userId"> Id of the user that created the message. </param>
+            <param name="projectId"> Id of the project containing the Todo of the message. </param>
+            <param name="todoId"> Id of the Todo that contains the message. </param>
+            <param name="messageId"> Id of the message. </param>
+            <returns> A DTO of the message. </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.TodoController.ChangeStatus(System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+             Partially updates a Todo, changing the status.
+            </summary>
+            <param name="userId"> Id of the current user. </param>
+            <param name="projectId"> Id of the project containing the Todo. </param>
+            <param name="todoId"> Id of the Todo. </param>
+            <param name="status"> New status as a string. </param>
+            <returns></returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.UserController.GetUser(System.String)">
+            <summary>
+             Get the user entity.
+            </summary>
+            <param name="userId"> Id of the user. </param>
+            <returns> A DTO of the user. </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.UserController.GetFriends(System.String)">
+            <summary>
+                Get the list of friends for the requesting user.
+            </summary>
+            <param name="userId"> Id of the user.</param>
+            <returns>
+              A collection of DTOS with the friends.
+            </returns>    
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.UserController.GetUsers(System.String,ProjectPlanner.API.Helpers.UserParams)">
+            <summary>
+             Gets the list of users with no friend relationship.
+            </summary>
+            <param name="userId"> Id of the user. </param>
+            <param name="userParams"> Query parameters for filtering or sorting. </param>
+            <returns> 
+            Collection of DTOs of the users with the Pagination Headers. 
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.UserController.AddFriend(System.String,System.String)">
+            <summary>
+             Creates a friendship entity between two users
+             with a status of "pending"
+             to be accepted by the recipient user.
+            </summary>
+            <param name="userId"> The id of the user sending the friend request. </param>
+            <param name="recipientId"> The id of the user recieving the friend request. </param>
+            <returns> 
+            A CreatedAtRoute result with:
+             - The route to get the entity.
+             - The parameters needed to get that entity.
+             - The entity created.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.UserController.GetFriendship(System.String,System.String)">
+            <summary>
+             Get the friendship entity between two users.
+            </summary>
+            <param name="userId"> The first user id. </param>
+            <param name="userId2"> The second user id. </param>
+            <returns> A friendship entity. </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.UserController.DeleteFriendship(System.String,System.String)">
+            <summary>
+             Removes a friendship entity between two users.
+            </summary>
+            <param name="userId"> The first user id. </param>
+            <param name="userId2"> The second user id. </param>
+            <returns> A No Content result. </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.UserController.AcceptFriendship(System.String,System.String)">
+            <summary>
+             Change the status of the friendship entity between two users to "Accepted".
+            </summary>
+            <param name="userId"> Id of the user that received the friend request. </param>
+            <param name="userId2"> Id of the user that sent the friend request. </param>
+            <returns></returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.UserController.EditAccountInformation(System.String,ProjectPlanner.API.Dtos.UserForEditDto)">
+            <summary>
+             Updates the information of a user account.
+            </summary>
+            <param name="userId"> Id of the user to update. </param>
+            <param name="dto"> Properties to be changed. </param>
+            <returns> A No Content Result </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.UserController.ChangeProfilePicture(System.String,Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+             Deletes the last profile picture and uploads the new one.
+            </summary>
+            <param name="userId"> Id of the user. </param>
+            <param name="photo"> Photo to upload as an IFormFile. </param>
+            <returns></returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.UserController.ChangePassword(System.String,ProjectPlanner.API.Dtos.PasswordToChangeDto)">
+            <summary>
+             Change the password of the user's account.
+            </summary>
+            <param name="userId"> Id of the user. </param>
+            <param name="passwordToChangeDto"> Dto with the old and the new password.</param>
+            <returns> A No Content result. </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Data.ProjectRepository.GetProjects(System.String,ProjectPlanner.API.Helpers.ProjectParams)">
+            <summary>
+             Gets the list of projects where a user is the owner or one of the collaborators,
+             then applies the filter parameters.
+            </summary>
+            
+            <param name="userId"> Id of the user</param>
+            <param name="projectParams"> Parameters for querying</param>
+            
+            <returns>A Collection of projects</returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Data.UserRepository.AlreadyFriends(System.String,System.String)">
+            <summary>
+             Checks if there is an existing friendship entity between two users
+             using the users' id. 
+            </summary>
+            
+            <returns> 
+            True if there is a friendship entity nad false if there isn't.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Data.UserRepository.GetFriendships(System.String)">
+            <summary>
+            Get all the friendship entities for a user.
+            </summary>
+            <param name="userId"> Id of the user. </param>
+            <returns>
+            A Collection of friendships. 
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Data.UserRepository.GetFriendship(System.String,System.String)">
+            <summary>
+            Get the friendship between two users.
+            </summary>
+            <param name="userId1"> Id of the first user. </param>
+            <param name="userId2"> Id of the second user. </param>
+            <returns> 
+            A friendship entity or null if there is no friendship.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Data.UserRepository.GetUser(System.String)">
+            <summary>
+             Get the user whose id matches the provided user id. 
+            </summary>
+            <param name="userId"> Id of the user to get</param>
+            <returns>
+            A user entity or null if there is no match.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Data.UserRepository.GetUsers(System.String,ProjectPlanner.API.Helpers.UserParams)">
+            <summary>
+             Gets the list of users with NO friendship relation with the requesting user
+             then applies filters/sorting preferences.
+            </summary>
+            <param name="userId"> Id of the requesting user. </param>
+            <param name="userParams"> Query parameters to filter or sort the list of users. </param>
+            <returns>
+            A Paged List of users with the pagination headers. 
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Helpers.Extensions.AddPagination(Microsoft.AspNetCore.Http.HttpResponse,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Adds the pagination headers to the response.
+            </summary>
+            <param name="response"> Response to be extended. </param>
+            <param name="pageIndex"> Index of the current page. </param>
+            <param name="pageSize"> Number of elements for each page. </param>
+            <param name="totalItems"> Total number of elements. </param>
+            <param name="totalPages"> Total number of pages. </param>
+        </member>
+        <member name="M:ProjectPlanner.API.Helpers.Extensions.CalculatePercentage(System.Collections.Generic.ICollection{ProjectPlanner.API.Models.Todo})">
+            <summary>
+            Calculates the percentage of "Completed" Todos in a project.
+            </summary>
+            <param name="todos"> Collection of Todos</param>
+            <returns> 
+            An integer with the percentage.
+            </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Helpers.Extensions.GetLastMessage(System.Collections.Generic.ICollection{ProjectPlanner.API.Models.Todo})">
+            <summary>
+             Get the most recently TodoMessage added in a Project.
+            </summary>
+            <param name="todos"> Collection of Todos from a project. </param>
+            <returns>
+             A message entity.
+            </returns>
+        </member>
+    </members>
+</doc>

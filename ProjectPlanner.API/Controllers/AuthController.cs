@@ -41,6 +41,11 @@ namespace ProjectPlanner.API.Controllers
             _emailSender = emailSender;
         }
 
+        /// <summary>
+        /// Create a user account.
+        /// </summary>
+        /// <param name="userForRegisterDto"> Dto with the new user's information. </param>
+        /// <returns> An IActionResult. </returns>
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromForm] UserForRegisterDto userForRegisterDto)
         {
@@ -81,6 +86,11 @@ namespace ProjectPlanner.API.Controllers
             return BadRequest("Something happened, try again");
         }
 
+        /// <summary>
+        /// Logs a user account.
+        /// </summary>
+        /// <param name="userForLoginDto"> Dto with the user's username and password.</param>
+        /// <returns> An IActionResult. </returns>
         [HttpPost("login")]
         public async Task<IActionResult> Login (UserForLoginDto userForLoginDto)
         {
@@ -120,6 +130,11 @@ namespace ProjectPlanner.API.Controllers
 
         }
 
+        /// <summary>
+        /// Generates the Jason Web Token for authenticating the user.
+        /// </summary>
+        /// <param name="user"> Entity of the user. </param>
+        /// <returns></returns>
         private string GenerateJwtToken (User user)
         {
             var claims = new[]
@@ -147,7 +162,12 @@ namespace ProjectPlanner.API.Controllers
             return tokenHandler.WriteToken(token);
         }
 
-
+        /// <summary>
+        /// Generates the token for account confirmation and Send it through the Email Service.
+        /// </summary>
+        /// <param name="user"> Entity of the User. </param>
+        /// <param name="email"> User's email </param>
+        /// <returns> </returns>
         private async Task GenerateAndSendEmailToken(User user, string email)
         {
             // Generate the confirmation token.
@@ -158,13 +178,17 @@ namespace ProjectPlanner.API.Controllers
 
             // CallBack to the SPA with the token and email.
             // The SPA will make a call to the ConfirmEmail method, passing the two parameters.
-            var callBackUrl = "http://localhost:4200/register/ConfirmEmail?token=" + encodedToken + "&email=" + email;
+            var callBackUrl = "http://localhost:5000/#/register/ConfirmEmail?token=" + encodedToken + "&email=" + email;
 
             // Send the email. 
             await _emailSender.SendEmailAsync(user.Email, "Confirm your account", $"<b>Please click in the link below to confirm your account</b> <br> <a href='{callBackUrl}'>Confirm Now</a>");
         }
 
-
+        /// <summary>
+        /// Confirms the newly created account.
+        /// </summary>
+        /// <param name="emailConfirmationDto"> Dto containing the user's email and the confirmation token. </param>
+        /// <returns> An IActionResult. </returns>
         [HttpPost("confirm")]
         [AllowAnonymous]
 
@@ -200,6 +224,81 @@ namespace ProjectPlanner.API.Controllers
             }
 
             return Unauthorized("Something happened");
+        }
+
+        /// <summary>
+        /// Starts the process to recover the user's password.
+        /// </summary>
+        /// <param name="email"> Email of the user.</param>
+        /// <returns>An IActionResult.</returns>
+        [HttpPost("forgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] string email)
+        {
+            // Get the user from provided email.
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+                return NotFound("There is no user associated with this email.");
+
+            // Check if user's account is confirmed. 
+            if (!await _userManager.IsEmailConfirmedAsync(user))
+                return BadRequest("Your have to confirm your account first.");
+
+            // Generates the token and send it through the email Service.
+            await GenerateAndSendPasswordToken(user, email);
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Generates the reset password token and send an email with the callback URL
+        /// </summary>
+        /// <param name="user"> User's entity. </param>
+        /// <param name="email"> User's email. </param>
+        /// <returns></returns>
+        public async Task GenerateAndSendPasswordToken(User user, string email)
+        {
+            // Generate the password reset token.
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            // Enconde it. 
+            var encodedToken = HttpUtility.UrlEncode(token);
+
+            // Generate the callback URL with the encodedToken and the user's email as query parameters.
+            var callBackUrl = "http://localhost:5000/#/login/RecoverPassword?token=" + encodedToken + "&email=" + email;
+
+            // Send the email. 
+            await _emailSender.SendEmailAsync(user.Email, "Reset your password", $"<b>Please click in the link below to reset your password</b> <br> <a href='{callBackUrl}'>Confirm Now</a>");
+        }
+
+        /// <summary>
+        /// Resets the user's password.
+        /// </summary>
+        /// <param name="passwordToRecoverDto"> Dto containing: user's email, reset token and new password.</param>
+        /// <returns> An IActionResult. </returns>
+        [HttpPatch("resetPassword")]
+        public async Task<IActionResult> ResetPassword(PasswordToRecoverDto passwordToRecoverDto)
+        {
+            var user = await _userManager.FindByEmailAsync(passwordToRecoverDto.Email);
+
+            if (user == null)
+                return NotFound();
+
+            // Check if the token hasn't expired and in that case, resend a new one.
+            if (!await _userManager.VerifyUserTokenAsync(user, _userManager.Options.Tokens.PasswordResetTokenProvider, "ResetPassword", passwordToRecoverDto.Token))
+            {
+                await GenerateAndSendPasswordToken(user, passwordToRecoverDto.Email);
+
+                return Unauthorized("The token has expired, please check your email for the new link");
+            }
+
+            // Reset the user's password with the new password. 
+            var result = await _userManager.ResetPasswordAsync(user, passwordToRecoverDto.Token, passwordToRecoverDto.Password);
+
+            if (result.Succeeded)
+                return NoContent();
+
+            return BadRequest("Something happened");
         }
     }
 }

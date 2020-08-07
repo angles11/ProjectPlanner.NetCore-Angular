@@ -16,9 +16,9 @@ namespace ProjectPlanner.API.Data
 
         // This method will be call only if the database is empty
         // to provide the initial data.
-        public static void SeedUsers(DataContext dataContext, UserManager<User> userManager)
+        public static void SeedUsers(UserManager<User> userManager)
         {
-            if (!dataContext.Users.Any())
+            if (!userManager.Users.Any())
             {
                 // Get the data file in Json format.
                 var userData = System.IO.File.ReadAllText("Data/UserSeedData.json");
@@ -30,10 +30,8 @@ namespace ProjectPlanner.API.Data
                 // Create an entity of a user for each object provided in the data file.
                 foreach (var user in users)
                 {
-                    userManager.CreateAsync(user, "Test1234-");
+                     userManager.CreateAsync(user, "Test1234-").Wait();
                 }
-
-                dataContext.SaveChanges();
             }
         }
 

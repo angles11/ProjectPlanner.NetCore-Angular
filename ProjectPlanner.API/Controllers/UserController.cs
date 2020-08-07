@@ -239,7 +239,7 @@ namespace ProjectPlanner.API.Controllers
         ///  Updates the information of a user account.
         /// </summary>
         /// <param name="userId"> Id of the user to update. </param>
-        /// <param name="userForRegisterDto"> Properties to be changed. </param>
+        /// <param name="dto"> Properties to be changed. </param>
         /// <returns> A No Content Result </returns>
         [HttpPut("{userId}")]
         public async Task<IActionResult> EditAccountInformation(string userId, [FromBody]UserForEditDto dto)

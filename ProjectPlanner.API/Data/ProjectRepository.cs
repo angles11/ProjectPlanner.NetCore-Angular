@@ -105,13 +105,12 @@ namespace ProjectPlanner.API.Data
 
         // Update the property Modified of a project
         // and then, save it.
-        public async void UpdateLastModified(Project project)
+        public void UpdateLastModified(Project project)
         {
             project.Modified = DateTime.Now;
 
             Edit(project);
 
-           await _dataContext.SaveChangesAsync();
         }
     }
 }

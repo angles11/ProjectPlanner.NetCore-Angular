@@ -28,6 +28,9 @@
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
         <span> Not a member? </span><a mat-button [routerLink]="['/register']" color="primary">Register now</a>
       </div>
+      <div style="text-align:center;">
+        <a mat-button (click)="openForgotPasswordDialog()">Forgot password?</a>
+      </div>
     </div>
   </div>
 </div>

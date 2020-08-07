@@ -44,18 +44,19 @@ namespace ProjectPlanner.API.Helpers
         /// <returns> 
         /// An integer with the percentage.
         /// </returns>
-        public static  int CalculatePercentage(this ICollection<Todo> todos)
+        public static  double CalculatePercentage(this ICollection<Todo> todos)
         {
+
             // Get all the "Completed" todos.
-            var completedTodosCount =  todos.Where(t => t.Status == "Completed").ToList().Count();
+            double completedTodosCount =  todos.Where(t => t.Status == "Completed").ToList().Count();
 
 
-            if (completedTodosCount == 0)
-                return 0;
+            if (completedTodosCount < 1)
+                return completedTodosCount;
             // Calculate the percentage.
-            var percentage = (completedTodosCount * 100) / todos.Count();
+            var percentage = (completedTodosCount * 100d) / todos.Count();
 
-            return percentage;
+            return  Math.Round(percentage, 2);
         }
 
 

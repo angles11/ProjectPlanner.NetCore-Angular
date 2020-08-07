@@ -92,13 +92,13 @@ namespace ProjectPlanner.API.Controllers
             var todo = _mapper.Map<Todo>(todoForCreationDto);
 
             _projectRepository.Add(todo);
-        
+
+            // Update the Modified property of the project.
+            _projectRepository.UpdateLastModified(project);
 
             if (await _projectRepository.SaveAll())
             {
                 var todoForReturn = _mapper.Map<TodoForListDto>(todo);
-
-                _projectRepository.UpdateLastModified(project);
 
                 return CreatedAtRoute(
                     routeName: "GetTodo",
@@ -259,7 +259,7 @@ namespace ProjectPlanner.API.Controllers
             return BadRequest();
         }
 
-        public async Task<bool> isOwnerOrCollaborator(string userId, int projectId)
+        private async Task<bool> isOwnerOrCollaborator(string userId, int projectId)
         {
             var project = await _projectRepository.GetProject(projectId);
 

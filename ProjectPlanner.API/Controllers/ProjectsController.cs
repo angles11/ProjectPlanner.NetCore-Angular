@@ -244,10 +244,11 @@ namespace ProjectPlanner.API.Controllers
             // Add the Collaboration entity to the database.
             _projectRepository.Add(collaboration);
 
+            // Update the Modified property of the project.
+            _projectRepository.UpdateLastModified(project);
+
             if (await _projectRepository.SaveAll())
             {  
-                // Update the Modified property of the project.
-                _projectRepository.UpdateLastModified(project);
                 return CreatedAtRoute("GetCollaboration", new { userId, projectId, collaboratorId }, collaboration);
             }               
             return BadRequest();
@@ -306,11 +307,12 @@ namespace ProjectPlanner.API.Controllers
 
             // Remove the collaboration from the database.
              _projectRepository.Delete(collaboration);
-            
+
+            // Update the Modified property of the project.
+            _projectRepository.UpdateLastModified(project);
 
             if (await _projectRepository.SaveAll())
             {
-                _projectRepository.UpdateLastModified(project);
                 return NoContent();
             }              
             return BadRequest();
@@ -323,7 +325,7 @@ namespace ProjectPlanner.API.Controllers
         /// <param name="userId"> Id of the user. </param>
         /// <param name="project"> Project entity. </param>
        
-        public bool isOwnerOrCollaborator(string userId, Project project)
+        private bool isOwnerOrCollaborator(string userId, Project project)
         {
             if (project.OwnerId == userId)
                 return true;

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
 import { MySnackBarService } from '../_notifications/my-snackBar.service';
+import { MatDialog } from '@angular/material/dialog';
+import { RecoverPasswordDialogComponent } from './recover-password-dialog/recover-password-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,7 @@ export class LoginComponent implements OnInit {
   hide = true;
   model: any = {};
 
-  constructor(private authService: AuthService, private router: Router, private snackBar: MySnackBarService) { }
+  constructor(private authService: AuthService, private router: Router, private snackBar: MySnackBarService, public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -24,5 +26,9 @@ export class LoginComponent implements OnInit {
     }, error => {
       this.snackBar.openSnackBar(error, 'error', 3000);
     });
+  }
+
+  openForgotPasswordDialog() {
+    const dialogRef = this.dialog.open(RecoverPasswordDialogComponent);
   }
 }

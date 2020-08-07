@@ -14,12 +14,15 @@ import { ProjectDetailResolver } from './resolvers/project-detail.resolver';
 import { ConfirmEmailComponent } from './register/confirm-email/confirm-email.component';
 import { AccountComponent } from './account/account.component';
 import { AccountResolver } from './resolvers/account.resolver';
+import { LoggedGuard } from './_guards/logged.guard';
+import { RecoverPasswordComponent } from './login/recover-password/recover-password.component';
 
 export const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent, data: { animation: 'LoginPage' }},
-  { path: 'register', component: RegisterComponent, data: { animation: 'RegisterPage' } },
-  {path: 'account', component: AccountComponent, canActivate:[AuthGuard], resolve: {user: AccountResolver} },
-  {path: 'register/ConfirmEmail', component: ConfirmEmailComponent},
+  { path: 'login', component: LoginComponent, canActivate: [LoggedGuard], data: { animation: 'LoginPage' } },
+  {path: 'login/RecoverPassword', component: RecoverPasswordComponent, canActivate: [LoggedGuard]},
+  { path: 'register', component: RegisterComponent, canActivate: [LoggedGuard], data: { animation: 'RegisterPage' } },
+  {path: 'account', component: AccountComponent, canActivate: [AuthGuard], resolve: {user: AccountResolver} },
+  {path: 'register/ConfirmEmail', component: ConfirmEmailComponent, canActivate: [LoggedGuard]},
   {
     path: '', component: ProjectsComponent, pathMatch: 'full', canActivate: [AuthGuard],  data: {animation: 'ProjectsPage'},
     resolve: { projects: ProjectsListResolver, friends: FriendsResolver }

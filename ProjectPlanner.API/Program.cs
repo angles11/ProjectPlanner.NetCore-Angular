@@ -30,7 +30,7 @@ namespace ProjectPlanner.API
 
                     var userManager = services.GetRequiredService<UserManager<User>>();
 
-                    SeedData.SeedUsers(context, userManager);
+                    SeedData.SeedUsers(userManager);
                 }
 
                 catch (Exception ex)

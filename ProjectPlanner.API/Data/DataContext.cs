@@ -76,15 +76,17 @@ namespace ProjectPlanner.API.Data
             builder.Entity<Friendship>()
                 .HasOne(f => f.Sender)
                 .WithMany(s => s.FriendshipSent)
-                .HasForeignKey(f => f.SenderId);
+                .HasForeignKey(f => f.SenderId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             builder.Entity<Friendship>()
                 .HasOne(f => f.Recipient)
                 .WithMany(f => f.FriendshipReceived)
-                .HasForeignKey(f => f.RecipientId);
+                .HasForeignKey(f => f.RecipientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            
+
         }
     }
 }

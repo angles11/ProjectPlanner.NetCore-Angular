@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPlanner.API", "ProjectPlanner.API\ProjectPlanner.API.csproj", "{BB1EEBFB-A073-41B6-A561-B5AD7A75B2FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectPlanner.API", "ProjectPlanner.API\ProjectPlanner.API.csproj", "{BB1EEBFB-A073-41B6-A561-B5AD7A75B2FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPlannerTests", "ProjectPlannerTests\ProjectPlannerTests.csproj", "{6CE1557D-0A93-40D2-A1AC-379C04DE7146}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BB1EEBFB-A073-41B6-A561-B5AD7A75B2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB1EEBFB-A073-41B6-A561-B5AD7A75B2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB1EEBFB-A073-41B6-A561-B5AD7A75B2FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CE1557D-0A93-40D2-A1AC-379C04DE7146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CE1557D-0A93-40D2-A1AC-379C04DE7146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CE1557D-0A93-40D2-A1AC-379C04DE7146}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CE1557D-0A93-40D2-A1AC-379C04DE7146}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -51,7 +51,6 @@ export class ProjectCardComponent implements OnInit {
   updateProgressBar() {
     setInterval(() => {
       if (this.progressBarValue < this.project.completedPercentage) {
-        console.log(this.progressBarValue);
         this.progressBarValue++;
       }
     }, 10);
