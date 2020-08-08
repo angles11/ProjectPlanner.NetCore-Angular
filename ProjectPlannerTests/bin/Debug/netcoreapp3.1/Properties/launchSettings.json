@@ -22,7 +22,7 @@
       "launchBrowser": true,
       "launchUrl": "api/auth/login",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5000"
     }

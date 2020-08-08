@@ -4,6 +4,64 @@
         <name>ProjectPlanner.API</name>
     </assembly>
     <members>
+        <member name="M:ProjectPlanner.API.Controllers.AuthController.Register(ProjectPlanner.API.Dtos.UserForRegisterDto)">
+            <summary>
+            Create a user account.
+            </summary>
+            <param name="userForRegisterDto"> Dto with the new user's information. </param>
+            <returns> An IActionResult. </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.AuthController.Login(ProjectPlanner.API.Dtos.UserForLoginDto)">
+            <summary>
+            Logs a user account.
+            </summary>
+            <param name="userForLoginDto"> Dto with the user's username and password.</param>
+            <returns> An IActionResult. </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.AuthController.GenerateJwtToken(ProjectPlanner.API.Models.User)">
+            <summary>
+            Generates the Jason Web Token for authenticating the user.
+            </summary>
+            <param name="user"> Entity of the user. </param>
+            <returns></returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.AuthController.GenerateAndSendEmailToken(ProjectPlanner.API.Models.User,System.String)">
+            <summary>
+            Generates the token for account confirmation and Send it through the Email Service.
+            </summary>
+            <param name="user"> Entity of the User. </param>
+            <param name="email"> User's email </param>
+            <returns> </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.AuthController.ConfirmEmail(ProjectPlanner.API.Dtos.EmailConfirmationDto)">
+            <summary>
+            Confirms the newly created account.
+            </summary>
+            <param name="emailConfirmationDto"> Dto containing the user's email and the confirmation token. </param>
+            <returns> An IActionResult. </returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.AuthController.ForgotPassword(System.String)">
+            <summary>
+            Starts the process to recover the user's password.
+            </summary>
+            <param name="email"> Email of the user.</param>
+            <returns>An IActionResult.</returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.AuthController.GenerateAndSendPasswordToken(ProjectPlanner.API.Models.User,System.String)">
+            <summary>
+            Generates the reset password token and send an email with the callback URL
+            </summary>
+            <param name="user"> User's entity. </param>
+            <param name="email"> User's email. </param>
+            <returns></returns>
+        </member>
+        <member name="M:ProjectPlanner.API.Controllers.AuthController.ResetPassword(ProjectPlanner.API.Dtos.PasswordToRecoverDto)">
+            <summary>
+            Resets the user's password.
+            </summary>
+            <param name="passwordToRecoverDto"> Dto containing: user's email, reset token and new password.</param>
+            <returns> An IActionResult. </returns>
+        </member>
         <member name="M:ProjectPlanner.API.Controllers.ProjectsController.GetProjects(System.String,ProjectPlanner.API.Helpers.ProjectParams)">
             <summary>
              Get a list of projects from a user.
