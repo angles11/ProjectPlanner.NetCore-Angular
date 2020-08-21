@@ -11,6 +11,7 @@ _A tool for managing your own projects or collaborate into others_
 * [Asp .Net Core 3.1](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1) - Web API.
 * [Angular 9](https://angular.io/) - Single Page Application.
 * [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) - Object Relational Mapper.
+* [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) - Query Language.
 * [Angular Material](https://material.angular.io/) - Material Design Components.
 * [Angular Flex Layout](https://github.com/angular/flex-layout) - Layout with Flexbox CSS and mediQuery.
 * [.Net Core Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-3.1) - Authentication system.
