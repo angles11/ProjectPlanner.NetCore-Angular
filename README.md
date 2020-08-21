@@ -7,9 +7,11 @@ _A tool for managing your own projects or collaborate into others_
  * _Add messages to mantain a communication with all the collaborators._
  
  ## Tecnologies used: 🛠️
- 
+
+* [C#](https://docs.microsoft.com/en-us/dotnet/csharp/) - Object Oriented Language.
 * [Asp .Net Core 3.1](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1) - Web API.
 * [Angular 9](https://angular.io/) - Single Page Application.
+* [Typescript](https://www.typescriptlang.org/) - Typed superset language of Javascript.
 * [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) - Object Relational Mapper.
 * [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) - Query Language.
 * [Angular Material](https://material.angular.io/) - Material Design Components.
