@@ -18,6 +18,8 @@ _A tool for managing your own projects or collaborate into others_
 * [AutoMapper](https://github.com/AutoMapper/AutoMapper) - Library for object-object mapping.
 * [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/) - Cloud object storing provider.
 * [Swagger/OpenAPI](https://swagger.io/docs/specification/about/) - API Documentation Generator.
+* [MimeKit](http://www.mimekit.net/#) - Library for creating and parsing messages.
+
 
 ## Author ✒️
 * **Ezequiel Rivas** - *Main Developer* - [Angles11](https://github.com/angles11)
