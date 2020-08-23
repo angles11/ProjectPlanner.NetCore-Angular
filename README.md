@@ -2,9 +2,9 @@
 _A tool for managing your own projects or collaborate into others_
  * _Find your colleagues and add it as friends._
  * _Create a project and every Task within it._
- * _Assing collaborators for each project._
+ * _Assign collaborators for each project._
  * _Manage the status of each Task._
- * _Add messages to mantain a communication with all the collaborators._
+ * _Add messages to maintain a communication with all the collaborators._
  
  ## Tecnologies used: 🛠️
 
