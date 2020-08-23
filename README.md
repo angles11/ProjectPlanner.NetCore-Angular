@@ -1,6 +1,6 @@
 # Project Planner
 _A tool for managing your own projects or collaborate into others_
- * _Find your collegues and add it as friends._
+ * _Find your colleagues and add it as friends._
  * _Create a project and every Task within it._
  * _Assing collaborators for each project._
  * _Manage the status of each Task._
